@@ -30,9 +30,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           <div className="lg:col-span-2">
             <img
-              src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/d90e800be_generated_image.png"
-              alt="TASS 2026 Logo"
-              className="h-16 w-auto object-contain mb-4 brightness-0 invert"
+              src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
+              alt="TASS Nigeria 2026"
+              className="h-14 w-auto object-contain mb-4"
             />
             <p className="text-primary-foreground/60 text-sm leading-relaxed max-w-sm mb-6">
               Technology. Arts. Science. Society. Solutions.

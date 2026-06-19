@@ -34,9 +34,9 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2 group">
             <img
-              src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/d90e800be_generated_image.png"
-              alt="TASS 2026 Logo"
-              className="h-10 w-auto object-contain"
+              src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
+              alt="TASS Nigeria 2026"
+              className="h-12 w-auto object-contain"
             />
           </Link>
 
