@@ -35,7 +35,7 @@ export default function Navbar() {
       }`}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           {/* Desktop: two rows */}
-          <div className="hidden lg:flex flex-col">
+          <div className="hidden lg:flex flex-col h-16 justify-center">
             {/* Row 1: logo left, links center, register right */}
             <div className="flex items-center justify-between h-16">
               <Link to="/" className="flex items-center">
@@ -65,14 +65,7 @@ export default function Navbar() {
                 Register Now <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            {/* Row 2: bold logo banner below nav links */}
-            <div className="flex justify-center pb-2">
-              <img
-                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
-                alt="TASS Nigeria 2026"
-                className={`h-10 w-auto object-contain transition-all duration-300 ${scrolled ? "bg-white/80 rounded-lg px-2" : ""}`}
-              />
-            </div>
+
           </div>
 
           {/* Mobile: single row */}
