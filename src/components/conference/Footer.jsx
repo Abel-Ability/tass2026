@@ -79,7 +79,7 @@ export default function Footer() {
 
         <div className="mt-16 pt-8 border-t border-primary-foreground/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-primary-foreground/40">
-            © 2026 ICMRISD Nigeria · Centre for Migration Research & Interdisciplinary Studies · University of Abuja
+            © 2026 TASS Nigeria 2026 · Centre for Migration Research & Interdisciplinary Studies · University of Abuja
           </p>
           <p className="text-xs text-primary-foreground/40">
             09–12 November 2026, Abuja, Nigeria

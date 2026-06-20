@@ -10,6 +10,8 @@ const navLinks = [
   { label: "Hackathon", href: "/hackathon" },
   { label: "Exhibition", href: "/exhibition" },
   { label: "Sponsorship", href: "/sponsorship" },
+  { label: "Accommodation", href: "/accommodation" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -31,39 +33,60 @@ export default function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled ? "bg-background/90 backdrop-blur-xl shadow-sm" : "bg-transparent"
       }`}>
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2 group">
-            <img
-              src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
-              alt="TASS Nigeria 2026"
-              className="h-12 w-auto object-contain"
-            />
-          </Link>
-
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((l) => (
-              <Link
-                key={l.href}
-                to={l.href}
-                className={`text-sm font-medium transition-colors hover:text-accent ${
-                  location.pathname === l.href ? "text-accent" : "text-muted-foreground"
-                }`}
-              >
-                {l.label}
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          {/* Desktop: two rows */}
+          <div className="hidden lg:flex flex-col">
+            {/* Row 1: logo left, links center, register right */}
+            <div className="flex items-center justify-between h-16">
+              <Link to="/" className="flex items-center">
+                <img
+                  src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
+                  alt="TASS Nigeria 2026"
+                  className="h-12 w-auto object-contain"
+                />
               </Link>
-            ))}
+              <div className="flex items-center gap-5">
+                {navLinks.map((l) => (
+                  <Link
+                    key={l.href}
+                    to={l.href}
+                    className={`text-sm font-medium transition-colors hover:text-accent ${
+                      location.pathname === l.href ? "text-accent" : "text-muted-foreground"
+                    }`}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+              </div>
+              <Link
+                to="/register"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-full hover:bg-green-700 transition-all"
+              >
+                Register Now <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            {/* Row 2: bold logo banner below nav links */}
+            <div className="flex justify-center pb-2">
+              <img
+                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
+                alt="TASS Nigeria 2026"
+                className={`h-10 w-auto object-contain transition-all duration-300 ${scrolled ? "bg-white/80 rounded-lg px-2" : ""}`}
+              />
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <Link
-              to="/register"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-full hover:bg-green-700 transition-all"
-            >
-              Register Now <ArrowRight className="w-4 h-4" />
+          {/* Mobile: single row */}
+          <div className="flex lg:hidden items-center justify-between h-16">
+            <Link to="/" className="flex items-center">
+              <img
+                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
+                alt="TASS Nigeria 2026"
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <button
               onClick={() => setOpen(!open)}
-              className="lg:hidden p-2 text-foreground"
+              className="p-2 text-foreground"
               aria-label="Toggle menu"
             >
               {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

@@ -16,6 +16,8 @@ import Exhibition from '@/pages/Exhibition';
 import Sponsorship from '@/pages/Sponsorship';
 import Register from '@/pages/Register';
 import Contact from '@/pages/Contact';
+import Accommodation from '@/pages/Accommodation';
+import Gallery from '@/pages/Gallery';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -53,6 +55,8 @@ const AuthenticatedApp = () => {
         <Route path="/sponsorship" element={<Sponsorship />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/accommodation" element={<Accommodation />} />
+        <Route path="/gallery" element={<Gallery />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
