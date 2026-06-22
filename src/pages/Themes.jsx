@@ -54,8 +54,8 @@ export default function Themes() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Call for Papers"
-            title="17 Thematic Tracks"
-            description="Each track hosts keynotes, peer-reviewed paper presentations, and structured roundtables spanning natural sciences, engineering, social sciences, humanities, and policy studies."
+            title="4 Themes & Sub-themes"
+            description="Each theme hosts keynotes, peer-reviewed paper presentations, and structured roundtables spanning natural sciences, engineering, social sciences, humanities, and policy studies."
             align="center"
           />
         </div>
@@ -65,10 +65,11 @@ export default function Themes() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 space-y-16">
           {categories.map((cat, ci) => (
             <div key={cat.name}>
-              <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-px bg-accent" />
                 <h3 className="font-heading font-bold text-xl">{cat.name}</h3>
               </div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6 ml-11">Sub-themes</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {cat.tracks.map((track, ti) => (
                   <motion.div
