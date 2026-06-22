@@ -104,7 +104,7 @@ export default function Themes() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             {[
               { step: "01", title: "Select Your Theme", desc: "Choose one of the 17 thematic tracks that best fits your research." },
-              { step: "02", title: "Upload Abstract", desc: "Submit your abstract (max 300 words) through the online portal." },
+              { step: "02", title: "Upload Abstract", desc: "Submit your abstract (max 300 words) through the Microsoft CMT online portal." },
               { step: "03", title: "Confirmation", desc: "Receive peer-review feedback and acceptance notification." },
             ].map((s) => (
               <div key={s.step} className="bg-primary-foreground/5 border border-primary-foreground/10 rounded-2xl p-6">
@@ -113,6 +113,21 @@ export default function Themes() {
                 <p className="text-sm text-primary-foreground/50 leading-relaxed">{s.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Acknowledgement */}
+      <section className="py-16 md:py-20 bg-muted/50">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-px bg-accent" />
+              <h3 className="font-heading font-bold text-lg">Acknowledgement</h3>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed border-l-4 border-accent/30 pl-5">
+              The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.
+            </p>
           </div>
         </div>
       </section>
