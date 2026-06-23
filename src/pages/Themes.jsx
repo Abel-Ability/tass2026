@@ -54,7 +54,7 @@ export default function Themes() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Call for Papers"
-            title="4 Themes & Sub-themes"
+            title="Advancing Global Innovation and Sustainable Development"
             description="Each theme hosts keynotes, peer-reviewed paper presentations, and structured roundtables spanning natural sciences, engineering, social sciences, humanities, and policy studies."
             align="center"
           />
@@ -62,33 +62,43 @@ export default function Themes() {
       </section>
 
       <section className="py-20 md:py-28">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 space-y-16">
-          {categories.map((cat, ci) => (
-            <div key={cat.name}>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="w-8 h-px bg-accent" />
-                <h3 className="font-heading font-bold text-xl">{cat.name}</h3>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          {/* Main Theme Banner */}
+          <div className="mb-14 text-center bg-primary/5 border border-primary/10 rounded-2xl py-8 px-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-3">Main Theme</p>
+            <h2 className="font-display font-extrabold text-2xl md:text-3xl text-foreground">
+              Advancing Global Innovation and Sustainable Development
+            </h2>
+          </div>
+
+          <div className="space-y-16">
+            {categories.map((cat, ci) => (
+              <div key={cat.name}>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="w-8 h-px bg-accent" />
+                  <h3 className="font-heading font-bold text-xl">Theme: {cat.name}</h3>
+                </div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6 ml-11">Sub-themes</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {cat.tracks.map((track, ti) => (
+                    <motion.div
+                      key={track.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: ti * 0.06, duration: 0.4 }}
+                      className={`rounded-xl border p-5 ${cat.color} hover:shadow-md transition-all duration-300`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <track.icon className="w-5 h-5 mt-0.5 shrink-0" />
+                        <span className="font-heading font-semibold text-sm">{track.title}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6 ml-11">Sub-themes</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {cat.tracks.map((track, ti) => (
-                  <motion.div
-                    key={track.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: ti * 0.06, duration: 0.4 }}
-                    className={`rounded-xl border p-5 ${cat.color} hover:shadow-md transition-all duration-300`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <track.icon className="w-5 h-5 mt-0.5 shrink-0" />
-                      <span className="font-heading font-semibold text-sm">{track.title}</span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 

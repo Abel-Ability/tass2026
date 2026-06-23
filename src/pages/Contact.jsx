@@ -48,6 +48,7 @@ export default function Contact() {
                   { icon: Mail, label: "tass2026@uniabuja.edu.ng", href: "mailto:tass2026@uniabuja.edu.ng" },
                   { icon: Phone, label: "+234 (0) 800 TASS 2026", href: "tel:+2348008277026" },
                   { icon: Globe, label: "tass2026.uniabuja.edu.ng", href: "https://tass2026.uniabuja.edu.ng" },
+                  { icon: Globe, label: "cemri.org (CEMRI Website)", href: "https://www.cemri.org" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-3">
                     <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
@@ -60,6 +61,29 @@ export default function Contact() {
                     )}
                   </div>
                 ))}
+              </div>
+
+              {/* Key Contacts */}
+              <div>
+                <h3 className="font-heading font-bold text-lg mb-4">Key Contacts</h3>
+                <div className="space-y-4">
+                  {[
+                    { name: "Dr. Duabari Silas Aziaka", role: "IOC Chairman", phone: "+44 7856 261406" },
+                    { name: "Prof. Patricia Taiwo", role: "LOC Chairperson", phone: "+234 803 482 0646" },
+                    { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+234 803 560 7640" },
+                  ].map((contact) => (
+                    <div key={contact.name} className="flex items-start gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                        <Phone className="w-4 h-4 text-accent" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{contact.name}</p>
+                        <p className="text-xs text-muted-foreground">{contact.role}</p>
+                        <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="text-sm text-muted-foreground hover:text-accent transition-colors">{contact.phone}</a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 

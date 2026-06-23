@@ -198,8 +198,8 @@ export default function About() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Organizers"
-            title="Centre for Migration Research & Interdisciplinary Studies"
-            description="CEMRI, University of Abuja, is the host institution for ICMRISD Nigeria 2026. The Centre brings together cross-disciplinary expertise to examine migration, integration, and sustainable development across Africa."
+            title="Centre for Multidisciplinary Research and Innovation"
+            description="CEMRI, University of Abuja, is the host institution for TASS Nigeria 2026. The Centre brings together cross-disciplinary expertise to examine migration, integration, and sustainable development across Africa."
             light
             align="center"
           />
