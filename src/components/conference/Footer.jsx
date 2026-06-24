@@ -48,9 +48,20 @@ export default function Footer() {
                 <Mail className="w-4 h-4 shrink-0" />
                 <a href="mailto:tass2026@uniabuja.edu.ng" className="hover:text-accent transition-colors">tass2026@uniabuja.edu.ng</a>
               </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 shrink-0" />
-                <span>+234 (0) 800 TASS 2026</span>
+              <div className="space-y-2">
+                {[
+                  { name: "Dr. Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447856261406" },
+                  { name: "Prof. Patricia Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
+                  { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
+                ].map((c) => (
+                  <div key={c.phone} className="flex items-start gap-2">
+                    <Phone className="w-4 h-4 mt-0.5 shrink-0" />
+                    <div>
+                      <a href={`tel:${c.phone}`} className="hover:text-accent transition-colors">{c.phone}</a>
+                      <span className="text-primary-foreground/40 text-xs ml-1">· {c.name} ({c.role})</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

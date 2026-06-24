@@ -40,7 +40,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between h-16">
               <Link to="/" className="flex items-center gap-3">
                 <img
-                  src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/e325559fb_1000509502.png"
+                  src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/5caa39d92_WhatsAppImage2026-05-29at231537.jpg"
                   alt="University of Abuja"
                   className="h-10 w-auto object-contain"
                 />
@@ -48,11 +48,6 @@ export default function Navbar() {
                   src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/14974f33a_logo_200x64.jpeg"
                   alt="TASS Nigeria 2026"
                   className="h-12 w-auto object-contain"
-                />
-                <img
-                  src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/910c524b8_WhatsAppImage2026-06-22at1345471.jpeg"
-                  alt="CEMRI"
-                  className="h-10 w-auto object-contain rounded"
                 />
               </Link>
               <div className="flex items-center gap-5">
@@ -68,12 +63,19 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Link
-                to="/register"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-full hover:bg-green-700 transition-all"
-              >
-                Register Now <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="flex items-center gap-3">
+                <img
+                  src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/fb3b51eb6_cemrilogo.png"
+                  alt="CEMRI"
+                  className="h-10 w-auto object-contain"
+                />
+                <Link
+                  to="/register"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-full hover:bg-green-700 transition-all"
+                >
+                  Register Now <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
 
           </div>
@@ -82,7 +84,7 @@ export default function Navbar() {
           <div className="flex lg:hidden items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-2">
               <img
-                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/e325559fb_1000509502.png"
+                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/5caa39d92_WhatsAppImage2026-05-29at231537.jpg"
                 alt="University of Abuja"
                 className="h-8 w-auto object-contain"
               />
@@ -92,9 +94,9 @@ export default function Navbar() {
                 className="h-10 w-auto object-contain"
               />
               <img
-                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/910c524b8_WhatsAppImage2026-06-22at1345471.jpeg"
+                src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/fb3b51eb6_cemrilogo.png"
                 alt="CEMRI"
-                className="h-8 w-auto object-contain rounded"
+                className="h-8 w-auto object-contain"
               />
             </Link>
             <button

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Calendar, MapPin } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 const HERO_IMG = "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/b3bb7586e_generated_03931515.png";
@@ -29,8 +29,8 @@ export default function HeroSection() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <span className="inline-block w-8 h-px bg-yellow-400" />
-                <span className="text-yellow-400 text-xs font-semibold uppercase tracking-[0.2em]">
-                  TASS Nigeria 2026
+                <span className="text-xs font-semibold uppercase tracking-[0.2em]">
+                  <span className="text-green-400">TASS NIG</span><span className="text-red-400">ERIA 2026</span>
                 </span>
               </div>
 
@@ -54,6 +54,24 @@ export default function HeroSection() {
                 <span className="flex items-center gap-2">
                   <MapPin className="w-4 h-4" /> University of Abuja, Nigeria
                 </span>
+              </div>
+
+              {/* Key Contacts */}
+              <div className="mb-8 space-y-1.5">
+                {[
+                  { name: "Dr. Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447856261406" },
+                  { name: "Prof. Patricia Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
+                  { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
+                ].map((c) => (
+                  <div key={c.phone} className="flex items-center gap-2 text-xs text-white/60">
+                    <Phone className="w-3 h-3 shrink-0" />
+                    <a href={`tel:${c.phone}`} className="hover:text-accent transition-colors">{c.phone}</a>
+                    <span className="text-white/30">·</span>
+                    <span>{c.name}</span>
+                    <span className="text-white/30">·</span>
+                    <span className="text-white/40">{c.role}</span>
+                  </div>
+                ))}
               </div>
 
               <div className="flex flex-wrap gap-4">
