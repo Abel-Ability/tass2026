@@ -22,7 +22,7 @@ function App() {
   return (
     <ThemeProvider>
       <QueryClientProvider client={queryClientInstance}>
-        <Router>
+        <Router basename="/tass2026">
           <ScrollToTop />
           <Routes>
             <Route element={<Layout />}>
