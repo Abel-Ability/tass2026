@@ -26,7 +26,7 @@ const footerLinks = [
 
 const contacts = [
   { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447442568824" },
-  { name: "Prof. Patricia Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
+  { name: "Prof. Patricia Awa Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
   { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
   { name: "Dr (Mrs) Joy Okwuguori", role: "LOC Secretary", phone: "+2347063891945" },
 ];
