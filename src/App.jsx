@@ -15,7 +15,6 @@ import Register from '@/pages/Register';
 import Contact from '@/pages/Contact';
 import Accommodation from '@/pages/Accommodation';
 import Gallery from '@/pages/Gallery';
-import FAQ from '@/pages/FAQ';
 import { ThemeProvider } from '@/lib/ThemeProvider';
 
 function App() {
@@ -38,7 +37,6 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/accommodation" element={<Accommodation />} />
               <Route path="/gallery" element={<Gallery />} />
-              <Route path="/faq" element={<FAQ />} />
             </Route>
           </Routes>
           <Toaster />
