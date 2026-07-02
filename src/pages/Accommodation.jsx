@@ -91,9 +91,10 @@ export default function Accommodation() {
   return (
     <div className="pt-20">
       {/* Hero */}
-      <section className="relative py-20 md:py-28 bg-green-700 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+      <section className="relative py-20 md:py-28 text-white overflow-hidden">
+        <div className="absolute inset-0">
           <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1600&q=80" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
