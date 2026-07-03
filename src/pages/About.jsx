@@ -7,7 +7,7 @@ const SCHOLARS_IMG = "/scholars.jpg";
 
 const features = [
   { icon: Globe, title: "International Platform", desc: "Bringing together leading researchers, innovators, and policymakers from across Africa and around the world.", bg: "bg-green-50", iconBg: "bg-green-100", iconColor: "text-green-700" },
-  { icon: Award, title: "Peer-Reviewed Research", desc: "Rigorous academic paper presentations across 17 thematic tracks with structured roundtables.", bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700" },
+  { icon: Award, title: "Peer-Reviewed Research", desc: "Rigorous academic paper presentations across 18 thematic tracks with structured roundtables.", bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700" },
   { icon: Lightbulb, title: "Innovation Exhibition", desc: "A curated technology and innovation exhibition showcasing cutting-edge solutions.", bg: "bg-orange-50", iconBg: "bg-orange-100", iconColor: "text-orange-700" },
   { icon: Users, title: "Policy Dialogue Forum", desc: "A dedicated forum where scientific advancements are examined within broader societal and policy contexts.", bg: "bg-blue-50", iconBg: "bg-blue-100", iconColor: "text-blue-700" },
   { icon: BookOpen, title: "Cross-Disciplinary", desc: "Sessions structured to foster interaction between technical research, social inquiry, and ethical reflection.", bg: "bg-purple-50", iconBg: "bg-purple-100", iconColor: "text-purple-700" },
@@ -238,8 +238,8 @@ export default function About() {
                     <speaker.icon className={`w-[18px] h-[18px] ${speaker.iconColor}`} />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">{speaker.role}</p>
-                    <h3 className="font-heading font-bold text-xl">{speaker.name}</h3>
+                    <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground dark:text-black">{speaker.role}</p>
+                    <h3 className="font-heading font-bold text-xl dark:text-black">{speaker.name}</h3>
                   </div>
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed">{speaker.note}</p>
@@ -258,6 +258,8 @@ export default function About() {
             description="A renowned scholar and academic leader with over five decades of contributions to engineering and education."
             light
             align="center"
+            titleClass="text-3xl md:text-4xl lg:text-5xl dark:text-white"
+            descClass="dark:text-white"
           />
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-10 items-start mt-8">
             <motion.div
@@ -332,7 +334,7 @@ export default function About() {
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
-            { val: "17", label: "Thematic Tracks", color: "text-yellow-400" },
+            { val: "18", label: "Thematic Tracks", color: "text-yellow-400" },
             { val: "₦10M+", label: "Total Prize Pool", color: "text-green-400" },
             { val: "4 Days", label: "Of Programming", color: "text-orange-400" },
             ].map((stat) => (

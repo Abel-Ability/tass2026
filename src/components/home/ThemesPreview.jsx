@@ -17,7 +17,7 @@ export default function ThemesPreview() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-10">
           <SectionHeading
-            label="17 Thematic Tracks"
+            label="18 Thematic Tracks"
             title="Conference Sub-Themes"
             description="Spanning natural sciences, engineering, social sciences, humanities, and policy studies."
           />

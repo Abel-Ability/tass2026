@@ -56,7 +56,7 @@ export default function HeroSection() {
               </h1>
 
               <p className="text-white/60 text-base md:text-lg max-w-lg leading-relaxed mb-8">
-                A four-day international conference bringing together researchers, policymakers, industry leaders, and students across 17 thematic tracks.
+                A four-day international conference bringing together researchers, policymakers, industry leaders, and students across 18 thematic tracks.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 mb-10">
@@ -111,7 +111,7 @@ export default function HeroSection() {
               <h3 className="text-white font-heading font-semibold text-sm mb-4">Key Highlights</h3>
               <div className="space-y-3">
                 {[
-                  { val: "17", label: "Thematic Tracks" },
+                  { val: "18", label: "Thematic Tracks" },
                   { val: "₦10M", label: "Hackathon Prize Pool" },
                   { val: "48hr", label: "Student Hackathon" },
                   { val: "5", label: "Sponsorship Tiers" },

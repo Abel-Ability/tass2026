@@ -6,7 +6,7 @@ const stats = [
   { val: 1500, suffix: "+", label: "Delegates" },
   { val: 30, suffix: "+", label: "Countries" },
   { val: 50, suffix: "+", label: "Speakers" },
-  { val: 17, suffix: "", label: "Technical Sessions" },
+  { val: 18, suffix: "", label: "Technical Sessions" },
   { val: 6, suffix: "", label: "Workshops" },
 ];
 

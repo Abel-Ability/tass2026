@@ -116,7 +116,7 @@ export default function Themes() {
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
             {[
-              { step: "01", title: "Select Your Theme", desc: "Choose one of the 17 thematic tracks that best fits your research." },
+              { step: "01", title: "Select Your Theme", desc: "Choose one of the 18 thematic tracks that best fits your research." },
               { step: "02", title: "Upload Abstract", desc: "Submit your abstract (max 300 words) through the Microsoft CMT online portal." },
               { step: "03", title: "Confirmation", desc: "Receive peer-review feedback and acceptance notification." },
             ].map((s) => (

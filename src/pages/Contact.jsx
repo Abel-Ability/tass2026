@@ -54,7 +54,7 @@ export default function Contact() {
                   { icon: Mail, label: "uniabujacemrisponsorship@cemri.org", href: "mailto:uniabujacemrisponsorship@cemri.org" },
                   { icon: Mail, label: "uniabujacemrihackathon@cemri.org", href: "mailto:uniabujacemrihackathon@cemri.org" },
                   { icon: Mail, label: "uniabujacemriabstract@cemri.org", href: "mailto:uniabujacemriabstract@cemri.org" },
-                  { icon: Globe, label: "tass2026.uniabuja.edu.ng", href: "https://tass2026.uniabuja.edu.ng" },
+                  { icon: Mail, label: "tass2026@uniabuja.edu.ng", href: "mailto:tass2026@uniabuja.edu.ng" },
                   { icon: Globe, label: "cemri.org (CEMRI Website)", href: "https://www.cemri.org" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-3">
