@@ -249,11 +249,65 @@ export default function About() {
         </div>
       </section>
 
+      {/* Keynote Speaker I Citation */}
+      <section className="py-10 md:py-10 bg-gradient-to-br from-navy to-navy-light text-white">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <SectionHeading
+            label="Keynote Speaker I Citation"
+            title="Prof. Feryel Ouerghi Sebai"
+            description="Former Minister of Economy and Planning of Tunisia, full professor, and recognized expert in international economic development."
+            light
+            align="center"
+            titleClass="text-3xl md:text-4xl lg:text-5xl dark:text-white"
+            descClass="dark:text-white"
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-10 items-start mt-8">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-2"
+            >
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 flex items-center justify-center aspect-[3/4]">
+                <span className="text-white/30 text-sm font-heading">Photo to be added</span>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="lg:col-span-3"
+            >
+              <h3 className="text-gold font-heading font-bold text-2xl md:text-3xl mb-2">
+                Prof. Feryel Ouerghi Sebai
+              </h3>
+              <p className="text-white/60 text-sm mb-6">Former Minister of Economy and Planning, Tunisia</p>
+              <div className="space-y-4 text-white/80 text-sm leading-relaxed">
+                <p>
+                  Feryel Ouerghi Sebai is the former Minister of Economy and Planning of Tunisia, a full professor, and a recognized expert in international economic development. She currently serves as Full Professor at the Higher School of Economic and Commercial Sciences of Tunis (ESSECT), University of Tunis, where she founded and led several specialized master&rsquo;s programs, including one in international trade developed in partnership with the International Trade Center of the United Nations.
+                </p>
+                <p>
+                  During her tenure as Minister, she led major national integration initiatives, including Tunisia&rsquo;s five-year economic development plan and the country&rsquo;s fiscal and budgetary policy, while managing cooperation with international financial institutions to secure funding for major development projects across infrastructure, renewable energy, agriculture, and human capital.
+                </p>
+                <p>
+                  As a senior consultant, she has carried out numerous projects for the International Trade Center (UN), focusing on the African Continental Free Trade Area (AfCFTA), EU&ndash;Mediterranean trade and investment facilitation, and regional value chains across Africa.
+                </p>
+                <p>
+                  She holds a PhD in Economics from the University of Tunis El Manar and has authored numerous scientific publications on global value chains, financial stability, and economic development, published in peer-reviewed international journals.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Keynote Speaker Citation */}
       <section className="py-10 md:py-10 bg-gradient-to-br from-navy to-navy-light text-white">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
-            label="Keynote Speaker Citation"
+            label="Keynote Speaker II Citation"
             title="Emeritus Prof. Steven Timipa Odi-Owei"
             description="A renowned scholar and academic leader with over five decades of contributions to engineering and education."
             light
