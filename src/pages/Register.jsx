@@ -14,8 +14,8 @@ const registrationFees = [
 
 export default function Register() {
   return (
-    <div className="pt-20">
-      <section className="py-20 md:py-28 bg-muted/50">
+    <div className="pt-10">
+      <section className="py-10 md:py-10 bg-muted/50">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Registration"
@@ -26,7 +26,7 @@ export default function Register() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-10">
         <div className="max-w-[900px] mx-auto px-6 md:px-10">
           {/* Fees Table */}
           <div className="rounded-2xl border border-border overflow-hidden mb-10">

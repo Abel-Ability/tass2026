@@ -29,9 +29,9 @@ export default function Gallery() {
   const filtered = active === "All" ? photos : photos.filter((p) => p.category === active);
 
   return (
-    <div className="pt-20">
+    <div className="pt-10">
       {/* Hero */}
-      <section className="relative py-20 md:py-28 bg-primary text-primary-foreground overflow-hidden">
+      <section className="relative py-10 md:py-10 bg-primary text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/72cb8d68d_WhatsAppImage2026-05-23at2012208.jpg" alt="" className="w-full h-full object-cover" />
         </div>
@@ -46,7 +46,7 @@ export default function Gallery() {
       </section>
 
       {/* Filter Tabs */}
-      <section className="py-12 md:py-16">
+      <section className="py-10 md:py-10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex gap-3 mb-10 flex-wrap">
             {categories.map((cat) => (

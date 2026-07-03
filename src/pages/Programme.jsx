@@ -68,8 +68,8 @@ export default function Programme() {
   const [activeDay, setActiveDay] = useState(0);
 
   return (
-    <div className="pt-20">
-      <section className="py-20 md:py-28 bg-muted/50">
+    <div className="pt-10">
+      <section className="py-10 md:py-10 bg-muted/50">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Four-Day Programme"
@@ -80,7 +80,7 @@ export default function Programme() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-10">
         <div className="max-w-[1000px] mx-auto px-6 md:px-10">
           {/* Day Tabs */}
           <div className="flex gap-2 mb-12 overflow-x-auto scrollbar-hide pb-2">

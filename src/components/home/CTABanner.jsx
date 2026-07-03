@@ -7,7 +7,7 @@ const ABUJA_IMG = "/abuja-skyline.jpg";
 
 export default function CTABanner() {
   return (
-    <section className="relative py-24 md:py-36 overflow-hidden">
+    <section className="relative py-10 md:py-10 overflow-hidden">
       <div className="absolute inset-0">
         <img src={ABUJA_IMG} alt="Abuja skyline" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/90 to-navy/70" />
@@ -32,13 +32,13 @@ export default function CTABanner() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               to="/register"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all text-[17.6px]"
             >
               Register Now <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/sponsorship"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-800 text-white font-semibold rounded-full hover:bg-blue-900 transition-all text-[17.6px]"
             >
               Become a Sponsor
             </Link>

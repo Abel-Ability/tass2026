@@ -31,13 +31,14 @@ export default function HeroSection() {
       <div className="absolute top-0 left-[25%] w-px h-full bg-white/5" />
       <div className="absolute top-0 right-[15%] w-px h-full bg-white/5" />
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pb-16 md:pb-24 pt-32 w-full">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pb-10 md:pb-10 pt-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-8">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
+              className="mt-[1cm]"
             >
               <div className="flex items-center gap-3 mb-6">
                 <span className="inline-block w-8 h-px bg-gold" />
@@ -46,12 +47,12 @@ export default function HeroSection() {
                 </span>
               </div>
 
-              <h1 className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white leading-[0.95] tracking-tight mb-6">
+              <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-[0.95] tracking-tight mb-6">
                 <span className="text-green-400">Technology.</span>
                 <br />
                 <span className="text-gold">Arts.</span> Science.
                 <br />
-                <span className="text-orange-400">Society.</span>
+                <span className="text-orange-400">Society.</span> <span className="text-black/80">(TASS)</span>
               </h1>
 
               <p className="text-white/60 text-base md:text-lg max-w-lg leading-relaxed mb-8">
@@ -77,7 +78,7 @@ export default function HeroSection() {
                   { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
                   { name: "Dr. Joy Kafomdi Okwuogor", role: "LOC Secretary", phone: "+2347063891945" },
                 ].map((c) => (
-                  <div key={c.phone} className="flex items-center gap-2 text-xs text-white/60">
+                  <div key={c.phone} className="flex items-center gap-2 text-[14.4px] text-white/60">
                     <Phone className="w-3 h-3 shrink-0" />
                     <a href={`tel:${c.phone}`} className="hover:text-gold transition-colors">{c.phone}</a>
                     <span className="text-white/30">·</span>
@@ -91,7 +92,7 @@ export default function HeroSection() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   to="/themes"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/20 text-white font-medium rounded-full hover:bg-white/10 transition-all text-sm"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-gold text-navy font-semibold rounded-full hover:bg-gold/90 transition-all text-[21px]"
                   aria-label="Submit Abstract"
                 >
                   Submit Abstract
@@ -104,7 +105,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="lg:col-span-4 hidden lg:block"
+            className="lg:col-span-4"
           >
             <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10" role="complementary" aria-label="Key Highlights">
               <h3 className="text-white font-heading font-semibold text-sm mb-4">Key Highlights</h3>

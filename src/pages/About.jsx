@@ -69,8 +69,13 @@ function PartnerAccordion() {
                   <div className="flex flex-wrap gap-6">
                     {partner.logos.map((logo) => (
                       <div key={logo.name} className="flex flex-col items-center gap-2 w-28">
-                        <img src={logo.src} alt={logo.name} className="h-16 w-full object-contain rounded-md" />
-                        <p className="text-xs text-center text-muted-foreground font-medium leading-snug">{logo.name}</p>
+                        {logo.src ? (
+                          <img src={logo.src} alt={logo.name} className="h-16 w-full object-contain rounded-md" />
+                        ) : (
+                          <div className="h-16 w-full rounded-md bg-muted flex items-center justify-center text-muted-foreground text-xs font-medium px-2 text-center leading-snug">
+                            {logo.name}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -106,15 +111,16 @@ function LOCSection() {
   if (members.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-32 bg-muted/50">
+    <section className="py-10 md:py-10 bg-muted/50">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <SectionHeading
           label="Committee"
           title="Local Organising Committee (LOC)"
           description="The dedicated team organising TASS Nigeria 2026."
           align="center"
+          className="mb-4 md:mb-6"
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
           {members.map((m, i) => (
             <motion.div
               key={m.name}
@@ -122,13 +128,17 @@ function LOCSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.04, duration: 0.4 }}
-              className="bg-card border border-border rounded-xl p-5 hover:shadow-lg transition-all duration-300"
+              className="bg-card border border-border rounded-xl p-3 md:p-4 hover:shadow-md transition-all duration-300"
             >
-              <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center mb-3">
-                <Users className="w-5 h-5 text-gold" />
+              <div className="flex items-start gap-2 mb-1">
+                <div className="w-9 h-9 shrink-0 rounded-full bg-gold/20 flex items-center justify-center">
+                  <Users className="w-[18px] h-[18px] text-gold" />
+                </div>
+                <div>
+                  <h4 className="font-heading font-bold text-base text-foreground leading-snug">{m.name}</h4>
+                  <p className="text-sm text-muted-foreground">{m.position}</p>
+                </div>
               </div>
-              <h4 className="font-heading font-bold text-sm text-foreground leading-snug">{m.name}</h4>
-              <p className="text-xs text-muted-foreground mt-1">{m.position}</p>
             </motion.div>
           ))}
         </div>
@@ -139,13 +149,13 @@ function LOCSection() {
 
 export default function About() {
   return (
-    <div className="pt-20">
+    <div className="pt-10">
       {/* Hero Banner */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-muted/50">
+      <section className="relative py-10 md:py-10 overflow-hidden bg-muted/50">
         <div className="absolute top-0 left-[10%] w-px h-full bg-border/50" />
         <div className="absolute top-0 right-[20%] w-px h-full bg-border/50" />
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
             <div>
               <SectionHeading
                 label={<><span className="text-green-600">TASS NIG</span><span className="text-red-600">ERIA 2026</span></>}
@@ -168,14 +178,15 @@ export default function About() {
       </section>
 
       {/* Features */}
-      <section className="py-20 md:py-32">
+      <section className="py-10 md:py-10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Why TASS 2026"
             title="What Makes This Conference Unique"
             align="center"
+            className="mb-4 md:mb-6"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {features.map((f, i) => (
               <motion.div
                 key={f.title}
@@ -183,12 +194,14 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className={`border border-border rounded-2xl p-6 md:p-8 hover:shadow-lg transition-all duration-300 ${f.bg}`}
+                className={`border border-border rounded-xl p-3 md:p-4 hover:shadow-md transition-all duration-300 ${f.bg}`}
               >
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 ${f.iconBg}`}>
-                  <f.icon className={`w-5 h-5 ${f.iconColor}`} />
+                <div className="flex items-center gap-2 mb-1">
+                  <div className={`w-9 h-9 shrink-0 rounded-lg flex items-center justify-center ${f.iconBg}`}>
+                    <f.icon className={`w-[18px] h-[18px] ${f.iconColor}`} />
+                  </div>
+                  <h3 className="font-heading font-bold text-base">{f.title}</h3>
                 </div>
-                <h3 className="font-heading font-bold text-lg mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
@@ -197,15 +210,16 @@ export default function About() {
       </section>
 
       {/* Keynote Speakers & Special Guest */}
-      <section className="py-20 md:py-32 bg-muted/50">
+      <section className="py-10 md:py-10 bg-muted/50">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Featured Speakers"
             title="Keynote Speakers & Special Guest of Honour"
             description="TASS Nigeria 2026 will feature distinguished academics, policymakers, and industry leaders as keynote speakers. Further details will be announced soon."
             align="center"
+            className="mb-4 md:mb-6"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {[
               { role: "Special Guest of Honour", name: "To Be Announced", note: "A distinguished personality of national significance.", icon: Award, bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700" },
               { role: "Keynote Speaker I", name: "Prof. Feryel Ouerghi Sebai", note: "Former Minister of Economy & Planning | Senior Economist | Expert in African Development & Economic Strategy Leader, Tunis, Tunisia.", icon: Mic2, bg: "bg-green-50", iconBg: "bg-green-100", iconColor: "text-green-700" },
@@ -217,14 +231,18 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
-                className={`rounded-2xl border border-border p-6 md:p-8 hover:shadow-lg transition-all duration-300 ${speaker.bg}`}
+                className={`rounded-xl border border-border p-3 md:p-4 hover:shadow-md transition-all duration-300 ${speaker.bg}`}
               >
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 ${speaker.iconBg}`}>
-                  <speaker.icon className={`w-5 h-5 ${speaker.iconColor}`} />
+                <div className="flex items-center gap-2 mb-1">
+                  <div className={`w-9 h-9 shrink-0 rounded-lg flex items-center justify-center ${speaker.iconBg}`}>
+                    <speaker.icon className={`w-[18px] h-[18px] ${speaker.iconColor}`} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">{speaker.role}</p>
+                    <h3 className="font-heading font-bold text-xl">{speaker.name}</h3>
+                  </div>
                 </div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1">{speaker.role}</p>
-                <h3 className="font-heading font-bold text-lg mb-2">{speaker.name}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{speaker.note}</p>
+                <p className="text-base text-muted-foreground leading-relaxed">{speaker.note}</p>
               </motion.div>
             ))}
           </div>
@@ -232,7 +250,7 @@ export default function About() {
       </section>
 
       {/* Keynote Speaker Citation */}
-      <section className="py-20 md:py-32 bg-gradient-to-br from-navy to-navy-light text-white">
+      <section className="py-10 md:py-10 bg-gradient-to-br from-navy to-navy-light text-white">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Keynote Speaker Citation"
@@ -241,7 +259,7 @@ export default function About() {
             light
             align="center"
           />
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-10 items-start mt-8">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -290,7 +308,7 @@ export default function About() {
       <LOCSection />
 
       {/* Partners */}
-      <section className="py-20 md:py-32">
+      <section className="py-10 md:py-10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Partners"
@@ -303,7 +321,7 @@ export default function About() {
       </section>
 
       {/* CEMRI & UniAbuja */}
-      <section className="py-20 md:py-32 bg-primary text-primary-foreground">
+      <section className="py-10 md:py-10 bg-primary text-primary-foreground">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Organisers"

@@ -7,9 +7,9 @@ const HACKATHON_IMG = "/hackathon.jpg";
 
 export default function HackathonPreview() {
   return (
-    <section className="py-20 md:py-32 relative overflow-hidden">
+    <section className="py-10 md:py-10 relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}

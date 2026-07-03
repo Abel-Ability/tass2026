@@ -60,7 +60,7 @@ export default function Footer() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-20 md:py-28">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-10 md:py-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           <div className="lg:col-span-2">
             <h3 className="font-heading font-bold text-2xl mb-4">TASS Nigeria 2026</h3>

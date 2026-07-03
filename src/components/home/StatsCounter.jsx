@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
 
 const stats = [
-  { val: 500, suffix: "+", label: "Delegates" },
+  { val: 1500, suffix: "+", label: "Delegates" },
   { val: 30, suffix: "+", label: "Countries" },
   { val: 50, suffix: "+", label: "Speakers" },
   { val: 17, suffix: "", label: "Technical Sessions" },
@@ -43,7 +43,7 @@ function AnimatedNumber({ target, suffix }) {
   }, [target]);
 
   return (
-    <span ref={ref} className="font-display font-extrabold text-4xl md:text-5xl text-gold">
+    <span ref={ref} className="font-display font-extrabold text-[1.8rem] md:text-[2.4rem] text-gold">
       {count}{suffix}
     </span>
   );
@@ -51,15 +51,16 @@ function AnimatedNumber({ target, suffix }) {
 
 export default function StatsCounter() {
   return (
-    <section className="py-20 md:py-28 bg-muted/50">
+    <section className="pt-0 pb-10 md:pt-0 md:pb-10 bg-muted/50">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <SectionHeading
           label="By the Numbers"
           title="TASS Nigeria 2026 in Numbers"
           description="A truly global gathering of researchers, innovators, and policymakers."
           align="center"
+          titleClass="text-[1.3125rem] md:text-[1.575rem] lg:text-[2.1rem]"
         />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mt-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mt-1">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}

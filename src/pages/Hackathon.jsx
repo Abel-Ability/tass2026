@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
 import { Trophy, Clock, Users, Zap, Code, Shield, Leaf, Heart, GraduationCap } from "lucide-react";
 
-const HACKATHON_IMG = "";
+const HACKATHON_IMG = "/hackathon.jpg";
 
 const hackathonTracks = [
   { icon: Zap, title: "EdTech & Digital Learning", desc: "Solutions for accessible, quality education across Africa.", bg: "bg-yellow-50 border-yellow-200", iconColor: "text-yellow-700" },
@@ -22,9 +22,9 @@ const prizes = [
 
 export default function Hackathon() {
   return (
-    <div className="pt-20">
+    <div className="pt-10">
       {/* Hero */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
+      <section className="relative py-10 md:py-10 overflow-hidden">
         <div className="absolute inset-0">
           <img src={HACKATHON_IMG} alt="Student hackathon" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/85" />
@@ -52,10 +52,10 @@ export default function Hackathon() {
       </section>
 
       {/* Tracks */}
-      <section className="py-20 md:py-28">
+      <section className="py-10 md:py-10">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <SectionHeading label="Hackathon Tracks" title="Build Solutions That Matter" align="center" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <SectionHeading label="Hackathon Tracks" title="Build Solutions That Matter" align="center" className="mb-4 md:mb-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {hackathonTracks.map((t, i) => (
               <motion.div
                 key={t.title}
@@ -63,11 +63,13 @@ export default function Hackathon() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className={`rounded-2xl p-6 border hover:shadow-lg transition-all duration-300 ${t.bg}`}
+                className={`rounded-xl p-3 md:p-4 border hover:shadow-md transition-all duration-300 ${t.bg}`}
               >
-                <t.icon className={`w-6 h-6 mb-4 ${t.iconColor}`} />
-                <h3 className="font-heading font-bold text-lg mb-2">{t.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t.desc}</p>
+                <div className="flex items-center gap-2 mb-1">
+                  <t.icon className={`w-7 h-7 shrink-0 ${t.iconColor}`} />
+                  <h3 className="font-heading font-bold text-xl">{t.title}</h3>
+                </div>
+                <p className="text-base text-muted-foreground leading-relaxed">{t.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -75,7 +77,7 @@ export default function Hackathon() {
       </section>
 
       {/* Prizes */}
-      <section className="py-20 md:py-28 bg-muted/50">
+      <section className="py-10 md:py-10 bg-muted/50">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading label="Prize Structure" title="₦10 Million Prize Pool" align="center" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">

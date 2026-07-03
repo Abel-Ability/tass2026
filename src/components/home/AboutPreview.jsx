@@ -8,9 +8,9 @@ const SCHOLARS_IMG = "/scholars.jpg";
 
 export default function AboutPreview() {
   return (
-    <section className="py-20 md:py-32">
+    <section className="py-10 md:py-10">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
           <div>
             <SectionHeading
               label="About the Conference"

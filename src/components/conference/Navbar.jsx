@@ -43,7 +43,7 @@ export default function Navbar() {
             <div className="flex items-center justify-between h-16">
               <Link to="/" className="flex items-center gap-3 shrink-0" aria-label="Home">
                 <img src={import.meta.env.BASE_URL + "logo-uniabuja.png"} alt="University of Abuja" className="h-10 md:h-12 w-auto object-contain" loading="lazy" />
-                <span className="hidden xl:block font-heading font-bold text-base text-foreground">TASS Nigeria 2026</span>
+                <span className="hidden xl:block font-heading font-bold text-base text-foreground mt-[1cm]">TASS Nigeria 2026</span>
               </Link>
               <div className="flex items-center gap-5">
                 {navLinks.map((l) => (
@@ -74,7 +74,7 @@ export default function Navbar() {
           <div className="flex lg:hidden items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-2" aria-label="Home">
               <img src={import.meta.env.BASE_URL + "logo-uniabuja.png"} alt="University of Abuja" className="h-10 w-auto object-contain" loading="lazy" />
-              <span className="font-heading font-bold text-foreground text-sm">TASS Nigeria 2026</span>
+              <span className="font-heading font-bold text-foreground text-sm mt-[1cm]">TASS Nigeria 2026</span>
             </Link>
             <div className="flex items-center gap-2">
               <button
