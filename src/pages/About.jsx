@@ -255,7 +255,7 @@ export default function About() {
           <SectionHeading
             label="Keynote Speaker I Citation"
             title="Prof. Feryel Ouerghi Sebai"
-            description="Former Minister of Economy and Planning of Tunisia, full professor, and recognized expert in international economic development."
+            description="Former Minister of Economy and Planning of Tunisia, full professor, and recognised expert in international economic development."
             light
             align="center"
             titleClass="text-3xl md:text-4xl lg:text-5xl dark:text-white"
@@ -269,8 +269,8 @@ export default function About() {
               transition={{ duration: 0.7 }}
               className="lg:col-span-2"
             >
-              <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-white/5 flex items-center justify-center aspect-[3/4]">
-                <span className="text-white/30 text-sm font-heading">Photo to be added</span>
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <img src="/Photo_Feryel.jpg" alt="Prof. Feryel Ouerghi Sebai" className="w-full aspect-[3/4] object-cover" />
               </div>
             </motion.div>
             <motion.div
