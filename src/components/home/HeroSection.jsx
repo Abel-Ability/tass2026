@@ -91,7 +91,7 @@ export default function HeroSection() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  to="/themes"
+                  to="/themes#submit-abstract"
                   className="inline-flex items-center gap-2 px-7 py-3.5 bg-gold text-navy font-semibold rounded-full hover:bg-gold/90 transition-all text-[21px]"
                   aria-label="Submit Abstract"
                 >

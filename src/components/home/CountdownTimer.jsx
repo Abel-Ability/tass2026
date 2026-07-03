@@ -5,7 +5,7 @@ const TARGET = new Date("2026-11-09T00:00:00+01:00");
 
 function calc() {
   const now = new Date();
-  const diff = Math.max(0, TARGET - now);
+  const diff = Math.max(0, TARGET.getTime() - now.getTime());
   const totalSeconds = Math.floor(diff / 1000);
   return {
     days: Math.floor(totalSeconds / 86400),
