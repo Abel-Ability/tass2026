@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export default function Contact() {
   const [submitted, setSubmitted] = React.useState(false);
+  const [formHidden, setFormHidden] = React.useState(false);
   const formRef = React.useRef(null);
 
   const handleSubmit = async (e) => {
@@ -18,6 +19,11 @@ export default function Contact() {
       const res = await fetch(e.target.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
       if (res.ok) setSubmitted(true);
     } catch {}
+  };
+
+  const handleSendAnother = () => {
+    setSubmitted(false);
+    if (formRef.current) formRef.current.reset();
   };
 
   return (
@@ -96,6 +102,7 @@ export default function Contact() {
             </div>
 
             {/* Contact Form */}
+            {!formHidden && (
             <div className="lg:col-span-3">
               {submitted ? (
                 <motion.div
@@ -107,7 +114,21 @@ export default function Contact() {
                     <Send className="w-6 h-6 text-accent" />
                   </div>
                   <h3 className="font-heading font-bold text-xl mb-2">Message Sent!</h3>
-                  <p className="text-sm text-muted-foreground">Thank you for your interest. The conference secretariat will respond within 48 hours.</p>
+                  <p className="text-sm text-muted-foreground mb-6">Thank you for your interest. The conference secretariat will respond within 48 hours.</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <button
+                      onClick={handleSendAnother}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 bg-accent text-accent-foreground font-semibold rounded-full hover:bg-accent/90 transition-all text-sm"
+                    >
+                      Send Another Message
+                    </button>
+                    <button
+                      onClick={() => setFormHidden(true)}
+                      className="inline-flex items-center gap-2 px-6 py-2.5 border border-border text-muted-foreground font-semibold rounded-full hover:bg-muted transition-all text-sm"
+                    >
+                      Exit
+                    </button>
+                  </div>
                 </motion.div>
               ) : (
                 <form ref={formRef} action="https://formspree.io/f/mwvdrgwl" method="POST" onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-6 md:p-8 space-y-5">
@@ -154,6 +175,7 @@ export default function Contact() {
                 </form>
               )}
             </div>
+            )}
           </div>
         </div>
       </section>
