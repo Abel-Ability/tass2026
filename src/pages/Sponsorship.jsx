@@ -158,7 +158,7 @@ export default function Sponsorship() {
           <div className="text-center mt-8">
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-semibold rounded-full hover:bg-accent/90 transition-all text-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-semibold rounded-full hover:bg-accent/90 transition-all text-xl"
             >
               Discuss Sponsorship <ArrowRight className="w-4 h-4" />
             </Link>

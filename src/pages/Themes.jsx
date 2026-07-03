@@ -165,7 +165,7 @@ export default function Themes() {
           <button
             type="button"
             onClick={openModal}
-            className="inline-flex items-center gap-2 px-8 py-3 font-semibold rounded-full shadow-lg transition-all hover:scale-105 text-sm md:text-base"
+            className="inline-flex items-center gap-2 px-8 py-3 font-semibold rounded-full shadow-lg transition-all hover:scale-105 text-xl md:text-2xl"
             style={{ backgroundColor: "#f4c430", color: "#0a5c36" }}
           >
             Click to Submit Your Abstract

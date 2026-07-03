@@ -31,7 +31,7 @@ export default function CTABanner() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              to="/register"
+              to="/register#register-cta"
               className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all text-[17.6px]"
             >
               Register Now <ArrowRight className="w-4 h-4" />
