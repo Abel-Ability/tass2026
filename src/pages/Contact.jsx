@@ -84,7 +84,7 @@ export default function Contact() {
                     { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+44 7442 568824" },
                     { name: "Prof. Patricia Awa Taiwo", role: "LOC Chairperson", phone: "+234 803 482 0646" },
                     { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+234 803 560 7640" },
-                    { name: "Dr. Joy Kafomdi Okwuogor", role: "LOC Secretary", phone: "+2347063891945" },
+                    { name: "Dr. Joy Kafomdi Okwuogori", role: "LOC Secretary", phone: "+2347063891945" },
                   ].map((contact) => (
                     <div key={contact.name} className="flex items-start gap-3">
                       <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
