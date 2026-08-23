@@ -136,8 +136,6 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-2">
             <a href="/terms" className="text-xs text-white/50 hover:text-gold transition-colors">Terms of Service</a>
-            <span className="text-white/30">|</span>
-            <a href="https://www.dmca.com/Protection/Status.aspx?id=YOUR_DMCA_ID" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-gold transition-colors">DMCA Protected</a>
           </div>
         </div>
       </div>
