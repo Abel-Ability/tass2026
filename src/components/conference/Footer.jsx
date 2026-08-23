@@ -27,7 +27,7 @@ const contacts = [
   { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447442568824" },
   { name: "Prof. Patricia Awa Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
   { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
-  { name: "Dr. Joy Kafomdi Okwuogori", role: "LOC Secretary", phone: "+2347063891945" },
+  { name: "Dr. Sylvester M.B. Akpata", role: "LOC Secretary", phone: "+2348033714763" },
 ];
 
 export default function Footer() {
@@ -129,11 +129,16 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-white/50">
-            &trade; TASS NIGERIA 2026. All Rights Reserved.
+            &copy; 2026 CEMRI, University of Abuja. All Rights Reserved.
           </p>
-          <p className="text-xs text-white/50">
-            09–12 November 2026, Abuja, Nigeria
+          <p className="text-xs text-white/50 text-center max-w-xl">
+            This website and its content are protected by copyright law. Unauthorized copying, reproduction, or distribution is strictly prohibited.
           </p>
+          <div className="flex items-center gap-2">
+            <a href="/terms" className="text-xs text-white/50 hover:text-gold transition-colors">Terms of Service</a>
+            <span className="text-white/30">|</span>
+            <a href="https://www.dmca.com/Protection/Status.aspx?id=YOUR_DMCA_ID" target="_blank" rel="noopener noreferrer" className="text-xs text-white/50 hover:text-gold transition-colors">DMCA Protected</a>
+          </div>
         </div>
       </div>
     </footer>

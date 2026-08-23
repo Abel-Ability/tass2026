@@ -78,7 +78,13 @@ export default function Gallery() {
                   className="relative group rounded-xl overflow-hidden cursor-pointer aspect-square"
                   onClick={() => setLightbox(photo)}
                 >
-                  <img src={photo.src} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={photo.src} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" draggable="false" />
+                  {/* Watermark overlay */}
+                  <div className="absolute inset-0 pointer-events-none opacity-20 flex items-center justify-center">
+                    <div className="text-white text-xs font-bold transform rotate-45 whitespace-nowrap select-none">
+                      © TASS Nigeria 2026
+                    </div>
+                  </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
                     <div className="flex items-start gap-1">
                       <MapPin className="w-3 h-3 text-yellow-400 mt-0.5 shrink-0" />
@@ -109,7 +115,15 @@ export default function Gallery() {
               className="relative max-w-4xl w-full"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={lightbox.src} alt={lightbox.caption} className="w-full rounded-2xl max-h-[80vh] object-contain" />
+              <div className="relative">
+                <img src={lightbox.src} alt={lightbox.caption} className="w-full rounded-2xl max-h-[80vh] object-contain" draggable="false" />
+                {/* Lightbox watermark */}
+                <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+                  <div className="text-white text-lg font-bold transform rotate-45 whitespace-nowrap select-none opacity-30">
+                    © TASS Nigeria 2026
+                  </div>
+                </div>
+              </div>
               <div className="mt-3 flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-yellow-400" />
                 <p className="text-white text-sm">{lightbox.caption}</p>

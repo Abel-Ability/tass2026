@@ -15,9 +15,12 @@ import Register from '@/pages/Register';
 import Contact from '@/pages/Contact';
 import Accommodation from '@/pages/Accommodation';
 import Gallery from '@/pages/Gallery';
+import Terms from '@/pages/Terms';
 import { ThemeProvider } from '@/lib/ThemeProvider';
+import { useAntiClone } from '@/hooks/useAntiClone';
 
 function App() {
+  useAntiClone();
   const routerBasename = import.meta.env.BASE_URL === '/' ? '' : import.meta.env.BASE_URL.replace(/\/$/, '');
   return (
     <ThemeProvider>
@@ -37,6 +40,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/accommodation" element={<Accommodation />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/terms" element={<Terms />} />
             </Route>
           </Routes>
           <Toaster />
