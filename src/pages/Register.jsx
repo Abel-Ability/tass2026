@@ -6,7 +6,7 @@ import { Calendar, Check, Info, X } from "lucide-react";
 const GAS_REG_URL = "https://script.google.com/macros/s/AKfycbwKUyKHAIUs1kW74C6BsTngAHOaQ71_TL46jEjIatAkhD8p6O3vdyx2f_aC-cd8ykz6MQ/exec?embed=true";
 
 const registrationFees = [
-  { category: "Nigerian Academic / Researcher", earlyBird: "₦75,000", standard: "₦100,000" },
+  { category: "Nigerian Academic / Researcher", earlyBird: "₦50,000", standard: "₦60,000" },
   { category: "International Academic / Researcher", earlyBird: "$200", standard: "$300" },
   { category: "Postgraduate Student (Nigerian)", earlyBird: "₦30,000", standard: "₦50,000" },
   { category: "Postgraduate Student (International)", earlyBird: "$100", standard: "$150" },
@@ -89,6 +89,49 @@ export default function Register() {
                 </li>
               </ul>
             </div>
+          </div>
+
+          {/* Payment Information */}
+          <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-10">
+            <h3 className="font-heading font-bold text-lg mb-2">Payment Information</h3>
+            <p className="text-sm text-muted-foreground mb-5">
+              Make payment via bank transfer to any of the accounts below, then complete your registration.
+              Kindly use your <strong>full name</strong> and <strong>institution</strong> as the payment reference.
+            </p>
+            <div className="rounded-xl border border-border overflow-hidden">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="bg-primary text-primary-foreground font-heading font-semibold">
+                    <th className="p-3 px-4 text-left">Currency</th>
+                    <th className="p-3 px-4 text-left">Account Number</th>
+                    <th className="p-3 px-4 text-left">Bank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { currency: "NGN (Nigerian Naira)", account: "1312300866" },
+                    { currency: "USD (US Dollar)", account: "5076045515" },
+                    { currency: "EUR (Euro)", account: "5081520836" },
+                    { currency: "GBP (British Pound)", account: "5061806183" },
+                  ].map((item, i) => (
+                    <tr
+                      key={item.currency}
+                      className={`border-t border-border ${i % 2 === 0 ? "bg-card" : "bg-muted/30"}`}
+                    >
+                      <td className="p-3 px-4 font-medium text-foreground">{item.currency}</td>
+                      <td className="p-3 px-4 font-mono font-semibold text-foreground">{item.account}</td>
+                      <td className="p-3 px-4 text-muted-foreground">Zenith Bank</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              <strong>Account Name:</strong> CEMRI TASS - UNIABUJA CONFERENCE
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              For international transfers, please contact your bank for the appropriate SWIFT/BIC code for Zenith Bank.
+            </p>
           </div>
 
           {/* What's Included */}
