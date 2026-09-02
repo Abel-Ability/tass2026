@@ -24,11 +24,11 @@ const partners = [
   {
     icon: Building2, label: "Partnership Industry", bg: "bg-teal-50", iconBg: "bg-teal-100", iconColor: "text-teal-700",
     logos: [
-      { src: "https://drive.google.com/uc?id=1hCQfpM2ScEaiao-ZCjfckX-Mj4BSQYrJ", name: "ResTV — Research Television" },
-      { src: "https://drive.google.com/uc?id=1NW55FvdT4PZf1EOck14vKIChJJknmePU", name: "CEFPACS Consulting Limited" },
-      { src: "https://drive.google.com/uc?id=1u5UN6Q6owDfiXAi3O2IEXa1qMwPVQhN2", name: "TripWinga" },
-      { src: "https://drive.google.com/uc?id=1mVMohWT6JpTkyTfx9jenuNQ3Jh5i1h7Z", name: "Hydrocarbon Pollution Remediation Project (HYPREP)" },
-      { src: "https://drive.google.com/uc?id=1gjkAEj7BorAXGaXP_VE3mE3OycpmP1ln", name: "Giolee Global Resources Limited" },
+      { src: "https://drive.google.com/uc?id=1hCQfpM2ScEaiao-ZCjfckX-Mj4BSQYrJ&export=download", name: "ResTV — Research Television" },
+      { src: "https://drive.google.com/uc?id=1NW55FvdT4PZf1EOck14vKIChJJknmePU&export=download", name: "CEFPACS Consulting Limited" },
+      { src: "https://drive.google.com/uc?id=1u5UN6Q6owDfiXAi3O2IEXa1qMwPVQhN2&export=download", name: "TripWinga" },
+      { src: "https://drive.google.com/uc?id=1mVMohWT6JpTkyTfx9jenuNQ3Jh5i1h7Z&export=download", name: "Hydrocarbon Pollution Remediation Project (HYPREP)" },
+      { src: "https://drive.google.com/uc?id=1gjkAEj7BorAXGaXP_VE3mE3OycpmP1ln&export=download", name: "Giolee Global Resources Limited" },
     ]
   },
   {
@@ -223,7 +223,7 @@ export default function About() {
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {[
-              { role: "Special Guest of Honour", name: "Senator George Akume, CON, Secretary to the Government of the Federation (SGF) of Nigeria", note: "A distinguished personality of national significance.", icon: Award, bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700", img: "https://drive.google.com/uc?id=1m67v1-AoBij_Mr2UwEbBdkB7fNKLg62K" },
+              { role: "Special Guest of Honour", name: "Senator George Akume, CON, Secretary to the Government of the Federation (SGF) of Nigeria", note: "A distinguished personality of national significance.", icon: Award, bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700", img: "https://drive.google.com/uc?id=1m67v1-AoBij_Mr2UwEbBdkB7fNKLg62K&export=download" },
               { role: "Keynote Speaker I", name: "Prof. Feryel Ouerghi Sebai", note: "Former Minister of Economy & Planning | Senior Economist | Expert in African Development & Economic Strategy Leader, Tunis, Tunisia.", icon: Mic2, bg: "bg-green-50", iconBg: "bg-green-100", iconColor: "text-green-700" },
               { role: "Keynote Speaker II", name: "Prof. Steven Timipa Odi-Owei", note: "Emeritus Professor of Mechanical Engineering & Former Vice-Chancellor, Rivers State University | Pro-Chancellor/Chairman of Council, Niger Delta University, Amasoma, Bayelsa State, Nigeria.", icon: Mic2, bg: "bg-blue-50", iconBg: "bg-blue-100", iconColor: "text-blue-700" },
             ].map((speaker, i) => (
