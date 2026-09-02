@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
-import { Atom, Users, BookOpen, Briefcase, FlaskConical, Cpu, Leaf, Heart, Scale, Landmark, PenTool, Globe, TrendingUp, GraduationCap, Handshake, Building, Lightbulb, Wrench, X } from "lucide-react";
+import { Atom, Users, BookOpen, Briefcase, FlaskConical, Cpu, Leaf, Heart, Scale, Landmark, PenTool, Globe, TrendingUp, GraduationCap, Handshake, Building, Lightbulb, Wrench, CloudSun, X } from "lucide-react";
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbzlH7OCSDfwgYjVweB7pRByZ6-zoQG0bUsZnDdplWVW7OXgULtTVnURuPbAZrGo9lK_/exec?embed=true";
 
@@ -12,6 +12,7 @@ const categories = [
     tracks: [
       { icon: Atom, title: "Physics, Chemistry & Materials Science" },
       { icon: FlaskConical, title: "Biological & Environmental Sciences" },
+      { icon: CloudSun, title: "Climate Change" },
       { icon: Cpu, title: "Computer Science, AI & Data Analytics" },
       { icon: Wrench, title: "Engineering & Technology" },
       { icon: Leaf, title: "Agriculture, Food Security & Nutrition" },

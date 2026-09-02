@@ -33,19 +33,19 @@ export default function HackathonPreview() {
               Student Innovation
             </span>
             <h2 className="font-display font-extrabold text-3xl md:text-4xl lg:text-5xl leading-tight text-foreground mb-6">
-              48-Hour
+              Two-Day
               <br />
               <span className="text-accent">Hackathon</span>
             </h2>
             <p className="text-muted-foreground leading-relaxed mb-8">
-              A competitive sprint beginning Day 1 and culminating in public demos on Day 3. Open to undergraduate and postgraduate students at Nigerian universities. Teams work with mentors from industry, academia, and civil society.
+              A competitive sprint beginning Day 1 and culminating in public demos on Day 2. Open to undergraduate and postgraduate students at Nigerian universities. Teams work with mentors from industry, academia, and civil society.
             </p>
 
             <div className="grid grid-cols-3 gap-4 mb-8">
               {[
                 { icon: Trophy, label: "₦10M Prize Pool" },
-                { icon: Clock, label: "48 Hours" },
-                { icon: Users, label: "Teams of 4–6" },
+                { icon: Clock, label: "10am - 6pm Daily" },
+                { icon: Users, label: "Teams of 2–5" },
               ].map((item) => (
                 <div key={item.label} className="bg-muted/60 rounded-xl p-4 text-center">
                   <item.icon className="w-5 h-5 text-accent mx-auto mb-2" />

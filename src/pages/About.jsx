@@ -24,9 +24,11 @@ const partners = [
   {
     icon: Building2, label: "Partnership Industry", bg: "bg-teal-50", iconBg: "bg-teal-100", iconColor: "text-teal-700",
     logos: [
-      { src: "", name: "ResTV — Research Television" },
-      { src: "", name: "CEFPACS Consulting Limited" },
-      { src: "", name: "TripWinga" },
+      { src: "https://drive.google.com/uc?id=1hCQfpM2ScEaiao-ZCjfckX-Mj4BSQYrJ", name: "ResTV — Research Television" },
+      { src: "https://drive.google.com/uc?id=1NW55FvdT4PZf1EOck14vKIChJJknmePU", name: "CEFPACS Consulting Limited" },
+      { src: "https://drive.google.com/uc?id=1u5UN6Q6owDfiXAi3O2IEXa1qMwPVQhN2", name: "TripWinga" },
+      { src: "https://drive.google.com/uc?id=1mVMohWT6JpTkyTfx9jenuNQ3Jh5i1h7Z", name: "Hydrocarbon Pollution Remediation Project (HYPREP)" },
+      { src: "https://drive.google.com/uc?id=1gjkAEj7BorAXGaXP_VE3mE3OycpmP1ln", name: "Giolee Global Resources Limited" },
     ]
   },
   {
@@ -58,7 +60,7 @@ function PartnerAccordion() {
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${partner.iconBg}`}>
                   <partner.icon className={`w-5 h-5 ${partner.iconColor}`} />
                 </div>
-                <span className="font-heading font-bold text-base">{partner.label}</span>
+                <span className="font-heading font-bold text-base dark:text-black">{partner.label}</span>
                 <span className="text-xs text-muted-foreground">({partner.logos.length} partner{partner.logos.length !== 1 ? "s" : ""})</span>
               </div>
               <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
@@ -200,7 +202,7 @@ export default function About() {
                   <div className={`w-9 h-9 shrink-0 rounded-lg flex items-center justify-center ${f.iconBg}`}>
                     <f.icon className={`w-[18px] h-[18px] ${f.iconColor}`} />
                   </div>
-                  <h3 className="font-heading font-bold text-base">{f.title}</h3>
+                  <h3 className="font-heading font-bold text-base dark:text-black">{f.title}</h3>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
               </motion.div>
@@ -221,7 +223,7 @@ export default function About() {
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {[
-              { role: "Special Guest of Honour", name: "To Be Announced", note: "A distinguished personality of national significance.", icon: Award, bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700" },
+              { role: "Special Guest of Honour", name: "Senator George Akume, CON, Secretary to the Government of the Federation (SGF) of Nigeria", note: "A distinguished personality of national significance.", icon: Award, bg: "bg-yellow-50", iconBg: "bg-yellow-100", iconColor: "text-yellow-700", img: "https://drive.google.com/uc?id=1m67v1-AoBij_Mr2UwEbBdkB7fNKLg62K" },
               { role: "Keynote Speaker I", name: "Prof. Feryel Ouerghi Sebai", note: "Former Minister of Economy & Planning | Senior Economist | Expert in African Development & Economic Strategy Leader, Tunis, Tunisia.", icon: Mic2, bg: "bg-green-50", iconBg: "bg-green-100", iconColor: "text-green-700" },
               { role: "Keynote Speaker II", name: "Prof. Steven Timipa Odi-Owei", note: "Emeritus Professor of Mechanical Engineering & Former Vice-Chancellor, Rivers State University | Pro-Chancellor/Chairman of Council, Niger Delta University, Amasoma, Bayelsa State, Nigeria.", icon: Mic2, bg: "bg-blue-50", iconBg: "bg-blue-100", iconColor: "text-blue-700" },
             ].map((speaker, i) => (
@@ -241,6 +243,9 @@ export default function About() {
                     <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground dark:text-black">{speaker.role}</p>
                     <h3 className="font-heading font-bold text-xl dark:text-black">{speaker.name}</h3>
                   </div>
+                  {speaker.img ? (
+                    <img src={speaker.img} alt={`${speaker.name} portrait`} className="w-10 h-10 rounded-full object-cover mx-3" />
+                  ) : null}
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed">{speaker.note}</p>
               </motion.div>

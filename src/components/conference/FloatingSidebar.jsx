@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ClipboardCheck, FileText, Handshake } from "lucide-react";
+import { ClipboardCheck, FileText, Handshake, Trophy } from "lucide-react";
 
 const actions = [
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
   { label: "Submit Abstract", mobileLabel: "Abstract", href: "/themes#submit-abstract", color: "bg-gold text-navy hover:bg-gold/90", icon: FileText },
+  { label: "Join the Hackathon", mobileLabel: "Hackathon", href: "/hackathon#register", color: "bg-purple-700 text-white hover:bg-purple-800", icon: Trophy },
   { label: "Become a Sponsor", mobileLabel: "Sponsor", href: "/sponsorship", color: "bg-blue-800 text-white hover:bg-blue-900", icon: Handshake },
 ];
 

@@ -73,7 +73,7 @@ export default function HeroSection() {
 
               <div className="mb-8 space-y-1.5">
                 {[
-                  { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447442568824" },
+                  { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+447856261406" },
                   { name: "Prof. Patricia Awa Taiwo", role: "LOC Chairperson", phone: "+2348034820646" },
                   { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+2348035607640" },
                   { name: "Dr. Joy Kafomdi Okwuogori", role: "LOC Secretary", phone: "+2347063891945" },

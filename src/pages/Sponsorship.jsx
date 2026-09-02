@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
-import { ArrowRight, Check } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Check, X } from "lucide-react";
+
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwGfeYhwloztSgTwBG_DzQxXwLHEEJRpnp958S74SYRoF_idgTOeNXUH3EMthFiE1Swzw/exec";
 
 const tiers = [
   {
@@ -81,6 +82,22 @@ const specialOpps = [
 ];
 
 export default function Sponsorship() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const iframeRef = useRef(null);
+
+  function openModal() {
+    setModalOpen(true);
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+    document.body.style.overflow = "";
+    if (iframeRef.current) {
+      iframeRef.current.src = GAS_URL;
+    }
+  }
+
   return (
     <div className="pt-10">
       <section className="py-10 md:py-10">
@@ -118,12 +135,13 @@ export default function Sponsorship() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  to="/contact"
+                <button
+                  type="button"
+                  onClick={openModal}
                   className="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2 font-semibold rounded-full text-sm transition-all bg-white/20 text-white hover:bg-white/30"
                 >
                   Enquire
-                </Link>
+                </button>
               </motion.div>
             ))}
           </div>
@@ -156,15 +174,39 @@ export default function Sponsorship() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link
-              to="/contact"
+            <button
+              type="button"
+              onClick={openModal}
               className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-semibold rounded-full hover:bg-accent/90 transition-all text-xl"
             >
               Discuss Sponsorship <ArrowRight className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4">
+          <div className="absolute inset-0 bg-black/60" onClick={closeModal} />
+          <div className="relative bg-card w-full max-w-5xl rounded-2xl shadow-2xl flex flex-col overflow-hidden h-[85vh] max-md:h-[95vh]">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border" style={{ backgroundColor: "#0a5c36" }}>
+              <h3 className="font-heading font-bold text-base md:text-lg" style={{ color: "#f4c430" }}>
+                TASS Nigeria 2026 — Sponsorship Enquiry
+              </h3>
+              <button onClick={closeModal} className="p-1 rounded-lg hover:bg-white/10 transition-colors">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
+            <iframe
+              ref={iframeRef}
+              src={GAS_URL}
+              className="flex-1 w-full border-0"
+              title="Sponsorship Enquiry Form"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

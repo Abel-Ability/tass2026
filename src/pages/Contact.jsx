@@ -81,7 +81,7 @@ export default function Contact() {
                 <h3 className="font-heading font-bold text-lg mb-4">Key Contacts</h3>
                 <div className="space-y-4">
                   {[
-                    { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+44 7442 568824" },
+                    { name: "Engr. (Dr) Duabari Silas Aziaka", role: "IOC Chairman", phone: "+44 7856 261406" },
                     { name: "Prof. Patricia Awa Taiwo", role: "LOC Chairperson", phone: "+234 803 482 0646" },
                     { name: "Dr. Lekpa Kingdom David", role: "CEMRI President", phone: "+234 803 560 7640" },
                     { name: "Dr. Joy Kafomdi Okwuogori", role: "LOC Secretary", phone: "+2347063891945" },
