@@ -77,7 +77,7 @@ export default function KeynoteSpeakersPreview() {
             Meet Our Speakers
           </span>
           <h2 className="font-display font-extrabold text-3xl md:text-4xl lg:text-5xl text-white leading-tight">
-            Keynote <span className="text-gold">Speakers</span>
+            Featured <span className="text-gold">Speakers</span>
           </h2>
         </motion.div>
 
