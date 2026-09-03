@@ -255,6 +255,63 @@ export default function About() {
         </div>
       </section>
 
+      {/* Special Guest of Honour */}
+      <section className="py-10 md:py-10 bg-gradient-to-br from-navy to-navy-light text-white">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <SectionHeading
+            label="Special Guest of Honour"
+            title="Senator (Dr.) George Akume, CON"
+            description="Secretary to the Government of the Federation, Federal Republic of Nigeria."
+            light
+            align="center"
+            titleClass="text-3xl md:text-4xl lg:text-5xl dark:text-white"
+            descClass="dark:text-white"
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-10 items-start mt-8">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-2"
+            >
+              <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                <img src="/Photo_Senator_Geroge_Akume.jpg" alt="Senator George Akume, CON" className="w-full aspect-[3/4] object-cover" />
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="lg:col-span-3"
+            >
+              <h3 className="text-gold font-heading font-bold text-2xl md:text-3xl mb-2">
+                Senator George Akume, CON
+              </h3>
+              <p className="text-white/60 text-sm mb-6">Secretary to the Government of the Federation, Federal Republic of Nigeria</p>
+              <div className="space-y-4 text-white/80 text-sm leading-relaxed">
+                <p>
+                  Senator (Dr.) George Akume, CON, is a distinguished Nigerian statesman and the 21st Secretary to the Government of the Federation (SGF), a position he has held since June 2023 under the administration of President Bola Ahmed Tinubu. As SGF, he serves as the engine room of the administration &mdash; advising the President, coordinating the implementation of government policies, and facilitating the work of the Federal Executive Council.
+                </p>
+                <p>
+                  A lifelong public servant, Akume began his career in the Benue State Civil Service in 1979 as a Lands Officer and rose through the ranks to retire as a Federal Permanent Secretary (Establishments and Management Services) in 1998. He holds a Bachelor&rsquo;s degree in Sociology (1978) and a Master&rsquo;s degree in Industrial and Labour Relations (1986) from the prestigious University of Ibadan, and has received honorary doctorates from the University of Jos and the University of Mkar.
+                </p>
+                <p>
+                  In 1999, Akume was elected the fourth Executive Governor of Benue State and served two terms (1999&ndash;2007). He was subsequently elected Senator for the Benue North-West Senatorial District in 2007, 2011, and 2015, serving as Minority Leader of the Senate from 2011 to 2015 and Chairman of the Senate Committee on the Army. He later served as Minister of Special Duties and Inter-Governmental Affairs (2019&ndash;2023) before his appointment as SGF.
+                </p>
+                <p>
+                  A recipient of the national honour of Commander of the Order of the Niger (CON) and a Fellow of the Nigerian Institute of Management, Akume is lauded for his integrity, discipline, and loyalty &mdash; having never been invited by the anti-corruption agencies (EFCC or ICPC) over any allegation across his decades-long career. His journey from local government administration to the highest echelons of the Federal Government exemplifies the power of service, resilience, and visionary leadership.
+                </p>
+                <p>
+                  His presence as Special Guest of Honour is especially fitting for TASS Nigeria 2026, whose theme connects Technology, Arts, Science, and Society to national development. Having steered policy, championed education and infrastructure, and navigated Nigeria&rsquo;s governance landscape at every level, Senator Akume embodies the conference&rsquo;s ideals of good governance, sustainable development, and the translation of knowledge into transformative policy.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Keynote Speaker I Citation */}
       <section className="py-10 md:py-10 bg-gradient-to-br from-navy to-navy-light text-white">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
