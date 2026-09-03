@@ -4,6 +4,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const speakers = [
   {
+    name: "Senator (Dr.) George Akume, CON",
+    role: "Special Guest of Honour",
+    image: "/Photo_Senator_Geroge_Akume.jpg",
+    description: "Secretary to the Government of the Federation, Federal Republic of Nigeria",
+  },
+  {
     name: "Prof. Feryel Ouerghi Sebai",
     role: "Keynote Speaker I",
     image: "/Photo_Feryel.jpg",
