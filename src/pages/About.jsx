@@ -20,6 +20,8 @@ const partners = [
     logos: [
       { src: "/logo_21st_century_open_university.png", name: "21st Century Open University" },
       { src: "/logo_global_interfaith_university.jpeg", name: "Global Interfaith University" },
+      { src: "/logo_journal_spectrum.jpeg", name: "Spectrum Journal" },
+      { src: "/logo_journal_tami.jpeg", name: "TAMI Journal" },
     ]
   },
   {
