@@ -130,7 +130,7 @@ export default function Register() {
               <strong>Account Name:</strong> CEMRI TASS - UNIABUJA CONFERENCE
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              For international transfers, please contact your bank for the appropriate SWIFT/BIC code for Zenith Bank.
+              For Zenith Bank transfers, use SWIFT/BIC Code: ZEIBNGLA and Sort Code: 057290025.
             </p>
           </div>
 
