@@ -115,3 +115,26 @@
     display: none;
   }
 }
+
+@keyframes eq-bar {
+  0%, 100% {
+    transform: scaleY(0.25);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.45);
+  }
+  75% {
+    transform: scaleY(0.85);
+  }
+}
+
+.eq-bar {
+  transform-origin: bottom;
+}
+
+.animate-eq {
+  animation: eq-bar 0.9s ease-in-out infinite;
+}

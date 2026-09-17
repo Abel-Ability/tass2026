@@ -17,6 +17,8 @@ import Accommodation from '@/pages/Accommodation';
 import Gallery from '@/pages/Gallery';
 import Terms from '@/pages/Terms';
 import { ThemeProvider } from '@/lib/ThemeProvider';
+import { AudioProvider } from './components/audio/AudioProvider';
+import MuteButton from './components/audio/MuteButton';
 import { useAntiClone } from '@/hooks/useAntiClone';
 
 function App() {
@@ -45,6 +47,9 @@ function App() {
           </Routes>
           <Toaster />
         </Router>
+        <AudioProvider>
+          <MuteButton />
+        </AudioProvider>
       </QueryClientProvider>
     </ThemeProvider>
   )
