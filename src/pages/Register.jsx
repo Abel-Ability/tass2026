@@ -6,7 +6,7 @@ import { Calendar, Check, Info, X } from "lucide-react";
 const GAS_REG_URL = "https://script.google.com/macros/s/AKfycbwKUyKHAIUs1kW74C6BsTngAHOaQ71_TL46jEjIatAkhD8p6O3vdyx2f_aC-cd8ykz6MQ/exec?embed=true";
 
 const registrationFees = [
-  { category: "Nigerian Academic / Researcher", earlyBird: "₦50,000", standard: "₦60,000" },
+  { category: "Nigerian Academic / Researcher", earlyBird: "₦50,000", standard: "₦70,000" },
   { category: "International Academic / Researcher", earlyBird: "$200", standard: "$300" },
   { category: "Postgraduate Student (Nigerian)", earlyBird: "₦30,000", standard: "₦50,000" },
   { category: "Postgraduate Student (International)", earlyBird: "$100", standard: "$150" },
