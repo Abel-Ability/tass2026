@@ -68,7 +68,8 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 
 - Production: https://tasscemri.org. Project: `tassnigeria2026`. Team scope: `team_l5KxHP1LNqNZiKnLwTBZ87Ux` (see `.vercel/repo.json`).
 - The project's **Root Directory is `app`**, so Vercel installs and builds inside `app/`. The deploy command still runs from the repo root; do not `cd app` before deploying or the CLI will look for a second `app/` folder.
-- **Pushing `main` does deploy.** The project is Git-linked to `Abel-Ability/tass2026` with production branch `main`, and every push creates a `source: git` production deployment. Do not run a CLI deploy right after pushing: Vercel cancels the in-flight Git build when a newer production deployment appears, so the push looks like it "didn't deploy" while actually showing as `CANCELED`. Pick one path per release.
+- **Pushing `main` does deploy.** The project is Git-linked to `Abel-Ability/tass2026` with production branch `main`, and every push creates a `source: git` production deployment. Do not run a CLI deploy while that Git build is running: a newer production deployment cancels the in-flight one, so the push shows as `CANCELED`. Pick one path per release.
+- History: pushes used to be cancelled 3-4 seconds in and looked like "push does not deploy". Cause was an inverted Ignored Build Step (`if [ "$VERCEL_GIT_COMMIT_REF" != "main" ]; then exit 0; fi`) — Vercel *skips* the build on exit code `0`, so `main` was always skipped. The setting (`commandForIgnoringBuildStep`) has been cleared; leave it empty.
 - Check what happened with:
   ```sh
   npx --yes vercel list --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
