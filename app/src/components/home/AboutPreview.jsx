@@ -17,7 +17,7 @@ export default function AboutPreview() {
               title="Where Africa's Brightest Minds Converge"
             />
             <p className="text-muted-foreground leading-relaxed mb-4">
-              TASS Nigeria 2026 serves as a premier international convening platform where Africa's diverse intellectual, academic, and professional communities come together to address the continent's most pressing challenges through collaborative, evidence-based solutions.
+              TASS Nigeria 2026 serves as a premier international convening platform where Africa&apos;s diverse intellectual, academic, and professional communities come together to address the continent&apos;s most pressing challenges through collaborative, evidence-based solutions.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
               The conference integrates rigorous peer-reviewed academic research with practical industry applications, creating a dynamic environment for knowledge exchange and innovation.

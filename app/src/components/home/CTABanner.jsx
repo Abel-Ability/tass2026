@@ -24,7 +24,7 @@ export default function CTABanner() {
             Join Us in Abuja
           </span>
           <h2 className="font-display font-extrabold text-3xl md:text-5xl text-white leading-tight mb-6 max-w-3xl mx-auto text-balance">
-            Be Part of Africa's Most Impactful Academic Gathering
+            Be Part of Africa&apos;s Most Impactful Academic Gathering
           </h2>
           <p className="text-white/50 text-lg max-w-xl mx-auto mb-10">
             Early bird registration closes 30 September 2026. Secure your place at TASS Nigeria 2026 today.

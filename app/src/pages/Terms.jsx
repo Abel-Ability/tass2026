@@ -69,8 +69,8 @@ export default function Terms() {
                 <li>Modify, adapt, or create derivative works from any content</li>
                 <li>Redistribute, publish, or publicly display any content</li>
                 <li>Remove or alter any copyright notices or watermarks</li>
-                <li>Frame or embed this website's content on other sites</li>
-                <li>Use this website's content for commercial purposes without authorization</li>
+                <li>Frame or embed this website&apos;s content on other sites</li>
+                <li>Use this website&apos;s content for commercial purposes without authorization</li>
               </ul>
             </section>
 
@@ -92,7 +92,7 @@ export default function Terms() {
             <section>
               <h2 className="text-lg font-heading font-semibold mb-4">Enforcement</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Unauthorized use of this website's content may constitute copyright infringement and will be 
+                Unauthorized use of this website&apos;s content may constitute copyright infringement and will be 
                 pursued through legal action, including but not limited to DMCA takedown notices, 
                 cease and desist letters, and litigation. We actively monitor for unauthorized copying 
                 and reproduction of our content.

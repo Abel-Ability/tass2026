@@ -18,7 +18,9 @@ export default function Contact() {
     try {
       const res = await fetch(e.target.action, { method: "POST", body: data, headers: { Accept: "application/json" } });
       if (res.ok) setSubmitted(true);
-    } catch {}
+    } catch {
+      // Network failure: leave the form visible so the visitor can retry.
+    }
   };
 
   const handleSendAnother = () => {

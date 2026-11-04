@@ -93,7 +93,7 @@ export default function Themes() {
           </div>
 
           <div className="space-y-10">
-            {categories.map((cat, ci) => (
+            {categories.map((cat) => (
               <div key={cat.name}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="w-8 h-px bg-accent" />
