@@ -1,7 +1,7 @@
 # TASS Nigeria 2026 — Update Guide
 
 ## Before Starting
-1. Run `start.bat` or `pnpm run dev` to start the local server
+1. Run `scripts\start.bat` or `pnpm run dev` to start the local server
 2. Open http://localhost:5173 to preview changes
 
 ## What to Tell the Assistant

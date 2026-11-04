@@ -7,7 +7,7 @@ TASS Nigeria 2026: a Vite + React 18 conference site (marketing pages plus exter
 `package.json` pins `pnpm@11.9.0`, but `pnpm` is not on PATH in this environment. Use `corepack pnpm ...` (corepack is installed).
 
 - Install: `corepack pnpm install --frozen-lockfile`
-- Dev: `corepack pnpm dev` (or `start.bat`) -> http://localhost:5173
+- Dev: `corepack pnpm dev` (or `scripts\start.bat`) -> http://localhost:5173
 - Verify: `corepack pnpm lint` -> `corepack pnpm typecheck` -> `corepack pnpm build`
 - Preview: `corepack pnpm preview`
 
@@ -17,6 +17,9 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 - `build` also copies `dist/index.html` to `dist/404.html` (Vercel SPA fallback) and obfuscates the JS via `rollup-plugin-obfuscator`. Don't remove the copy step or expect readable bundle output.
 - `lint` only covers `src/components/**`, `src/pages/**`, and a nonexistent `src/Layout.jsx`; it ignores `src/lib`, `src/components/ui`, `App.jsx`, `main.jsx`, and hooks. `typecheck` uses `checkJs: false`. Neither is a complete safety net.
 - `pnpm-lock.yaml` is the only lockfile. pnpm is authoritative; don't add or regenerate an npm lockfile.
+- Build-tool configs live in `config/`: `tailwind.config.js`, `postcss.config.js` (points Tailwind at `config/tailwind.config.js`), and `eslint.config.js`. `vite.config.js` loads PostCSS from `config/` via `css.postcss`, and the lint scripts pass `--config config/eslint.config.js`.
+- Files that tools locate automatically must stay at the repo root: `index.html`, `package.json`, `vite.config.js`, `jsconfig.json`, `components.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `.env.local`, `.gitignore`.
+- `scripts\start.bat` is the Windows dev launcher; it `cd`s to the repo root before running `pnpm run dev`.
 
 ## Architecture
 
