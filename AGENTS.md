@@ -25,7 +25,7 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 
 - `vite.config.js` sets `logLevel: 'error'`, so dev/build can finish with almost no console output. A silent start is normal.
 - `build` also copies `dist/index.html` to `dist/404.html` (Vercel SPA fallback) and obfuscates the JS via `rollup-plugin-obfuscator`. Don't remove the copy step or expect readable bundle output. Obfuscator output varies per run, so JS hashes differ between identical builds; CSS output is deterministic.
-- `lint` only covers `src/components/**`, `src/pages/**`, and a nonexistent `src/Layout.jsx`; it ignores `src/lib`, `src/components/ui`, `App.jsx`, `main.jsx`, and hooks. `typecheck` uses `checkJs: false`. Neither is a complete safety net.
+- `lint` covers all of `src/**` (including `App.jsx`, `main.jsx`, `src/lib`, and hooks) using the `@eslint/js` and `eslint-plugin-react` recommended rule sets plus the project's rules; it skips generated `src/components/ui/**` and build output (`dist/`). The npm script passes `--quiet`, which hides warnings — run `cd app; npx eslint . --config config/eslint.config.js` to see them. `typecheck` uses `checkJs: false`, so it checks syntax and declaration consistency, not types. Neither is a complete safety net.
 - `pnpm-lock.yaml` is the only lockfile. pnpm is authoritative; don't add or regenerate an npm lockfile.
 - Build-tool configs live in `app/config/`: `tailwind.config.js`, `postcss.config.js` (points Tailwind at `config/tailwind.config.js`), and `eslint.config.js`. `vite.config.js` loads PostCSS from `config/` via `css.postcss`, and the lint scripts pass `--config config/eslint.config.js`.
 - `app/scripts/start.bat` is the Windows dev launcher; it `cd`s to `app/` before running `pnpm run dev`.

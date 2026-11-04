@@ -5,15 +5,14 @@ import pluginReactHooks from "eslint-plugin-react-hooks";
 import pluginUnusedImports from "eslint-plugin-unused-imports";
 
 export default [
+  // Never lint build output; the obfuscated bundle is large and not source.
+  { ignores: ["dist/**", "node_modules/**"] },
   {
-    files: [
-      "src/components/**/*.{js,mjs,cjs,jsx}",
-      "src/pages/**/*.{js,mjs,cjs,jsx}",
-      "src/Layout.jsx",
-    ],
-    ignores: ["src/lib/**/*", "src/components/ui/**/*"],
-    ...pluginJs.configs.recommended,
-    ...pluginReact.configs.flat.recommended,
+    // `src/**/*` also covers `src/*.jsx`, but listing it keeps the intent explicit
+    // for app-level entry files such as App.jsx and main.jsx.
+    files: ["src/**/*.{js,mjs,cjs,jsx}", "src/*.{js,mjs,cjs,jsx}"],
+    // Generated shadcn primitives are vendored and reformatted by the CLI.
+    ignores: ["src/components/ui/**/*"],
     languageOptions: {
       globals: globals.browser,
       parserOptions: {
@@ -35,6 +34,10 @@ export default [
       "unused-imports": pluginUnusedImports,
     },
     rules: {
+      // Spread the presets inside `rules` so they are actually applied; assigning
+      // the preset objects at this level would be overwritten by the keys below.
+      ...pluginJs.configs.recommended.rules,
+      ...pluginReact.configs.flat.recommended.rules,
       "no-unused-vars": "off",
       "react/jsx-uses-vars": "error",
       "react/jsx-uses-react": "error",
@@ -55,6 +58,7 @@ export default [
         { ignore: ["cmdk-input-wrapper", "toast-close"] },
       ],
       "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
 ];
