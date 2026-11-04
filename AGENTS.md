@@ -2,37 +2,45 @@
 
 TASS Nigeria 2026: a Vite + React 18 conference site (marketing pages plus external form embeds). JavaScript/JSX only, Tailwind CSS, shadcn/ui. Production: https://tasscemri.org.
 
+## Repository layout
+
+- `app/` — the whole Vite app and its toolchain: `src/`, `public/`, `index.html`, `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `vite.config.js`, `jsconfig.json`, `components.json`, `config/`, `scripts/`, `.env.local`.
+- `docs/` — project documents (`UPDATE_GUIDE.md`, citation `.docx` files).
+- Repo root holds only `AGENTS.md`, `README.md`, and `.gitignore`.
+- **Run every pnpm command from `app/`**, not the repo root. The repo root has no `package.json`.
+- `.gitignore` stays at the repo root; its patterns (`node_modules`, `dist`, `.env*`) match inside `app/` too.
+- Files that tooling locates automatically must stay inside `app/` and must not be moved elsewhere: `index.html` (Vite entry), `package.json` + `pnpm-lock.yaml` + `pnpm-workspace.yaml` (install and framework detection), `vite.config.js`, `jsconfig.json`, `components.json`, `.env.local`. This is why the app is not flattened into the repo root.
+
 ## Commands
 
-`package.json` pins `pnpm@11.9.0`, but `pnpm` is not on PATH in this environment. Use `corepack pnpm ...` (corepack is installed).
+Run in `app/`. `package.json` pins `pnpm@11.9.0`, but `pnpm` is not on PATH in this environment. Use `corepack pnpm ...` (corepack is installed).
 
-- Install: `corepack pnpm install --frozen-lockfile`
-- Dev: `corepack pnpm dev` (or `scripts\start.bat`) -> http://localhost:5173
-- Verify: `corepack pnpm lint` -> `corepack pnpm typecheck` -> `corepack pnpm build`
-- Preview: `corepack pnpm preview`
+- Install: `cd app; corepack pnpm install --frozen-lockfile`
+- Dev: `cd app; corepack pnpm dev` (or `app\scripts\start.bat`) -> http://localhost:5173
+- Verify: `cd app; corepack pnpm lint` -> `corepack pnpm typecheck` -> `corepack pnpm build`
+- Preview: `cd app; corepack pnpm preview`
 
 There is no test suite or CI, so don't invent `pnpm test`. `build` is the only full check.
 
 - `vite.config.js` sets `logLevel: 'error'`, so dev/build can finish with almost no console output. A silent start is normal.
-- `build` also copies `dist/index.html` to `dist/404.html` (Vercel SPA fallback) and obfuscates the JS via `rollup-plugin-obfuscator`. Don't remove the copy step or expect readable bundle output.
+- `build` also copies `dist/index.html` to `dist/404.html` (Vercel SPA fallback) and obfuscates the JS via `rollup-plugin-obfuscator`. Don't remove the copy step or expect readable bundle output. Obfuscator output varies per run, so JS hashes differ between identical builds; CSS output is deterministic.
 - `lint` only covers `src/components/**`, `src/pages/**`, and a nonexistent `src/Layout.jsx`; it ignores `src/lib`, `src/components/ui`, `App.jsx`, `main.jsx`, and hooks. `typecheck` uses `checkJs: false`. Neither is a complete safety net.
 - `pnpm-lock.yaml` is the only lockfile. pnpm is authoritative; don't add or regenerate an npm lockfile.
-- Build-tool configs live in `config/`: `tailwind.config.js`, `postcss.config.js` (points Tailwind at `config/tailwind.config.js`), and `eslint.config.js`. `vite.config.js` loads PostCSS from `config/` via `css.postcss`, and the lint scripts pass `--config config/eslint.config.js`.
-- Files that tools locate automatically must stay at the repo root: `index.html`, `package.json`, `vite.config.js`, `jsconfig.json`, `components.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `.env.local`, `.gitignore`.
-- `scripts\start.bat` is the Windows dev launcher; it `cd`s to the repo root before running `pnpm run dev`.
+- Build-tool configs live in `app/config/`: `tailwind.config.js`, `postcss.config.js` (points Tailwind at `config/tailwind.config.js`), and `eslint.config.js`. `vite.config.js` loads PostCSS from `config/` via `css.postcss`, and the lint scripts pass `--config config/eslint.config.js`.
+- `app/scripts/start.bat` is the Windows dev launcher; it `cd`s to `app/` before running `pnpm run dev`.
 
 ## Architecture
 
-- Entry: `src/main.jsx` -> `src/App.jsx`. Routes are declared in `App.jsx` under `src/components/conference/Layout.jsx` (Navbar, Footer, ScrollProgress, FloatingSidebar).
+- Entry: `app/src/main.jsx` -> `app/src/App.jsx`. Routes are declared in `App.jsx` under `app/src/components/conference/Layout.jsx` (Navbar, Footer, ScrollProgress, FloatingSidebar).
 - Adding a page requires three edits: create `src/pages/<Name>.jsx`, add a `<Route>` in `src/App.jsx`, and add a nav entry in `src/components/conference/Navbar.jsx`. Navigation is not derived from routes.
-- `src/components/home/*` = homepage sections; `src/components/conference/*` = site chrome; `src/components/ui/*` = generated shadcn primitives (don't hand-edit). `@/` maps to `src/` in Vite, jsconfig, and components.json.
+- `src/components/home/*` = homepage sections; `src/components/conference/*` = site chrome; `src/components/ui/*` = generated shadcn primitives (don't hand-edit). `@/` maps to `app/src/` in Vite, jsconfig, and components.json.
 - Use `@/lib/utils`; `src/utils/index.ts` is unused legacy.
 - Styling is shadcn CSS variables in `src/index.css`, not raw brand hex. Use semantic classes: `bg-primary` (navy), `bg-secondary`/`text-secondary` (green), `text-accent`/`bg-gold` (gold). Dark mode is `.dark` on `<html>`, stored as `tass-theme` in localStorage.
 
 ## Content and integrations
 
 - No backend or API layer exists in this repo. Fees, tracks, sponsorship tiers, programme, hotels, speakers, and FAQs are inline arrays in `src/pages/*` and components. Edit those directly.
-- Registration, themes/abstracts, sponsorship, and hackathon forms are Google Apps Script iframes. Each page hardcodes its own URL at the top (`GAS_URL` / `GAS_REG_URL`) in `Register.jsx`, `Themes.jsx`, `Sponsorship.jsx`, and `Hackathon.jsx`; update each page separately. `VITE_GAS_ENDPOINT` in `.env.local` is currently unused.
+- Registration, themes/abstracts, sponsorship, and hackathon forms are Google Apps Script iframes. Each page hardcodes its own URL at the top (`GAS_URL` / `GAS_REG_URL`) in `Register.jsx`, `Themes.jsx`, `Sponsorship.jsx`, and `Hackathon.jsx`; update each page separately. `VITE_GAS_ENDPOINT` in `app/.env.local` is currently unused.
 - The contact form posts to Formspree (`src/pages/Contact.jsx`).
 - The LOC list is fetched at runtime from `public/LOC.csv` (`name,position` per line) by `src/pages/About.jsx`.
 - Assets in `public/` are referenced as root paths (`/logo-uniabuja.png`) or `import.meta.env.BASE_URL + ...`. Keep the BASE_URL form so `VITE_BASE_PATH` subpath builds still work.
@@ -53,11 +61,12 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
   git commit -m "<message>"
   git push origin main
   ```
-- `dist/`, `node_modules/`, and `.env*` are gitignored. Never commit secrets or build output.
+- `app/dist/`, `app/node_modules/`, and all `.env*` files are gitignored. Never commit secrets or build output.
 
 ### Vercel
 
 - Production: https://tasscemri.org. Project: `tassnigeria2026`. Team scope: `team_l5KxHP1LNqNZiKnLwTBZ87Ux` (see `.vercel/repo.json`).
+- The project's **Root Directory is `app`**, so Vercel installs and builds inside `app/`. The deploy command still runs from the repo root; do not `cd app` before deploying or the CLI will look for a second `app/` folder.
 - Do not rely on a GitHub push to deploy. Despite the note in `docs/UPDATE_GUIDE.md`, pushing `main` did not trigger a Vercel deployment. After pushing, deploy explicitly.
 - Vercel CLI is not installed globally and is not logged in on this machine. Use `npx --yes vercel ...`.
 - If `VERCEL_TOKEN` is set, deploy with:
@@ -73,4 +82,6 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
   curl.exe -sS -X POST "https://api.vercel.com/login/oauth/token" -H "Content-Type: application/x-www-form-urlencoded" --data "client_id=cl_HYyOPBNtFMfHhaUn9L4QPfTZz6TP47bp&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code&device_code=<DEVICE_CODE>"
   ```
   Pass the returned `access_token` to `vercel deploy --token`; never print or commit it. Device codes expire after about 10 minutes.
-- A successful production deploy prints `Aliased https://tasscemri.org`. Verify by comparing the live HTML's CSS asset with the newest file in `dist/assets/` and checking that the live CSS contains the expected rules.
+- To change project settings from the CLI environment, PATCH the project:
+  `curl.exe -X PATCH "https://api.vercel.com/v9/projects/prj_ATOYzVIvi5SbJJJ64IwOivZoYJg7" -H "Authorization: Bearer <TOKEN>" -H "Content-Type: application/json" -d '{\"rootDirectory\":\"app\"}'`
+- A successful production deploy prints `Aliased https://tasscemri.org`. Verify by comparing the live HTML's CSS asset with `app/dist/assets/` and checking that the live CSS contains the expected rules.

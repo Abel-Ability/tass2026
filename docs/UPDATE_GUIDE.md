@@ -1,8 +1,10 @@
 # TASS Nigeria 2026 — Update Guide
 
 ## Before Starting
-1. Run `scripts\start.bat` or `pnpm run dev` to start the local server
+1. Run `app\scripts\start.bat`, or `cd app` then `pnpm run dev`, to start the local server
 2. Open http://localhost:5173 to preview changes
+
+> All commands run inside the `app/` folder. The repo root only holds `AGENTS.md`, `README.md`, `.gitignore` and the `docs/` folder.
 
 ## What to Tell the Assistant
 - Which page/component to modify (e.g. "Update the About page")
