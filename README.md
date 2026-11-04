@@ -30,12 +30,18 @@ corepack pnpm build
 
 ## Deploy
 
-The Vercel project uses `app` as its Root Directory.
+Vercel is Git-linked to this repository on branch `main`, with `app` as the project's Root Directory.
 
-Push to https://github.com/Abel-Ability/tass2026, then deploy from the repo root with the Vercel CLI:
+Pushing to `main` deploys automatically to https://tasscemri.org:
 
 ```sh
-npx vercel --prod --yes
+git push origin main
 ```
 
-Update GitHub tokens https://github.com/settings/tokens
+Do not also run a CLI deploy while that build is in flight: the newer production deployment cancels the Git one, so the push shows as `CANCELED`.
+
+Check the result with:
+
+```sh
+npx --yes vercel list --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
+```

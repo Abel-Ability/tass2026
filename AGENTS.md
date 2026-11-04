@@ -52,7 +52,9 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 
 ### GitHub
 
-- Branch `main`, remote `https://github.com/Abel-Ability/tass2026.git`.
+- Branch `main`, remote `https://github.com/Abel-Ability/tass2026.git`. Repository is public; homepage `https://tass2026.vercel.app`; default branch `main`.
+- The repo was deleted and recreated on 2026-11-04 to drop a stale `blackboxai/footer-loc-update` branch that still held the pre-`app/` flat layout. Full history and tag `v1.0.0` were re-pushed, so history is intact but the repo id changed (`1286889077` -> `1445486470`). Vercel did **not** re-link itself: after such a change run `npx --yes vercel git disconnect --yes` then `npx --yes vercel git connect https://github.com/Abel-Ability/tass2026 --yes`, and confirm the new link's `repoId` before trusting auto-deploy. `vercel git connect` on its own short-circuits with "already connected" while the stale link exists, and PATCHing the project's `link` directly returns 400.
+- The GitHub credential stored in Windows Credential Manager has scopes `gist, repo, workflow` — **not `delete_repo`**, so deleting this repo must be confirmed in the browser (Settings -> Danger Zone) or done with a PAT that includes `delete_repo`.
 - Git refuses this checkout until the safe directory is registered (run once):
   `git config --global --add safe.directory "D:/Website Projects/tass2026"`
   Alternatively prefix commands with `git -c safe.directory="D:/Website Projects/tass2026" ...`.
