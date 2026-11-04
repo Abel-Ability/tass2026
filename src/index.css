@@ -141,36 +141,36 @@
 
 @keyframes shooting-star {
   0% {
-    transform: rotate(145deg) translate3d(0, 0, 0);
+    transform: rotate(var(--star-angle, 145deg)) translate3d(0, 0, 0);
     opacity: 0;
   }
   2% {
     opacity: 1;
   }
-  8% {
+  9% {
     opacity: 1;
   }
-  12% {
-    transform: rotate(145deg) translate3d(300px, 0, 0);
+  14% {
+    transform: rotate(var(--star-angle, 145deg)) translate3d(var(--star-travel, 400px), 0, 0);
     opacity: 0;
   }
   100% {
-    transform: rotate(145deg) translate3d(300px, 0, 0);
+    transform: rotate(var(--star-angle, 145deg)) translate3d(var(--star-travel, 400px), 0, 0);
     opacity: 0;
   }
 }
 
 .shooting-star {
   position: absolute;
-  height: 2px;
+  height: var(--star-height, 2px);
   border-radius: 9999px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 255, 255, 0.85) 100%
+    rgba(255, 255, 255, 0.06) 38%,
+    rgba(255, 255, 255, 0.9) 100%
   );
-  filter: drop-shadow(0 0 4px rgba(244, 196, 48, 0.55));
+  filter: drop-shadow(0 0 5px rgba(244, 196, 48, 0.6));
   opacity: 0;
   animation: shooting-star var(--star-duration, 18s) linear var(--star-delay, 0s) infinite;
   will-change: transform, opacity;
@@ -181,13 +181,13 @@
   position: absolute;
   top: 50%;
   right: -1px;
-  width: 4px;
-  height: 4px;
+  width: var(--star-head, 5px);
+  height: var(--star-head, 5px);
   border-radius: 9999px;
   background: #fff;
   box-shadow:
-    0 0 8px 2px rgba(244, 196, 48, 0.8),
-    0 0 16px 4px rgba(255, 255, 255, 0.25);
+    0 0 10px 3px rgba(244, 196, 48, 0.8),
+    0 0 20px 6px rgba(255, 255, 255, 0.25);
   transform: translateY(-50%);
 }
 
