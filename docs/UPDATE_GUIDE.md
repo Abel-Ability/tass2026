@@ -27,7 +27,7 @@
 
 ## After Changes
 1. Ask to **verify build** (`pnpm run build`)
-2. Ask to **push to GitHub** — Vercel auto-deploys to https://tasscemri.org
+2. Ask to **push to GitHub** — the Vercel Git integration builds and deploys https://tasscemri.org automatically (don't also run a manual CLI deploy; it cancels the automatic build)
 3. Ask to **save this version** (git commit)
 
 ## Quick Commands

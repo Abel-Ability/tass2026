@@ -16,6 +16,7 @@ TASS Nigeria 2026: a Vite + React 18 conference site (marketing pages plus exter
 Run in `app/`. `package.json` pins `pnpm@11.9.0`, but `pnpm` is not on PATH in this environment. Use `corepack pnpm ...` (corepack is installed).
 
 - Install: `cd app; corepack pnpm install --frozen-lockfile`
+- After adding or removing dependencies: `cd app; corepack pnpm install --no-frozen-lockfile` (pnpm runs with frozen-lockfile by default here, so the lockfile would otherwise reject the change).
 - Dev: `cd app; corepack pnpm dev` (or `app\scripts\start.bat`) -> http://localhost:5173
 - Verify: `cd app; corepack pnpm lint` -> `corepack pnpm typecheck` -> `corepack pnpm build`
 - Preview: `cd app; corepack pnpm preview`
@@ -67,9 +68,13 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 
 - Production: https://tasscemri.org. Project: `tassnigeria2026`. Team scope: `team_l5KxHP1LNqNZiKnLwTBZ87Ux` (see `.vercel/repo.json`).
 - The project's **Root Directory is `app`**, so Vercel installs and builds inside `app/`. The deploy command still runs from the repo root; do not `cd app` before deploying or the CLI will look for a second `app/` folder.
-- Do not rely on a GitHub push to deploy. Despite the note in `docs/UPDATE_GUIDE.md`, pushing `main` did not trigger a Vercel deployment. After pushing, deploy explicitly.
-- Vercel CLI is not installed globally and is not logged in on this machine. Use `npx --yes vercel ...`.
-- If `VERCEL_TOKEN` is set, deploy with:
+- **Pushing `main` does deploy.** The project is Git-linked to `Abel-Ability/tass2026` with production branch `main`, and every push creates a `source: git` production deployment. Do not run a CLI deploy right after pushing: Vercel cancels the in-flight Git build when a newer production deployment appears, so the push looks like it "didn't deploy" while actually showing as `CANCELED`. Pick one path per release.
+- Check what happened with:
+  ```sh
+  npx --yes vercel list --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
+  ```
+- A user-level `VERCEL_TOKEN` (`vca_...`) is set on this machine, so deploys no longer need a device login. Shells started before that change must be reopened to see it. Without a token, fall back to the login flow below.
+- Deploy explicitly with:
   ```sh
   npx --yes vercel deploy --prod --yes --token $env:VERCEL_TOKEN --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
   ```
