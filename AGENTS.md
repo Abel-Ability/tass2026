@@ -38,5 +38,36 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 
 ## Deploy
 
-- Branch `main`, remote `https://github.com/Abel-Ability/tass2026.git`, Vercel project `tassnigeria2026` (`.vercel/repo.json`). `UPDATE_GUIDE.md` says pushes to `main` auto-deploy; `README.md` also documents `npx vercel --prod --yes`.
-- On this machine, git commands fail with "dubious ownership" until this is run once: `git config --global --add safe.directory "D:/Website Projects/tass2026"`.
+### GitHub
+
+- Branch `main`, remote `https://github.com/Abel-Ability/tass2026.git`.
+- Git refuses this checkout until the safe directory is registered (run once):
+  `git config --global --add safe.directory "D:/Website Projects/tass2026"`
+  Alternatively prefix commands with `git -c safe.directory="D:/Website Projects/tass2026" ...`.
+- Commit and push:
+  ```sh
+  git add <files>
+  git commit -m "<message>"
+  git push origin main
+  ```
+- `dist/`, `node_modules/`, and `.env*` are gitignored. Never commit secrets or build output.
+
+### Vercel
+
+- Production: https://tasscemri.org. Project: `tassnigeria2026`. Team scope: `team_l5KxHP1LNqNZiKnLwTBZ87Ux` (see `.vercel/repo.json`).
+- Do not rely on a GitHub push to deploy. Despite the note in `UPDATE_GUIDE.md`, pushing `main` did not trigger a Vercel deployment. After pushing, deploy explicitly.
+- Vercel CLI is not installed globally and is not logged in on this machine. Use `npx --yes vercel ...`.
+- If `VERCEL_TOKEN` is set, deploy with:
+  ```sh
+  npx --yes vercel deploy --prod --yes --token $env:VERCEL_TOKEN --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
+  ```
+- Once the CLI is logged in, omit `--token`:
+  ```sh
+  npx --yes vercel deploy --prod --yes --scope team_l5KxHP1LNqNZiKnLwTBZ87Ux
+  ```
+- If not authenticated, run `npx --yes vercel login --debug` in the background and give the user the `https://vercel.com/oauth/device?user_code=...` URL to approve. If CLI polling fails with `fetch failed`, extract `device_code` from the debug output and exchange it for an access token:
+  ```sh
+  curl.exe -sS -X POST "https://api.vercel.com/login/oauth/token" -H "Content-Type: application/x-www-form-urlencoded" --data "client_id=cl_HYyOPBNtFMfHhaUn9L4QPfTZz6TP47bp&grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Adevice_code&device_code=<DEVICE_CODE>"
+  ```
+  Pass the returned `access_token` to `vercel deploy --token`; never print or commit it. Device codes expire after about 10 minutes.
+- A successful production deploy prints `Aliased https://tasscemri.org`. Verify by comparing the live HTML's CSS asset with the newest file in `dist/assets/` and checking that the live CSS contains the expected rules.
