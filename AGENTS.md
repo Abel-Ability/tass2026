@@ -16,7 +16,7 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 - `vite.config.js` sets `logLevel: 'error'`, so dev/build can finish with almost no console output. A silent start is normal.
 - `build` also copies `dist/index.html` to `dist/404.html` (Vercel SPA fallback) and obfuscates the JS via `rollup-plugin-obfuscator`. Don't remove the copy step or expect readable bundle output.
 - `lint` only covers `src/components/**`, `src/pages/**`, and a nonexistent `src/Layout.jsx`; it ignores `src/lib`, `src/components/ui`, `App.jsx`, `main.jsx`, and hooks. `typecheck` uses `checkJs: false`. Neither is a complete safety net.
-- Both `pnpm-lock.yaml` and `package-lock.json` exist, and `base44/config.jsonc` mentions npm. pnpm is authoritative; don't regenerate the npm lockfile.
+- `pnpm-lock.yaml` is the only lockfile. pnpm is authoritative; don't add or regenerate an npm lockfile.
 
 ## Architecture
 
@@ -55,7 +55,7 @@ There is no test suite or CI, so don't invent `pnpm test`. `build` is the only f
 ### Vercel
 
 - Production: https://tasscemri.org. Project: `tassnigeria2026`. Team scope: `team_l5KxHP1LNqNZiKnLwTBZ87Ux` (see `.vercel/repo.json`).
-- Do not rely on a GitHub push to deploy. Despite the note in `UPDATE_GUIDE.md`, pushing `main` did not trigger a Vercel deployment. After pushing, deploy explicitly.
+- Do not rely on a GitHub push to deploy. Despite the note in `docs/UPDATE_GUIDE.md`, pushing `main` did not trigger a Vercel deployment. After pushing, deploy explicitly.
 - Vercel CLI is not installed globally and is not logged in on this machine. Use `npx --yes vercel ...`.
 - If `VERCEL_TOKEN` is set, deploy with:
   ```sh
