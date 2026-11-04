@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Star, Phone, Globe } from "lucide-react";
 import SectionHeading from "@/components/conference/SectionHeading";
@@ -8,7 +8,7 @@ const hotels = [
     name: "ASUU Charlette",
     stars: 4,
     distance: "0 km (on University of Abuja campus)",
-    price: "From ₦18,000/night",
+    price: "From â‚¦18,000/night",
     phone: "+234 9 876 5432",
     website: "uniabuja.edu.ng",
     img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80",
@@ -21,12 +21,12 @@ const hotels = [
     name: "Divine Love (DDL) Retreat and Conference Centre",
     stars: 3,
     distance: "~11 km from University of Abuja",
-    price: "From ₦20,000/night",
+    price: "From â‚¦20,000/night",
     phone: "+234 9 876 5000",
     website: "dracc.org",
     img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHJYtaNGoiZKLnQ-H3x3BvLIe0zac_nmD2Ss8HSFM69h_eAzT2CDN-SV8mwY2pxqa8oH9RALwKzoWpniR8ycz5VV9gfLlcHWzHb4OqQZR87gACmL7_KaQWCIr9Od-WwXjqE_AxpPg=s680-w680-h510",
     amenities: ["Parking", "Security"],
-    desc: "Daughters of Divine Love Retreat and Conference Centre — a quiet, budget-friendly option for delegates.",
+    desc: "Daughters of Divine Love Retreat and Conference Centre â€” a quiet, budget-friendly option for delegates.",
     location: "Aco Estate, Lugbe, Abuja, Nigeria",
     featured: true,
   },
@@ -34,7 +34,7 @@ const hotels = [
     name: "Casa De Kings",
     stars: 3,
     distance: "~20 km from University of Abuja",
-    price: "From ₦21,000/night",
+    price: "From â‚¦21,000/night",
     phone: "+234 9 710 4400",
     website: "hotels.ng",
     img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAF1Xov3oXpKvKFmQnMot6OwzS2EH-tRi6n0KTk5Qpel-CQUn4sJAuTYL79A3cJxyu03_zHsUbxWOxvPm59wmJZdZd-Z6eUIw_X7I7aj8hlTF2QUe_RVZsmESns8OdbDvZCiPjZQ=w252-h180-k-no",
@@ -46,7 +46,7 @@ const hotels = [
     name: "C7 Hazelwood Residence & Suites",
     stars: 3,
     distance: "~20 km from University of Abuja",
-    price: "From ₦22,000/night",
+    price: "From â‚¦22,000/night",
     phone: "+234 9 710 3300",
     website: "comabuja.com",
     img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAHNEcK6cc-fCW41nSGYZXJ-dTft9IZheAazWAcFub_L6vX2n-ZrElHhnCtj4dtdMD5xm8UozW2j6eRb9PXywZUWdM30CzmoBV8zcN2v0yBMoXOPd8FmFJjlDx53-4czyyyrCf9l=s680-w680-h510",
@@ -58,7 +58,7 @@ const hotels = [
     name: "Nexus Xpress Hotel",
     stars: 3,
     distance: "~22 km from University of Abuja",
-    price: "From ₦30,000/night",
+    price: "From â‚¦30,000/night",
     phone: "+234 9 710 5500",
     website: "hotels.ng",
     img: "https://lh3.googleusercontent.com/gps-cs-s/APNQkAG4M4UtuCpuizSTMAvf62fulnQoL9h93Zoh6uT0p_8qwkt_lnJbSf5ClK30DXpntE_SzhwEuru9xB5vF3XZygPibj-nbYZ9VHg3fZIpNgF3YugRdx53wedix9WWsUWCdSyuroJ0Iw=s680-w680-h510",
@@ -70,7 +70,7 @@ const hotels = [
     name: "Hawthorn Suites by Wyndham",
     stars: 4,
     distance: "~25 km from University of Abuja",
-    price: "From ₦55,000/night",
+    price: "From â‚¦55,000/night",
     phone: "+234 9 290 5000",
     website: "wyndhamhotels.com",
     img: "https://www.wyndhamhotels.com/content/dam/property-images/en-us/bh/ng/others/abuja/31741/31741_exterior_view_2.jpg?crop=3000:2000;*,*&downsize=1800:*",
@@ -82,19 +82,19 @@ const hotels = [
     name: "Bourdillon Hotel & Apartments",
     stars: 4,
     distance: "~25 km from University of Abuja",
-    price: "From ₦70,000/night",
+    price: "From â‚¦70,000/night",
     phone: "+234 9 169 0640",
     website: "bourdillonhotel.com",
     img: "https://bourdillonhotel.com/wp-content/uploads/2025/08/BHA-Delux-1.jpg",
     amenities: ["Free WiFi", "Pool", "Gym", "Restaurant", "Bar", "Parking"],
-    desc: "Luxurious hotel on Airport Road with 50+ rooms, modern facilities, restaurant, gym, and business centre — ideal for delegates seeking premium comfort.",
+    desc: "Luxurious hotel on Airport Road with 50+ rooms, modern facilities, restaurant, gym, and business centre â€” ideal for delegates seeking premium comfort.",
     location: "Airport Road, Abuja",
   },
   {
     name: "Transcorp Hilton Abuja",
     stars: 5,
     distance: "~22 km from University of Abuja",
-    price: "From ₦200,000/night",
+    price: "From â‚¦200,000/night",
     phone: "+234 9 461 3000",
     website: "hilton.com",
     img: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Transcorp_Hilton%2C_Abuja.jpg",
@@ -106,7 +106,7 @@ const hotels = [
     name: "Abuja Continental Hotel",
     stars: 5,
     distance: "~25 km from University of Abuja",
-    price: "From ₦240,000/night",
+    price: "From â‚¦240,000/night",
     phone: "+234 9 461 5000",
     website: "abujacontinental.com",
     img: "https://image-tc.galaxy.tf/wijpeg-c2uhscjmido2fwifh5l3a1jse/aerial-view.jpg?width=1920",
@@ -122,13 +122,13 @@ export default function Accommodation() {
       {/* Hero */}
       <section className="relative py-10 md:py-10 bg-gray-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1600&q=80" alt="" className="w-full h-full object-cover" />
+          <img loading="lazy" src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1600&q=80" alt="" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
             label="Where to Stay"
             title="Accommodation in Abuja"
-            description="We've curated a selection of hotels near the University of Abuja campus — from luxury 5-star properties to comfortable budget options. Delegates are advised to book early."
+            description="We've curated a selection of hotels near the University of Abuja campus â€” from luxury 5-star properties to comfortable budget options. Delegates are advised to book early."
             light
             titleClass="text-3xl md:text-4xl lg:text-5xl dark:text-white"
             descClass="dark:text-white"
@@ -152,7 +152,7 @@ export default function Accommodation() {
                 }`}
               >
                 <div className="relative h-48 overflow-hidden">
-                  <img src={hotel.img} alt={hotel.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+                  <img loading="lazy" src={hotel.img} alt={hotel.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                   {hotel.featured && (
                     <span className="absolute top-3 left-3 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full">
                       Recommended

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+﻿import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
 import { Trophy, Clock, Users, Zap, Code, Shield, Leaf, Heart, GraduationCap, X, Award, Calendar, Lightbulb, TrendingUp, Target, Presentation, Cloud, Wifi, Handshake } from "lucide-react";
@@ -16,13 +16,13 @@ const hackathonTracks = [
 ];
 
 const prizes = [
-  { place: "1st Place", amount: "₦5,000,000", desc: "Grand Prize + Incubation Support" },
-  { place: "2nd Place", amount: "₦3,000,000", desc: "Runner-up Prize + Mentorship" },
-  { place: "3rd Place", amount: "₦2,000,000", desc: "Bronze Prize + Recognition" },
+  { place: "1st Place", amount: "â‚¦5,000,000", desc: "Grand Prize + Incubation Support" },
+  { place: "2nd Place", amount: "â‚¦3,000,000", desc: "Runner-up Prize + Mentorship" },
+  { place: "3rd Place", amount: "â‚¦2,000,000", desc: "Bronze Prize + Recognition" },
 ];
 
 const stats = [
-  { icon: Trophy, value: "₦10M", label: "Prize Pool" },
+  { icon: Trophy, value: "â‚¦10M", label: "Prize Pool" },
   { icon: Clock, value: "16", label: "Hours of Building" },
   { icon: Zap, value: String(hackathonTracks.length), label: "Focused Tracks" },
   { icon: Award, value: "3", label: "Prize Categories" },
@@ -92,7 +92,7 @@ export default function Hackathon() {
       {/* Hero */}
       <section className="relative py-10 md:py-10 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HACKATHON_IMG} alt="Student hackathon" className="w-full h-full object-cover" />
+          <img loading="lazy" src={HACKATHON_IMG} alt="Student hackathon" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/85" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
@@ -104,7 +104,7 @@ export default function Hackathon() {
           />
           <div className="flex flex-wrap gap-6 mt-8">
             {[
-              { icon: Trophy, text: "₦10M Prize Pool" },
+              { icon: Trophy, text: "â‚¦10M Prize Pool" },
               { icon: Clock, text: "10am - 6pm Daily" },
               { icon: Users, text: "Mentors from Industry & Academia" },
             ].map((item) => (
@@ -164,7 +164,7 @@ export default function Hackathon() {
       {/* Prizes */}
       <section className="py-10 md:py-10 bg-muted/50">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <SectionHeading label="Prize Structure" title="₦10 Million Prize Pool" align="center" />
+          <SectionHeading label="Prize Structure" title="â‚¦10 Million Prize Pool" align="center" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {prizes.map((p, i) => (
               <motion.div
@@ -199,7 +199,7 @@ export default function Hackathon() {
           <SectionHeading
             label="Event Timeline"
             title="The Two-Day Journey"
-            description="From kickoff to awards — here's how the weekend unfolds."
+            description="From kickoff to awards â€” here's how the weekend unfolds."
             align="center"
             className="mb-4 md:mb-6"
           />
@@ -216,7 +216,7 @@ export default function Hackathon() {
                 <div className="flex items-center gap-2 px-5 py-3 border-b border-border" style={{ backgroundColor: "#0a5c36" }}>
                   <Calendar className="w-4 h-4" style={{ color: "#f4c430" }} />
                   <h3 className="font-heading font-bold text-lg" style={{ color: "#f4c430" }}>
-                    {col.day} — {col.title}
+                    {col.day} â€” {col.title}
                   </h3>
                 </div>
                 <ul className="p-5 space-y-4">
@@ -332,7 +332,7 @@ export default function Hackathon() {
           <div className="relative bg-card w-full max-w-5xl rounded-2xl shadow-2xl flex flex-col overflow-hidden h-[85vh] max-md:h-[95vh]">
             <div className="flex items-center justify-between px-4 py-3 border-b border-border" style={{ backgroundColor: "#0a5c36" }}>
               <h3 className="font-heading font-bold text-base md:text-lg" style={{ color: "#f4c430" }}>
-                TASS Nigeria 2026 — Hackathon Registration
+                TASS Nigeria 2026 â€” Hackathon Registration
               </h3>
               <button onClick={closeModal} className="p-1 rounded-lg hover:bg-white/10 transition-colors">
                 <X className="w-5 h-5 text-white" />

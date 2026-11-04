@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MapPin } from "lucide-react";
 import SectionHeading from "@/components/conference/SectionHeading";
@@ -6,20 +6,20 @@ import SectionHeading from "@/components/conference/SectionHeading";
 const categories = ["All", "University of Abuja", "Abuja City"];
 
 const photos = [
-  // University of Abuja — uploaded images
+  // University of Abuja â€” uploaded images
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/0c7eb669f_WhatsAppImage2026-05-23at2012201.jpg", caption: "University of Abuja Campus Grounds", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/72cb8d68d_WhatsAppImage2026-05-23at2012208.jpg", caption: "University of Abuja Main Gate", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/dde67b78d_WhatsAppImage2026-05-23at201220.jpeg", caption: "Campus Gardens & Open Spaces", category: "University of Abuja" },
-  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/068abd991_WhatsAppImage2026-05-23at2012211.jpg", caption: "Academic Building — University of Abuja", category: "University of Abuja" },
-  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/4acdd2d10_WhatsAppImage2026-05-23at201221.jpg", caption: "University of Abuja — Second Gate", category: "University of Abuja" },
+  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/068abd991_WhatsAppImage2026-05-23at2012211.jpg", caption: "Academic Building â€” University of Abuja", category: "University of Abuja" },
+  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/4acdd2d10_WhatsAppImage2026-05-23at201221.jpg", caption: "University of Abuja â€” Second Gate", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/041ef567a_WhatsAppImage2026-05-23at2012202.jpg", caption: "Students on Campus Grounds", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/33a19b90b_WhatsAppImage2026-05-23at2012203.jpeg", caption: "University of Abuja Sign", category: "University of Abuja" },
-  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/b4eb53a9f_WhatsAppImage2026-05-23at2012204.jpg", caption: "Graduation Ceremony — UniAbuja", category: "University of Abuja" },
+  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/b4eb53a9f_WhatsAppImage2026-05-23at2012204.jpg", caption: "Graduation Ceremony â€” UniAbuja", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/5e714cfb1_WhatsAppImage2026-05-23at2012205.jpg", caption: "Campus Avenue & Flame Trees", category: "University of Abuja" },
   { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/38450dd67_WhatsAppImage2026-05-23at2012206.jpg", caption: "University of Abuja Sports Stadium", category: "University of Abuja" },
-  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/71f0078aa_WhatsAppImage2026-05-23at2012207.jpg", caption: "Convocation Procession — UniAbuja", category: "University of Abuja" },
+  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/71f0078aa_WhatsAppImage2026-05-23at2012207.jpg", caption: "Convocation Procession â€” UniAbuja", category: "University of Abuja" },
   // Abuja City
-  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/fee050250_WhatsAppImage2026-05-23at2012212.jpg", caption: "Zuma Rock — 700m Monolith, Abuja", category: "Abuja City" },
+  { src: "https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/fee050250_WhatsAppImage2026-05-23at2012212.jpg", caption: "Zuma Rock â€” 700m Monolith, Abuja", category: "Abuja City" },
 ];
 
 export default function Gallery() {
@@ -33,7 +33,7 @@ export default function Gallery() {
       {/* Hero */}
       <section className="relative py-10 md:py-10 bg-primary text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/72cb8d68d_WhatsAppImage2026-05-23at2012208.jpg" alt="" className="w-full h-full object-cover" />
+          <img loading="lazy" src="https://media.base44.com/images/public/6a359631188c7bfda4ca24b0/72cb8d68d_WhatsAppImage2026-05-23at2012208.jpg" alt="" className="w-full h-full object-cover" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
           <SectionHeading
@@ -78,11 +78,11 @@ export default function Gallery() {
                   className="relative group rounded-xl overflow-hidden cursor-pointer aspect-square"
                   onClick={() => setLightbox(photo)}
                 >
-                  <img src={photo.src} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" draggable="false" />
+                  <img loading="lazy" src={photo.src} alt={photo.caption} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" draggable="false" />
                   {/* Watermark overlay */}
                   <div className="absolute inset-0 pointer-events-none opacity-20 flex items-center justify-center">
                     <div className="text-white text-xs font-bold transform rotate-45 whitespace-nowrap select-none">
-                      © TASS Nigeria 2026
+                      Â© TASS Nigeria 2026
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
@@ -116,11 +116,11 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative">
-                <img src={lightbox.src} alt={lightbox.caption} className="w-full rounded-2xl max-h-[80vh] object-contain" draggable="false" />
+                <img loading="lazy" src={lightbox.src} alt={lightbox.caption} className="w-full rounded-2xl max-h-[80vh] object-contain" draggable="false" />
                 {/* Lightbox watermark */}
                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
                   <div className="text-white text-lg font-bold transform rotate-45 whitespace-nowrap select-none opacity-30">
-                    © TASS Nigeria 2026
+                    Â© TASS Nigeria 2026
                   </div>
                 </div>
               </div>

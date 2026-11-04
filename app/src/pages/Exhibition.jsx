@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
 import { Star, Zap, ArrowRight } from "lucide-react";
@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 const EXHIBIT_IMG = "/exhibition-bg.jpg";
 
 const boothTiers = [
-  { name: "Standard Booth", size: "3m × 3m", price: "₦500,000", features: ["Table & 2 chairs", "Power outlet", "Basic signage", "Exhibitor passes (2)"] },
-  { name: "Premium Booth", size: "3m × 6m", price: "₦1,000,000", features: ["Branded backdrop", "Power & WiFi", "Premium signage", "Exhibitor passes (4)", "Programme listing"] },
-  { name: "Island Booth", size: "6m × 6m", price: "₦2,500,000", features: ["360° branding", "Dedicated power & WiFi", "Custom signage", "Exhibitor passes (8)", "Prime location", "Programme feature"] },
+  { name: "Standard Booth", size: "3m Ã— 3m", price: "â‚¦500,000", features: ["Table & 2 chairs", "Power outlet", "Basic signage", "Exhibitor passes (2)"] },
+  { name: "Premium Booth", size: "3m Ã— 6m", price: "â‚¦1,000,000", features: ["Branded backdrop", "Power & WiFi", "Premium signage", "Exhibitor passes (4)", "Programme listing"] },
+  { name: "Island Booth", size: "6m Ã— 6m", price: "â‚¦2,500,000", features: ["360Â° branding", "Dedicated power & WiFi", "Custom signage", "Exhibitor passes (8)", "Prime location", "Programme feature"] },
 ];
 
 const addOns = [
@@ -26,7 +26,7 @@ export default function Exhibition() {
       {/* Hero */}
       <section className="relative py-10 md:py-10 overflow-hidden">
         <div className="absolute inset-0">
-          <img src={EXHIBIT_IMG} alt="Exhibition hall" className="w-full h-full object-cover" />
+          <img loading="lazy" src={EXHIBIT_IMG} alt="Exhibition hall" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/80" />
         </div>
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">

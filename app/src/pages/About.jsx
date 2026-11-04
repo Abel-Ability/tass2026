@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionHeading from "@/components/conference/SectionHeading";
 import { Globe, Award, Lightbulb, Users, BookOpen, Handshake, Mic2, Building2, FlaskConical, Landmark, ChevronDown } from "lucide-react";
@@ -27,7 +27,7 @@ const partners = [
   {
     icon: Building2, label: "Partnership Industry", bg: "bg-teal-50", iconBg: "bg-teal-100", iconColor: "text-teal-700",
     logos: [
-      { src: "/logo_restv.jpeg", name: "ResTV — Research Television" },
+      { src: "/logo_restv.jpeg", name: "ResTV â€” Research Television" },
       { src: "/logo_cefpacs.jpeg", name: "CEFPACS Consulting Limited" },
       { src: "/logo_tripwinga.jpeg", name: "TripWinga" },
       { src: "/logo_hyprep.jpeg", name: "Hydrocarbon Pollution Remediation Project (HYPREP)" },
@@ -75,7 +75,7 @@ function PartnerAccordion() {
                     {partner.logos.map((logo) => (
                       <div key={logo.name} className="flex flex-col items-center gap-2 w-28">
                         {logo.src ? (
-                          <img src={logo.src} alt={logo.name} className="h-16 w-full object-contain rounded-md" />
+                          <img loading="lazy" src={logo.src} alt={logo.name} className="h-16 w-full object-contain rounded-md" />
                         ) : (
                           <div className="h-16 w-full rounded-md bg-muted flex items-center justify-center text-muted-foreground text-xs font-medium px-2 text-center leading-snug">
                             {logo.name}
@@ -165,7 +165,7 @@ export default function About() {
               <SectionHeading
                 label={<><span className="text-green-600">TASS NIG</span><span className="text-red-600">ERIA 2026</span></>}
                 title="Technology. Arts. Science. Society."
-                description="TASS — Technology, Arts, Science, and Society — is an international multidisciplinary platform established to promote excellence in research, innovation, entrepreneurship, knowledge exchange, and sustainable development."
+                description="TASS â€” Technology, Arts, Science, and Society â€” is an international multidisciplinary platform established to promote excellence in research, innovation, entrepreneurship, knowledge exchange, and sustainable development."
               />
               <p className="text-muted-foreground leading-relaxed">
                 The conference programme integrates rigorous peer-reviewed academic research with practical industry applications. In addition to scholarly paper presentations, the event features a competitive student hackathon, a dedicated policy dialogue forum, and a curated innovation and technology exhibition.
@@ -176,7 +176,7 @@ export default function About() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
             >
-              <img src={SCHOLARS_IMG} alt="Scholars in discussion" className="rounded-2xl w-full aspect-[4/3] object-cover shadow-xl" />
+              <img loading="lazy" src={SCHOLARS_IMG} alt="Scholars in discussion" className="rounded-2xl w-full aspect-[4/3] object-cover shadow-xl" />
             </motion.div>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function About() {
                     <h3 className="font-heading font-bold text-xl dark:text-black">{speaker.name}</h3>
                   </div>
                   {speaker.img ? (
-                    <img src={speaker.img} alt={`${speaker.name} portrait`} className="w-10 h-10 rounded-full object-cover mx-3" />
+                    <img loading="lazy" src={speaker.img} alt={`${speaker.name} portrait`} className="w-10 h-10 rounded-full object-cover mx-3" />
                   ) : null}
                 </div>
                 <p className="text-base text-muted-foreground leading-relaxed">{speaker.note}</p>
@@ -278,7 +278,7 @@ export default function About() {
               className="lg:col-span-2"
             >
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                <img src="/Photo_Senator_Geroge_Akume.jpg" alt="Senator George Akume, CON" className="w-full aspect-[3/4] object-cover" />
+                <img loading="lazy" src="/Photo_Senator_Geroge_Akume.jpg" alt="Senator George Akume, CON" className="w-full aspect-[3/4] object-cover" />
               </div>
             </motion.div>
             <motion.div
@@ -335,7 +335,7 @@ export default function About() {
               className="lg:col-span-2"
             >
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                <img src="/Photo_Feryel.jpg" alt="Prof. Feryel Ouerghi Sebai" className="w-full aspect-[3/4] object-cover" />
+                <img loading="lazy" src="/Photo_Feryel.jpg" alt="Prof. Feryel Ouerghi Sebai" className="w-full aspect-[3/4] object-cover" />
               </div>
             </motion.div>
             <motion.div
@@ -389,7 +389,7 @@ export default function About() {
               className="lg:col-span-2"
             >
               <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                <img src="/Photo_Odi.jpeg" alt="Emeritus Prof. Steven Timipa Odi-Owei" className="w-full aspect-[3/4] object-cover" />
+                <img loading="lazy" src="/Photo_Odi.jpeg" alt="Emeritus Prof. Steven Timipa Odi-Owei" className="w-full aspect-[3/4] object-cover" />
               </div>
             </motion.div>
             <motion.div
@@ -454,7 +454,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
             { val: "18", label: "Thematic Tracks", color: "text-yellow-400" },
-            { val: "₦10M+", label: "Total Prize Pool", color: "text-green-400" },
+            { val: "â‚¦10M+", label: "Total Prize Pool", color: "text-green-400" },
             { val: "4 Days", label: "Of Programming", color: "text-orange-400" },
             ].map((stat) => (
             <div key={stat.label} className="text-center">
@@ -468,3 +468,4 @@ export default function About() {
     </div>
   );
 }
+
