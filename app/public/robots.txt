@@ -1,0 +1,9 @@
+﻿
+User-agent: *
+Allow: /
+Disallow: /wp-admin$
+Disallow: /wp-includes$
+Disallow: /login$
+Host: tasscemri.org
+Sitemap: https://tasscemri.org/sitemap.xml
+
