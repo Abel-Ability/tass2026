@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Calendar, MapPin, Phone, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import CountdownTimer from "@/components/home/CountdownTimer";
+import ShootingStars from "@/components/home/ShootingStars";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -39,6 +40,8 @@ export default function HeroSection() {
         <img src={HERO_IMG} alt="University of Abuja campus" className="w-full h-full object-cover" loading="eager" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/70 to-navy/20" />
       </div>
+
+      <ShootingStars />
 
       <div className="absolute top-0 left-[8%] w-px h-full bg-white/5" />
       <div className="absolute top-0 left-[25%] w-px h-full bg-white/5" />
