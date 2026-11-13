@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --green:#0e6b2d; --red:#d3202a; --ink:#1a1a1a; --muted:#5b665e; --line:#cfdcd2; --panel:#f3f9f0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background: #fff; padding: 22px 20px 28px; }
+  .wrap { max-width: 440px; margin: 0 auto; }
+  .bar { height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--green) 0 70%, var(--red) 70% 100%); margin-bottom: 18px; }
+  h1 { font-size: 22px; line-height: 1.2; margin: 0 0 4px; color: var(--green); }
+  h1 span { color: var(--red); }
+  p.sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; }
+  label { display: block; font-weight: 600; font-size: 13.5px; margin: 14px 0 5px; }
+  input, select { width: 100%; font: inherit; padding: 11px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+  input:focus, select:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(14,107,45,.15); }
+  .hint { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; }
+  button, .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; font: inherit; font-weight: 600; padding: 12px 16px; border: 0; border-radius: 8px; background: var(--green); color: #fff; cursor: pointer; text-decoration: none; }
+  button:hover, .btn:hover { background: #0a5624; }
+  button:disabled { opacity: .7; cursor: progress; }
+  .btn.alt { background: #fff; color: var(--green); border: 1.5px solid var(--green); }
+  .btn.alt:hover { background: var(--panel); }
+  #go { margin-top: 20px; }
+  .spin { width: 16px; height: 16px; border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: r .8s linear infinite; display: none; }
+  button:disabled .spin { display: inline-block; }
+  @keyframes r { to { transform: rotate(360deg); } }
+  .msg { margin-top: 16px; padding: 11px 13px; border-radius: 8px; font-size: 14px; display: none; }
+  .msg.err { display: block; background: #fdecee; border: 1px solid #f3b9be; color: #8c1119; }
+  .msg.info { display: block; background: #fff6e0; border: 1px solid #f0d58a; color: #6b4b00; }
+  .card { margin-top: 18px; padding: 18px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); display: none; }
+  .card h2 { margin: 0 0 4px; font-size: 17px; color: var(--green); }
+  .card dl { margin: 12px 0 16px; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14px; }
+  .card dt { color: var(--muted); }
+  .card dd { margin: 0; font-weight: 600; word-break: break-word; }
+  .actions { display: grid; gap: 10px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"></div>
+  <h1>TASS <span>Nigeria 2026</span></h1>
+  <p class="sub">Enter your details to get your certificate (PDF).</p>
+
+  <form id="f" autocomplete="off" novalidate>
+    <label for="reg">Registration number</label>
+    <input id="reg" name="reg" type="text" required spellcheck="false" autocapitalize="characters" placeholder="As shown on your registration">
+
+    <label for="surname">Surname</label>
+    <input id="surname" name="surname" type="text" required spellcheck="false" placeholder="Your surname / family name">
+
+    <label for="type">Certificate type</label>
+    <select id="type" name="type" required>
+      <option value="" selected disabled>Select one…</option>
+      <option value="participation">Participation</option>
+      <option value="presentation">Participation and Paper Presentation</option>
+    </select>
+    <p class="hint">Only one certificate is issued per registration number, so choose carefully. “Participation and Paper Presentation” is for authors with a paper in the programme.</p>
+
+    <button id="go" type="submit"><span class="spin"></span><span id="goText">Generate certificate</span></button>
+  </form>
+
+  <div id="msg" class="msg" role="alert" aria-live="polite"></div>
+
+  <section id="result" class="card" aria-live="polite">
+    <h2 id="rTitle">Your certificate is ready</h2>
+    <dl>
+      <dt>Name</dt><dd id="rName"></dd>
+      <dt>Type</dt><dd id="rType"></dd>
+      <dt>Certificate No.</dt><dd id="rNo"></dd>
+    </dl>
+    <div class="actions">
+      <a id="dl" class="btn" href="#">Download PDF</a>
+      <button id="pr" type="button" class="alt">Open &amp; print</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('f');
+  var go = document.getElementById('go');
+  var goText = document.getElementById('goText');
+  var msg = document.getElementById('msg');
+  var result = document.getElementById('result');
+  var blobUrl = null;
+
+  function showMsg(text, kind) { msg.className = 'msg ' + kind; msg.textContent = text; }
+  function clearMsg() { msg.className = 'msg'; msg.textContent = ''; }
+  function setBusy(b) {
+    go.disabled = b;
+    goText.textContent = b ? 'Preparing your certificate… (first time can take ~20 s)' : 'Generate certificate';
+  }
+
+  function toBlob(b64) {
+    var bin = atob(b64), len = bin.length, arr = new Uint8Array(len);
+    for (var i = 0; i < len; i++) arr[i] = bin.charCodeAt(i);
+    return new Blob([arr], { type: 'application/pdf' });
+  }
+
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    clearMsg();
+    result.style.display = 'none';
+    var reg = form.reg.value.trim(), sur = form.surname.value.trim(), type = form.type.value;
+    if (!reg || !sur || !type) { showMsg('Please fill in your registration number, surname and certificate type.', 'err'); return; }
+    setBusy(true);
+    google.script.run
+      .withSuccessHandler(onDone)
+      .withFailureHandler(function () {
+        setBusy(false);
+        showMsg('Could not reach the server. Check your connection and try again.', 'err');
+      })
+      .claimCertificate(reg, sur, type);
+  });
+
+  function onDone(res) {
+    setBusy(false);
+    if (!res || !res.ok) { showMsg((res && res.message) || 'Something went wrong. Please try again.', 'err'); return; }
+
+    if (blobUrl) URL.revokeObjectURL(blobUrl);
+    blobUrl = URL.createObjectURL(toBlob(res.pdfBase64));
+
+    document.getElementById('rName').textContent = res.name;
+    document.getElementById('rType').textContent = res.typeLabel;
+    document.getElementById('rNo').textContent = res.certNo;
+    document.getElementById('rTitle').textContent = res.reused ? 'Here is your certificate again' : 'Your certificate is ready';
+    var dl = document.getElementById('dl');
+    dl.href = blobUrl;
+    dl.setAttribute('download', res.fileName);
+    result.style.display = 'block';
+    if (res.notice) showMsg(res.notice, 'info');
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.getElementById('pr').addEventListener('click', function () {
+    if (!blobUrl) return;
+    var w = window.open(blobUrl, '_blank');
+    if (!w) showMsg('Your browser blocked the pop-up. Please use “Download PDF” and print the file.', 'err');
+  });
+})();
+</script>
+</body>
+</html>

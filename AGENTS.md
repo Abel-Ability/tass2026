@@ -6,6 +6,7 @@ TASS Nigeria 2026: a Vite + React 18 conference site (marketing pages plus exter
 
 - `app/` — the whole Vite app and its toolchain: `src/`, `public/`, `index.html`, `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `vite.config.js`, `jsconfig.json`, `components.json`, `config/`, `scripts/`, `.env.local`.
 - `docs/` — project documents (`UPDATE_GUIDE.md`, citation `.docx` files).
+- `certificate-apps-script/` — standalone Google Apps Script project (`Code.gs`, `Certificate.html`, `Verify.html`, `appsscript.json`, `README.md`) that issues participant certificates. Vite does not build or deploy it; it is deployed separately and its `/exec` URL is pasted into `app/src/components/conference/CertificateModal.jsx` (`GAS_CERT_URL`), which renders it in an iframe modal. Keep `Code.gs` in sync with the deployed project by hand.
 - Repo root holds only `AGENTS.md`, `README.md`, and `.gitignore`.
 - **Run every pnpm command from `app/`**, not the repo root. The repo root has no `package.json`.
 - `.gitignore` stays at the repo root; its patterns (`node_modules`, `dist`, `.env*`) match inside `app/` too.

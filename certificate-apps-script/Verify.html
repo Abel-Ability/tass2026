@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --green:#0e6b2d; --red:#d3202a; --ink:#1a1a1a; --muted:#5b665e; --line:#cfdcd2; --panel:#f3f9f0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink); background: #fff; padding: 28px 20px; }
+  .wrap { max-width: 460px; margin: 0 auto; }
+  .bar { height: 5px; border-radius: 3px; background: linear-gradient(90deg, var(--green) 0 70%, var(--red) 70% 100%); margin-bottom: 18px; }
+  h1 { font-size: 20px; margin: 0 0 18px; color: var(--green); }
+  h1 span { color: var(--red); }
+  .badge { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 10px; font-weight: 700; font-size: 16px; }
+  .badge svg { flex: none; }
+  .ok  { background: var(--panel); border: 1px solid var(--line); color: var(--green); }
+  .bad { background: #fdecee; border: 1px solid #f3b9be; color: #8c1119; }
+  dl { margin: 18px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; }
+  dt { color: var(--muted); font-size: 14px; }
+  dd { margin: 0; font-weight: 600; word-break: break-word; }
+  p.note { margin-top: 22px; font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"></div>
+  <h1>TASS <span>Nigeria 2026</span> · Certificate verification</h1>
+
+  <? if (data.valid) { ?>
+    <div class="badge ok">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+      <span>Valid certificate</span>
+    </div>
+    <dl>
+      <dt>Awarded to</dt><dd><?= data.name ?></dd>
+      <dt>Certificate</dt><dd><?= data.type ?></dd>
+      <? if (data.paperTitle) { ?><dt>Paper</dt><dd><?= data.paperTitle ?></dd><? } ?>
+      <dt>Event</dt><dd><?= data.event ?></dd>
+      <dt>Issued on</dt><dd><?= data.issuedOn ?></dd>
+      <dt>Certificate No.</dt><dd><?= data.certNo ?></dd>
+    </dl>
+    <p class="note">Checked against the official register of certificates issued by CEMRI and the University of Abuja for TASS Nigeria 2026. Make sure the name and number above match the certificate you were shown.</p>
+  <? } else { ?>
+    <div class="badge bad">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+      <span>Certificate not found</span>
+    </div>
+    <p class="note">No certificate with the number <strong><?= data.certNo ?></strong> exists in our register. The document may be forged or altered. Please contact the organisers if you believe this is a mistake.</p>
+  <? } ?>
+</div>
+</body>
+</html>
