@@ -7,7 +7,9 @@ const AudioContext = createContext();
 export function AudioProvider({ children }) {
   const audioRef = useRef(null);
   const trackIndexRef = useRef(0);
-  const [muted, setMuted] = useState(false);
+  // Background music is muted by default; the volume button unmutes it.
+  const mutedRef = useRef(true);
+  const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState(false);
 
   const ensureAudio = useCallback(() => {
@@ -16,6 +18,7 @@ export function AudioProvider({ children }) {
       audio.loop = false;
       audio.volume = 1;
       audio.preload = "auto";
+      audio.muted = mutedRef.current;
       audio.src = TRACKS[0];
       audio.addEventListener("ended", () => {
         trackIndexRef.current = (trackIndexRef.current + 1) % TRACKS.length;
@@ -38,10 +41,10 @@ export function AudioProvider({ children }) {
 
   const toggleMuted = useCallback(() => {
     const audio = ensureAudio();
-    setMuted((prev) => {
-      audio.muted = !prev;
-      return !prev;
-    });
+    const next = !mutedRef.current;
+    mutedRef.current = next;
+    audio.muted = next;
+    setMuted(next);
   }, [ensureAudio]);
 
   useEffect(() => {

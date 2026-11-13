@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Award, ClipboardCheck, FileEdit, FileText, Handshake, Trophy } from "lucide-react";
+import { ArrowRight, Award, ClipboardCheck, FileEdit, FileText } from "lucide-react";
 import CertificateModal from "./CertificateModal";
 import {
   AlertDialog,
@@ -21,9 +21,9 @@ const actions = [
   { label: "Full Paper Submission", mobileLabel: "Full Paper", external: CMT_SUBMISSION_URL, color: "bg-red-700 text-white hover:bg-red-800", icon: FileEdit },
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
   { label: "Submit Abstract", mobileLabel: "Abstract", href: "/themes#submit-abstract", color: "bg-gold text-navy hover:bg-gold/90", icon: FileText },
-  { label: "Join the Hackathon", mobileLabel: "Hackathon", href: "/hackathon#register", color: "bg-purple-700 text-white hover:bg-purple-800", icon: Trophy },
-  { label: "Become a Sponsor", mobileLabel: "Sponsor", href: "/sponsorship", color: "bg-blue-800 text-white hover:bg-blue-900", icon: Handshake },
 ];
+
+const CERTIFICATE_HINT_KEY = "tass-certificate-hint";
 
 const ACTION_BASE_CLASS =
   "inline-flex items-center justify-center font-semibold rounded-full shadow-lg hover:shadow-xl opacity-75 hover:opacity-100 transition-all whitespace-nowrap " +
@@ -33,6 +33,23 @@ export default function FloatingSidebar() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.9], [0, 120]);
   const [certificateOpen, setCertificateOpen] = useState(false);
+  const [showCertificateHint, setShowCertificateHint] = useState(() => {
+    try {
+      return window.localStorage.getItem(CERTIFICATE_HINT_KEY) !== "dismissed";
+    } catch {
+      return true;
+    }
+  });
+
+  const openCertificatePortal = () => {
+    setCertificateOpen(true);
+    setShowCertificateHint(false);
+    try {
+      window.localStorage.setItem(CERTIFICATE_HINT_KEY, "dismissed");
+    } catch {
+      // storage blocked (private mode): the hint simply shows again next visit
+    }
+  };
 
   return (
     <>
@@ -40,16 +57,35 @@ export default function FloatingSidebar() {
         style={{ y }}
         className="fixed right-1.5 sm:right-3 md:right-4 top-[35%] md:top-1/2 -translate-y-1/2 z-50 flex-col gap-1 md:gap-2 flex"
       >
-        <button
-          type="button"
-          onClick={() => setCertificateOpen(true)}
-          className={`bg-amber-500 text-white hover:bg-amber-600 ${ACTION_BASE_CLASS}`}
-          aria-label="Generate Certificate"
-        >
-          <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
-          <span className="hidden md:inline">Generate Certificate</span>
-          <span className="md:hidden">Certificate</span>
-        </button>
+        <div className="relative">
+          <button
+            type="button"
+            onClick={openCertificatePortal}
+            className={`relative w-full bg-amber-500 text-white hover:bg-amber-600 ${ACTION_BASE_CLASS}`}
+            aria-label="Generate Certificate"
+          >
+            <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
+            <span className="hidden md:inline">Generate Certificate</span>
+            <span className="md:hidden">Certificate</span>
+          </button>
+
+          {/* pulsing outline keeps attention on the certificate button */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-1 rounded-full border-2 border-amber-400/80 animate-certificate-hint"
+          />
+
+          {/* callout with the arrow pointing at the button */}
+          {showCertificateHint && (
+            <div className="pointer-events-none absolute right-full top-1/2 z-10 mr-1.5 flex -translate-y-1/2 items-center gap-1 rounded-full border border-amber-300 bg-white px-2 py-1 text-[10px] font-semibold leading-none text-amber-900 shadow-lg sm:mr-2.5 sm:px-3 sm:py-1.5 sm:text-xs dark:border-amber-400/40 dark:bg-card dark:text-foreground">
+              Get certificate
+              <ArrowRight
+                className="h-3 w-3 text-amber-600 sm:h-3.5 sm:w-3.5 dark:text-amber-400"
+                aria-hidden="true"
+              />
+            </div>
+          )}
+        </div>
 
         {actions.map((a) => (
           a.external ? (
