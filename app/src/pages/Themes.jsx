@@ -153,7 +153,7 @@ export default function Themes() {
       </section>
 
       {/* Submit Your Abstract CTA */}
-      <section id="submit-abstract" className="py-10 md:py-10" style={{ backgroundColor: "#0a5c36" }}>
+      {/* submit-abstract section removed; conference has ended */}{" "}
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 text-center">
           <h2
             className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4"

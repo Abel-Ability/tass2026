@@ -1,27 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Award, ClipboardCheck, FileEdit, FileText, ShieldCheck } from "lucide-react";
+import { ArrowRight, Award, ClipboardCheck, ShieldCheck } from "lucide-react";
 import CertificateModal from "./CertificateModal";
 import VerifyCertificateModal from "./VerifyCertificateModal";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
-  AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-
-const CMT_SUBMISSION_URL = "https://cmt3.research.microsoft.com/Conference/Recent";
 
 const actions = [
-  { label: "Full Paper Submission", mobileLabel: "Full Paper", external: CMT_SUBMISSION_URL, color: "bg-red-700 text-white hover:bg-red-800", icon: FileEdit },
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
-  { label: "Submit Abstract", mobileLabel: "Abstract", href: "/themes#submit-abstract", color: "bg-gold text-navy hover:bg-gold/90", icon: FileText },
 ];
 
 const CERTIFICATE_HINT_KEY = "tass-certificate-hint";
@@ -101,49 +86,11 @@ export default function FloatingSidebar() {
         </button>
 
         {actions.map((a) => (
-          a.external ? (
-            <AlertDialog key={a.label}>
-              <AlertDialogTrigger asChild>
-                <button
-                  type="button"
-                  className={`${a.color} ${ACTION_BASE_CLASS}`}
-                  aria-label={a.label}
-                >
-                  <a.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
-                  <span className="hidden md:inline">{a.label}</span>
-                  <span className="md:hidden">{a.mobileLabel}</span>
-                </button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Complete Your Full Paper Submission</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Full papers are submitted through the Microsoft CMT platform. Before you can submit, you
-                    must first <strong>register as an author</strong> on CMT and sign in. If you already have a
-                    CMT account, please sign in on the next page before submitting your full paper.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <a href={CMT_SUBMISSION_URL} target="_blank" rel="noopener noreferrer">
-                      Continue to CMT
-                    </a>
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          ) : (
-            <Link
-              key={a.label}
-              to={a.href}
-              className={`${a.color} ${ACTION_BASE_CLASS}`}
-            >
-              <a.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
-              <span className="hidden md:inline">{a.label}</span>
-              <span className="md:hidden">{a.mobileLabel}</span>
-            </Link>
-          )
+          <Link key={a.label} to={a.href} className={`${a.color} ${ACTION_BASE_CLASS}`}>
+            <a.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
+            <span className="hidden md:inline">{a.label}</span>
+            <span className="md:hidden">{a.mobileLabel}</span>
+          </Link>
         ))}
       </motion.div>
 

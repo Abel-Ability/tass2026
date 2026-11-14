@@ -105,44 +105,8 @@ export default function HeroSection() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap gap-4">
-                <Link
-                  to="/themes#submit-abstract"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 bg-gold text-navy font-semibold rounded-full hover:bg-gold/90 transition-all text-[21px]"
-                  aria-label="Submit Abstract"
-                >
-                  Submit Abstract
-                </Link>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-2 px-7 py-3.5 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-all text-[21px]"
-                      aria-label="Submit Full Paper"
-                    >
-                      Full Paper Submission <ExternalLink className="w-5 h-5" />
-                    </button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Complete Your Full Paper Submission</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Full papers are submitted through the Microsoft CMT platform. Before you can submit, you
-                        must first <strong>register as an author</strong> on CMT and sign in. If you already have a
-                        CMT account, please sign in on the next page before submitting your full paper.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction asChild>
-                        <a href={CMT_SUBMISSION_URL} target="_blank" rel="noopener noreferrer">
-                          Continue to CMT
-                        </a>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </div>
+              {/* Hero CTAs removed per conference end requirements; only Register / Generate / Verify are available. */}
+            </div>
             </motion.div>
           </div>
 
