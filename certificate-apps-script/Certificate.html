@@ -58,7 +58,12 @@
       <option value="participation">Participation</option>
       <option value="presentation">Participation and Paper Presentation</option>
     </select>
-    <p class="hint">Only one certificate is issued per registration number, so choose carefully. “Participation and Paper Presentation” is for authors with a paper in the programme.</p>
+    <p class="hint">Authors (main or co-author) choose “Participation and Paper Presentation” and can generate one certificate for each of their papers. “Participation” is for registered participants without a paper.</p>
+
+    <div id="paperBox" hidden>
+      <label for="paper">Which paper is this certificate for?</label>
+      <select id="paper"></select>
+    </div>
 
     <button id="go" type="submit"><span class="spin"></span><span id="goText">Generate certificate</span></button>
   </form>
@@ -70,6 +75,7 @@
     <dl>
       <dt>Name</dt><dd id="rName"></dd>
       <dt>Type</dt><dd id="rType"></dd>
+      <dt id="rPaperT">Paper</dt><dd id="rPaper"></dd>
       <dt>Certificate No.</dt><dd id="rNo"></dd>
     </dl>
     <div class="actions">
@@ -86,7 +92,15 @@
   var goText = document.getElementById('goText');
   var msg = document.getElementById('msg');
   var result = document.getElementById('result');
+  var paperBox = document.getElementById('paperBox');
+  var paper = document.getElementById('paper');
   var blobUrl = null;
+
+  // changing any field invalidates a paper list shown earlier
+  ['reg', 'surname', 'type'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () { paperBox.hidden = true; });
+    document.getElementById(id).addEventListener('change', function () { paperBox.hidden = true; });
+  });
 
   function showMsg(text, kind) { msg.className = 'msg ' + kind; msg.textContent = text; }
   function clearMsg() { msg.className = 'msg'; msg.textContent = ''; }
@@ -106,6 +120,7 @@
     clearMsg();
     result.style.display = 'none';
     var reg = form.reg.value.trim(), sur = form.surname.value.trim(), type = form.type.value;
+    var paperId = (!paperBox.hidden && type === 'presentation') ? paper.value : '';
     if (!reg || !sur || !type) { showMsg('Please fill in your registration number, surname and certificate type.', 'err'); return; }
     setBusy(true);
     google.script.run
@@ -114,11 +129,24 @@
         setBusy(false);
         showMsg('Could not reach the server. Check your connection and try again.', 'err');
       })
-      .claimCertificate(reg, sur, type);
+      .claimCertificate(reg, sur, type, paperId);
   });
 
   function onDone(res) {
     setBusy(false);
+    if (res && res.needsChoice) {
+      paper.innerHTML = '';
+      res.papers.forEach(function (p) {
+        var o = document.createElement('option');
+        o.value = p.id;
+        o.textContent = p.title + ' (' + p.role + ')';
+        paper.appendChild(o);
+      });
+      paperBox.hidden = false;
+      showMsg(res.message, 'info');
+      paper.focus();
+      return;
+    }
     if (!res || !res.ok) { showMsg((res && res.message) || 'Something went wrong. Please try again.', 'err'); return; }
 
     if (blobUrl) URL.revokeObjectURL(blobUrl);
@@ -127,6 +155,9 @@
     document.getElementById('rName').textContent = res.name;
     document.getElementById('rType').textContent = res.typeLabel;
     document.getElementById('rNo').textContent = res.certNo;
+    document.getElementById('rPaper').textContent = res.paperTitle || '';
+    document.getElementById('rPaper').hidden = !res.paperTitle;
+    document.getElementById('rPaperT').hidden = !res.paperTitle;
     document.getElementById('rTitle').textContent = res.reused ? 'Here is your certificate again' : 'Your certificate is ready';
     var dl = document.getElementById('dl');
     dl.href = blobUrl;

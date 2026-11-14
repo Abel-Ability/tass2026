@@ -9,8 +9,9 @@
 /* ───────────────────────────── CONFIG ───────────────────────────── */
 const CONFIG = {
   ROSTER_SPREADSHEET_ID: '1AqypBH8gehtbv6MdtSunGsxKwX-b2T5gUXfLuxZnOdk',
-  ROSTER_SHEET_NAME: '',                 // '' = first tab of the spreadsheet
+  ROSTER_SHEET_NAME: 'Consolidated',     // '' = first tab of the spreadsheet
   LOG_SHEET_NAME: 'Issued Certificates', // created automatically
+  VERIFY_LOG_SHEET_NAME: 'Verification Log', // created automatically; one row per ?verify= lookup
   CERT_FOLDER_ID: '198VzaA4idKrOazZlf_ndGR3b94Marmzq',
 
   TEMPLATE_SLIDES_ID: '1CLqHNQz9as4Ugj3Nr49j-Gi-QYrPD_7ydydItEfCoXs',
@@ -33,9 +34,11 @@ const CERT_TYPES = {
 
 const LOG_HEADERS = ['First Issued At', 'Last Access At', 'Access Date', 'Access Count',
   'Registration ID', 'Full Names', 'Author (main/co)', 'Paper Title',
-  'Certificate Number', 'File ID', 'File Name', 'Certificate Type'];
+  'Certificate Number', 'File ID', 'File Name', 'Certificate Type', 'Submission ID'];
 const COL = { FIRST: 0, LAST: 1, DATE: 2, COUNT: 3, REG: 4, NAME: 5, AUTHOR: 6, PAPER: 7,
-  CERTNO: 8, FILEID: 9, FILENAME: 10, TYPE: 11 };
+  CERTNO: 8, FILEID: 9, FILENAME: 10, TYPE: 11, SUB: 12 };
+
+const VERIFY_LOG_HEADERS = ['Checked At', 'Certificate Number', 'Result'];
 
 const TITLES = ['mr', 'mrs', 'ms', 'miss', 'dr', 'prof', 'professor', 'engr', 'engineer', 'chief',
   'hon', 'sir', 'rev', 'pastor', 'alhaji', 'alhaja', 'hajia', 'barr', 'arc', 'pharm', 'dame', 'elder', 'mallam',
@@ -46,8 +49,10 @@ function doGet(e) {
   const p = (e && e.parameter) || {};
   let out;
   if (p.verify) {
+    const data = buildVerificationData_(p.verify);
+    logVerification_(data); // best effort: a logging failure must never block the result page
     const t = HtmlService.createTemplateFromFile('Verify');
-    t.data = buildVerificationData_(p.verify);
+    t.data = data;
     out = t.evaluate();
   } else {
     out = HtmlService.createHtmlOutputFromFile('Certificate');
@@ -59,21 +64,22 @@ function doGet(e) {
 }
 
 /* ───────────────────── PUBLIC (called from the page) ───────────────────── */
-function claimCertificate(regId, surname, typeKey) {
+function claimCertificate(regId, surname, typeKey, paperId) {
   try {
-    return claim_(regId, surname, typeKey);
+    return claim_(regId, surname, typeKey, paperId);
   } catch (err) {
     console.error(err && err.stack ? err.stack : err);
     return fail_('Something went wrong on our side. Please try again in a minute or contact the organisers.');
   }
 }
 
-function claim_(regId, surname, typeKey) {
+function claim_(regId, surname, typeKey, paperId) {
   regId = String(regId || '').trim();
   surname = String(surname || '').trim();
+  paperId = String(paperId || '').trim();
   const regKey = normReg_(regId);
-  if (!regKey || regKey.length > 40 || surname.length < 2 || surname.length > 80 || !CERT_TYPES[typeKey]) {
-    return fail_('Please complete all three fields correctly.');
+  if (!regKey || regKey.length > 40 || surname.length < 2 || surname.length > 80 || paperId.length > 60 || !CERT_TYPES[typeKey]) {
+    return fail_('Please complete all fields correctly.');
   }
 
   // 1. Throttle wrong guesses (stops walking through registration IDs)
@@ -85,30 +91,75 @@ function claim_(regId, surname, typeKey) {
   }
 
   // 2. Roster lookup – registration ID AND surname must match (same message for either failure)
-  const entry = findRosterEntry_(regKey, surname);
-  if (!entry) {
+  const matches = findRosterEntries_(regKey, surname);
+  if (!matches.length) {
     cache.put(failKey, String(fails + 1), 3600);
     return fail_('We could not match that registration number and surname. Please check both and try again.');
   }
   cache.remove(failKey);
 
+  // 3. Which certificate?
+  //    Participation  → one per person, for registrants WITHOUT a paper only.
+  //    Paper Presentation → main authors and co-authors; one per paper.
   const type = CERT_TYPES[typeKey];
-  if (type.needsPaper && !entry.paperTitle) {
-    return fail_('Our records show no paper title under this registration number, so the ' + type.label +
-      ' cannot be issued yet. If you presented a paper, please contact ' + CONFIG.SUPPORT_CONTACT +
-      ' so your record can be updated. Otherwise, choose Participation.');
+  const mains = matches.filter(function (m) { return m.author === 'main'; });
+  const cos = matches.filter(function (m) { return m.author === 'co'; });
+  const unclear = matches.filter(function (m) { return !m.author && m.paperTitle; }); // paper but no Author_Type
+  const unclearMsg = 'Our records list a paper under this registration number but do not say whether you are the main ' +
+    'author or a co-author, so this certificate cannot be issued yet. Please contact ' + CONFIG.SUPPORT_CONTACT +
+    ' so your record can be updated.';
+  const unclearNote = 'Another paper under your registration number has no author status in our records, so it is not ' +
+    'listed. If you need a certificate for it, please contact ' + CONFIG.SUPPORT_CONTACT + '.';
+  let entry;
+  let extraNotice = '';
+
+  if (!type.needsPaper) {
+    // Authors (anyone with a paper) get the Participation and Paper Presentation certificate instead
+    if (papersOf_(matches).length) {
+      return fail_('Authors receive the ' + CERT_TYPES.presentation.label + ', one for each paper. ' +
+        'Please choose that option instead.');
+    }
+    if (!mains.length && !cos.length && unclear.length) return fail_(unclearMsg);
+    const kind = mains.length ? 'main' : (cos.length ? 'co' : '');
+    const base = (mains.length ? mains : (cos.length ? cos : matches))[0];
+    entry = Object.assign({}, base, { author: kind, paperTitle: '', paperKey: '', submissionId: '' });
+  } else {
+    const papers = papersOf_(matches); // rows with a title and a known author status (main or co)
+    if (!papers.length) {
+      if (unclear.length) return fail_(unclearMsg);
+      return fail_('Our records show no paper title under this registration number, so the ' + type.label +
+        ' cannot be issued yet. If you presented a paper, please contact ' + CONFIG.SUPPORT_CONTACT +
+        ' so your record can be updated. Otherwise, choose Participation.');
+    }
+    if (unclear.length) extraNotice = unclearNote;
+    if (paperId) {
+      entry = papers.filter(function (p) { return p.paperKey === paperId; })[0];
+      if (!entry) return fail_('That paper could not be found for this registration number. Please select it again.');
+    } else if (papers.length === 1) {
+      entry = papers[0];
+    } else {
+      return {
+        ok: false, needsChoice: true,
+        message: 'You have ' + papers.length + ' papers. Please select the paper for this certificate, then click Generate again.' +
+          (extraNotice ? ' ' + extraNotice : ''),
+        papers: papers.map(function (p) {
+          return { id: p.paperKey, title: p.paperTitle, role: roleFor_(p).replace(/^(the|an?) /, '') };
+        })
+      };
+    }
   }
 
-  // 3. Decide inside the lock: reuse the existing PDF, or claim the right to create one
+  // 4. Decide inside the lock: reuse the existing PDF, or claim the right to create one
   let plan;
   withLock_(function () { plan = issueOrReuse_(entry, typeKey); });
   if (plan.status === 'blocked') return fail_(plan.message);
+  if (extraNotice) plan.notice = ((plan.notice || '') + ' ' + extraNotice).trim();
 
   if (plan.status === 'reuse') {
     return success_(DriveApp.getFileById(plan.fileId), plan, entry, true);
   }
 
-  // 4. Generate outside the lock (slow part), then record the result
+  // 5. Generate outside the lock (slow part), then record the result
   let file;
   try {
     file = generateCertificate_(entry, plan.typeKey, plan.certNo);
@@ -121,7 +172,9 @@ function claim_(regId, surname, typeKey) {
 }
 
 /* ───────────────────── ISSUANCE: generate once, reuse forever ───────────────────── */
-// Runs inside the script lock. Returns {status:'blocked'|'reuse'|'generate', ...}
+// Runs inside the script lock. One log row per (registration ID + certificate type + paper):
+// Participation → 1 per person; Paper Presentation → 1 per paper (Submission ID).
+// Returns {status:'blocked'|'reuse'|'generate', ...}
 function issueOrReuse_(entry, typeKey) {
   const now = new Date();
   const today = Utilities.formatDate(now, CONFIG.TIMEZONE, 'yyyy-MM-dd');
@@ -134,18 +187,22 @@ function issueOrReuse_(entry, typeKey) {
   let idx = -1;
   data.forEach(function (r, i) {
     used[String(r[COL.CERTNO])] = true;
-    if (idx < 0 && normReg_(r[COL.REG]) === entry.regKey) idx = i;
+    if (idx < 0 &&
+        normReg_(r[COL.REG]) === entry.regKey &&
+        typeKeyFromLabel_(String(r[COL.TYPE] || '')) === typeKey &&
+        String(r[COL.SUB] || '').trim() === entry.paperKey) idx = i;
   });
 
-  // ── First request ever for this registration: claim a certificate number
+  // ── First request for this certificate: claim a certificate number
   if (idx < 0) {
     const certNo = newCertNo_(used, entry.regId);
     const r = sh.getLastRow() + 1;
     sh.getRange(r, COL.REG + 1).setNumberFormat('@');
     sh.getRange(r, COL.DATE + 1).setNumberFormat('@');
+    sh.getRange(r, COL.SUB + 1).setNumberFormat('@');
     sh.getRange(r, 1, 1, LOG_HEADERS.length).setValues([[
       now, now, today, 1, entry.regId, entry.name, entry.authorRaw, entry.paperTitle,
-      certNo, 'PENDING', '', requestedLabel]]);
+      certNo, 'PENDING', '', requestedLabel, entry.paperKey]]);
     return { status: 'generate', certNo: certNo, created: true, typeKey: typeKey, typeLabel: requestedLabel };
   }
 
@@ -162,7 +219,6 @@ function issueOrReuse_(entry, typeKey) {
       return { status: 'blocked', message: 'Your certificate is still being prepared. Please wait a moment and try again.' };
     }
     sh.getRange(sheetRow, 2, 1, 1).setValue(now);
-    sh.getRange(sheetRow, COL.TYPE + 1).setValue(requestedLabel);
     return { status: 'generate', certNo: certNo, created: false, typeKey: typeKey, typeLabel: requestedLabel };
   }
 
@@ -170,28 +226,21 @@ function issueOrReuse_(entry, typeKey) {
   const secondsSince = msSince / 1000;
   if (secondsSince < CONFIG.COOLDOWN_SECONDS) {
     return { status: 'blocked', message: 'Please wait ' + Math.ceil(CONFIG.COOLDOWN_SECONDS - secondsSince) +
-      ' seconds before requesting your certificate again.' };
+      ' seconds before requesting this certificate again.' };
   }
   const count = toDateStr_(row[COL.DATE]) === today ? (Number(row[COL.COUNT]) || 0) : 0;
   if (count >= CONFIG.MAX_REQUESTS_PER_DAY) {
-    return { status: 'blocked', message: 'You have reached the daily limit for this registration number. Please try again tomorrow.' };
+    return { status: 'blocked', message: 'You have reached the daily limit for this certificate. Please try again tomorrow.' };
   }
   sh.getRange(sheetRow, 2, 1, 3).setValues([[now, today, count + 1]]);
 
-  const issuedLabel = String(row[COL.TYPE] || requestedLabel);
   let file = null;
   try { file = DriveApp.getFileById(fileId); if (file.isTrashed()) file = null; } catch (e) { file = null; }
 
   if (!file) { // PDF was deleted from Drive: rebuild it under the SAME certificate number
-    return { status: 'generate', certNo: certNo, created: false,
-      typeKey: typeKeyFromLabel_(issuedLabel) || typeKey, typeLabel: issuedLabel };
+    return { status: 'generate', certNo: certNo, created: false, typeKey: typeKey, typeLabel: requestedLabel };
   }
-  return {
-    status: 'reuse', fileId: fileId, certNo: certNo, typeLabel: issuedLabel,
-    notice: issuedLabel !== requestedLabel
-      ? 'A ' + issuedLabel + ' was already issued for this registration number, so that is the certificate shown here.'
-      : ''
-  };
+  return { status: 'reuse', fileId: fileId, certNo: certNo, typeLabel: requestedLabel, notice: '' };
 }
 
 function finalizeClaim_(plan, file) {
@@ -227,7 +276,7 @@ function generateCertificate_(entry, typeKey, certNo) {
       CERT_TYPE: type.label,
       FULL_NAME: entry.name,
       NAME: entry.name,
-      ROLE: roleFor_(entry, typeKey),
+      ROLE: roleFor_(entry),
       PAPER_TITLE: typeKey === 'presentation' ? 'Title of Paper: \u201C' + entry.paperTitle + '\u201D' : '',
       CERT_NO: certNo,
       DATE: Utilities.formatDate(now, CONFIG.TIMEZONE, 'd MMMM yyyy')
@@ -286,11 +335,8 @@ function verifyUrl_(certNo) {
   return base + (base.indexOf('?') > -1 ? '&' : '?') + 'verify=' + encodeURIComponent(certNo);
 }
 
-function roleFor_(entry, typeKey) {
-  if (typeKey === 'presentation') {
-    return entry.author === 'main' ? 'the Main Author' : entry.author === 'co' ? 'a Co-Author' : 'an Author';
-  }
-  return 'a Delegate';
+function roleFor_(entry) {
+  return entry.author === 'main' ? 'the Main Author' : (entry.author === 'co' ? 'a Co-Author' : 'a Delegate');
 }
 
 /* ───────────────────────────── ROSTER ───────────────────────────── */
@@ -332,19 +378,21 @@ function locateColumns_(rows) {
     if (iPaper < 0) iPaper = h.indexOf('papertitle');
     if (iPaper < 0) iPaper = h.findIndex(function (k) { return k.indexOf('paper') > -1; });
     if (iPaper < 0) iPaper = h.findIndex(function (k) { return k.indexOf('title') > -1; });
-    return { row: r, iReg: iReg, iName: iName, iAuth: iAuth, iPaper: iPaper };
+    const iSub = h.indexOf('submissionid');
+    return { row: r, iReg: iReg, iName: iName, iAuth: iAuth, iPaper: iPaper, iSub: iSub };
   }
   return null;
 }
 
-function findRosterEntry_(regKey, surname) {
+// All roster rows for this registration ID whose name matches the surname, best row first.
+function findRosterEntries_(regKey, surname) {
   const values = getRosterSheet_().getDataRange().getValues();
   const loc = locateColumns_(values);
   if (!loc) throw new Error('Roster headers not found');
-  const iReg = loc.iReg, iName = loc.iName, iAuth = loc.iAuth, iPaper = loc.iPaper;
+  const iReg = loc.iReg, iName = loc.iName, iAuth = loc.iAuth, iPaper = loc.iPaper, iSub = loc.iSub;
 
   const wanted = surnameTokens_(surname);
-  if (!wanted) return null;
+  if (!wanted) return [];
   const hits = [];
   for (let i = loc.row + 1; i < values.length; i++) {
     const r = values[i];
@@ -354,16 +402,33 @@ function findRosterEntry_(regKey, surname) {
     const authorRaw = iAuth > -1 ? String(r[iAuth] || '').trim() : '';
     const author = classifyAuthor_(authorRaw);
     const paperTitle = iPaper > -1 ? String(r[iPaper] || '').trim() : '';
-    const rank = (author === 'main' ? 0 : 2) + (paperTitle ? 0 : 1); // main+paper wins
+    const submissionId = iSub > -1 ? String(r[iSub] || '').trim() : '';
+    const rank = (author === 'main' ? 0 : 2) + (paperTitle ? 0 : 1); // main+paper first
     hits.push({ rank: rank, regKey: regKey, regId: String(r[iReg]).trim(), name: name,
-      author: author, authorRaw: authorRaw, paperTitle: paperTitle });
+      author: author, authorRaw: authorRaw, paperTitle: paperTitle, submissionId: submissionId,
+      paperKey: paperTitle ? paperKey_(submissionId, paperTitle) : '' });
   }
-  if (!hits.length) return null;
-  hits.sort(function (x, y) { return x.rank - y.rank; }); // stable in V8 → earliest row wins ties
-  return hits[0];
+  hits.sort(function (x, y) { return x.rank - y.rank; }); // stable in V8 → sheet order within the same rank
+  return hits;
 }
 
-// 'main' | 'co' | '' (blank). Anything that is not clearly "main" counts as co-author.
+// One entry per distinct paper the person is main author OR co-author of
+function papersOf_(matches) {
+  const seen = {}, out = [];
+  matches.forEach(function (m) {
+    if (m.author && m.paperTitle && !seen[m.paperKey]) { seen[m.paperKey] = true; out.push(m); }
+  });
+  return out;
+}
+
+// Stable id for a paper: its Submission ID, or a short hash of the title when that is blank
+function paperKey_(submissionId, title) {
+  const sid = String(submissionId || '').trim().toUpperCase().replace(/\s+/g, '');
+  if (sid) return sid.slice(0, 40);
+  const bytes = Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, norm_(title));
+  return 'T' + bytes.map(function (b) { return ('0' + ((b + 256) % 256).toString(16)).slice(-2); }).join('').slice(0, 10);
+}
+
 function classifyAuthor_(raw) {
   const a = norm_(raw);
   if (!a) return '';
@@ -405,7 +470,7 @@ function buildVerificationData_(certNo) {
 /* ───────────────────────────── HELPERS ───────────────────────────── */
 function success_(file, plan, entry, reused) {
   return {
-    ok: true, reused: reused, certNo: plan.certNo, typeLabel: plan.typeLabel, name: entry.name,
+    ok: true, reused: reused, certNo: plan.certNo, typeLabel: plan.typeLabel, name: entry.name, paperTitle: entry.paperTitle || '',
     fileName: file.getName(), notice: plan.notice || '',
     pdfBase64: Utilities.base64Encode(file.getBlob().getBytes())
   };
@@ -428,6 +493,39 @@ function getLogSheet_() {
     sh.getRange(1, COL.REG + 1, sh.getMaxRows(), 1).setNumberFormat('@');
     sh.getRange(1, COL.DATE + 1, sh.getMaxRows(), 1).setNumberFormat('@');
     sh.getRange(2, 1, sh.getMaxRows() - 1, 2).setNumberFormat('yyyy-mm-dd hh:mm:ss');
+  }
+  // older log tab without the Submission ID column → add it
+  if (sh.getRange(1, LOG_HEADERS.length).getValue() !== LOG_HEADERS[LOG_HEADERS.length - 1]) {
+    sh.getRange(1, 1, 1, LOG_HEADERS.length).setValues([LOG_HEADERS]);
+    sh.getRange(1, COL.SUB + 1, sh.getMaxRows(), 1).setNumberFormat('@');
+  }
+  return sh;
+}
+
+/* Verification lookups (?verify=<cert-no>, from QR scans and the site's
+   Verify modal) are appended to their own tab. Appends are best effort so an
+   unavailable sheet can never break the public verification page. */
+function logVerification_(data) {
+  try {
+    getVerifyLogSheet_().appendRow([
+      new Date(),
+      data && data.certNo ? data.certNo : '',
+      data && data.valid ? 'Valid' : 'Not found'
+    ]);
+  } catch (err) {
+    console.error('Verification log skipped: ' + (err && err.message ? err.message : err));
+  }
+}
+
+function getVerifyLogSheet_() {
+  const ss = SpreadsheetApp.openById(CONFIG.ROSTER_SPREADSHEET_ID);
+  let sh = ss.getSheetByName(CONFIG.VERIFY_LOG_SHEET_NAME);
+  if (!sh) {
+    sh = ss.insertSheet(CONFIG.VERIFY_LOG_SHEET_NAME);
+    sh.getRange(1, 1, 1, VERIFY_LOG_HEADERS.length).setValues([VERIFY_LOG_HEADERS]).setFontWeight('bold').setBackground('#e8f3ea');
+    sh.setFrozenRows(1);
+    sh.getRange(1, 1, sh.getMaxRows(), 1).setNumberFormat('yyyy-mm-dd hh:mm:ss');
+    sh.getRange(1, 2, sh.getMaxRows(), 1).setNumberFormat('@'); // keep certificate numbers as text
   }
   return sh;
 }
@@ -486,7 +584,7 @@ function checkSetup() {
     const hdr = values[loc.row];
     const col = function (i) { return i > -1 ? '"' + hdr[i] + '"' : 'NOT FOUND'; };
     return 'tab "' + sh.getName() + '", header row ' + (loc.row + 1) + ', ' + (values.length - loc.row - 1) + ' rows | ID: ' +
-      col(loc.iReg) + ' | Name: ' + col(loc.iName) + ' | Author: ' + col(loc.iAuth) + ' | Paper: ' + col(loc.iPaper);
+      col(loc.iReg) + ' | Name: ' + col(loc.iName) + ' | Author: ' + col(loc.iAuth) + ' | Paper: ' + col(loc.iPaper) + ' | Submission: ' + col(loc.iSub);
   });
   tryIt('Author_Type values', function () {
     const values = getRosterSheet_().getDataRange().getValues();
@@ -504,6 +602,18 @@ function checkSetup() {
       return '"' + k + '" x' + counts[k] + ' = ' + kind;
     }).join(' | ');
   });
+  tryIt('Papers with a blank Author_Type', function () {
+    const values = getRosterSheet_().getDataRange().getValues();
+    const loc = locateColumns_(values);
+    const bad = [];
+    for (let i = loc.row + 1; i < values.length; i++) {
+      const reg = normReg_(values[i][loc.iReg]);
+      if (!reg || String(values[i][loc.iPaper] || '').trim() === '') continue;
+      if (loc.iAuth < 0 || String(values[i][loc.iAuth] || '').trim() === '') bad.push(reg);
+    }
+    return bad.length + ' paper row(s) have no Author_Type (these people are told to contact support)' +
+      (bad.length ? ': ' + bad.slice(0, 15).join(', ') + (bad.length > 15 ? ' …' : '') : '');
+  });
   tryIt('Authors with a blank Title', function () {
     const values = getRosterSheet_().getDataRange().getValues();
     const loc = locateColumns_(values);
@@ -520,6 +630,23 @@ function checkSetup() {
     return withTitle + ' rows have a paper title; ' + bad.length + ' author row(s) have none' +
       (bad.length ? ': ' + bad.slice(0, 15).join(', ') + (bad.length > 15 ? ' …' : '') : '');
   });
+  tryIt('Authors with several papers', function () {
+    const values = getRosterSheet_().getDataRange().getValues();
+    const loc = locateColumns_(values);
+    const papers = {}, noSub = [];
+    for (let i = loc.row + 1; i < values.length; i++) {
+      const reg = normReg_(values[i][loc.iReg]);
+      const title = String(values[i][loc.iPaper] || '').trim();
+      if (!reg || !title) continue;
+      const sid = loc.iSub > -1 ? String(values[i][loc.iSub] || '').trim() : '';
+      if (!sid) noSub.push(reg);
+      const key = paperKey_(sid, title);
+      (papers[reg] = papers[reg] || {})[key] = true;
+    }
+    const multi = Object.keys(papers).filter(function (k) { return Object.keys(papers[k]).length > 1; });
+    return multi.length + ' registration(s) with 2+ papers' + (multi.length ? ': ' + multi.slice(0, 10).join(', ') : '') +
+      ' | paper rows with blank Submission ID: ' + noSub.length;
+  });
   tryIt('Certificate number clashes', function () {
     const values = getRosterSheet_().getDataRange().getValues();
     const loc = locateColumns_(values);
@@ -534,10 +661,11 @@ function checkSetup() {
     const clashes = Object.keys(map).filter(function (k) { return Object.keys(map[k]).length > 1; })
       .map(function (k) { return k + ' ← ' + Object.keys(map[k]).join(', '); });
     return (clashes.length ? clashes.length + ' shared last-5-digit group(s): ' + clashes.slice(0, 10).join(' ; ') +
-      ' (later person gets a -B suffix)' : 'none, all numbers unique') +
+      ' (later certificate gets a -B suffix)' : 'none, all numbers unique') +
       (noDigits.length ? ' | IDs with no digits: ' + noDigits.slice(0, 5).join(', ') : '');
   });
   tryIt('Log sheet', function () { return getLogSheet_().getName(); });
+  tryIt('Verification log', function () { return getVerifyLogSheet_().getName(); });
   tryIt('Certificates folder', function () { return DriveApp.getFolderById(CONFIG.CERT_FOLDER_ID).getName(); });
   tryIt('Slides template', function () {
     const f = DriveApp.getFileById(CONFIG.TEMPLATE_SLIDES_ID);

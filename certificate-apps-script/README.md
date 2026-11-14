@@ -10,7 +10,8 @@ project, deployed separately from the website. Vite does not build or deploy it.
 | | |
 | --- | --- |
 | Live deployment | `https://script.google.com/macros/s/AKfycbxoXcBjjwYsNYdQpQopB6xbl63m2eTl_U84WCrxZPe62ucSbLt6KVegAhoMMgKQ8aoB/exec` |
-| Embedded by | `app/src/components/conference/CertificateModal.jsx` (`GAS_CERT_URL`) |
+| Embedded by | `app/src/components/conference/CertificateModal.jsx` (`?embed=true`) |
+| Verify lookups | same URL with `?verify=<cert-no>`, used by certificate QR codes and `app/src/components/conference/VerifyCertificateModal.jsx` |
 
 ## Files
 
@@ -25,24 +26,25 @@ project, deployed separately from the website. Vite does not build or deploy it.
 
 1. Participant opens the modal and enters **Registration number**, **Surname**
    and **Certificate type** (Participation, or Participation and Paper
-   Presentation).
-2. `findRosterEntry_` looks the pair up in the roster spreadsheet
-   (`1AqypBH8gehtbv6MdtSunGsxKwX-b2T5gUXfLuxZnOdk`). The registration ID must
-   match exactly (case/space-insensitive) **and** the surname must appear as a
-   whole word inside the `Full Names` value, so knowing an ID alone is not
-   enough.
-3. On the **first** request the app copies the Slides template, fills the
-   placeholders, adds a QR code, exports a PDF to the certificates folder and
-   records it in the **Issued Certificates** tab.
-4. Every later request for the same registration number returns that **same
-   PDF**. No second certificate is ever created.
+   Presentation). Authors with more than one paper pick which paper the
+   certificate is for.
+2. `findRosterEntries_` looks the pair up in the roster spreadsheet
+   (`1AqypBH8gehtbv6MdtSunGsxKwX-b2T5gUXfLuxZnOdk`, tab `Consolidated`). The
+   registration ID must match exactly (case/space-insensitive) **and** the
+   surname must appear as a whole word inside the `Full Names` value, so knowing
+   an ID alone is not enough.
+3. On the **first** request for a certificate the app copies the Slides template,
+   fills the placeholders, adds a QR code, exports a PDF to the certificates
+   folder and records it in the **Issued Certificates** tab.
+4. Every later request for the same registration number, certificate type and
+   paper returns that **same PDF**. Each paper gets its own certificate.
 5. The PDF is returned to the page as base64 and turned into a local blob, so
    the Drive file stays private and the download works without sharing links.
 
 `Issued Certificates` columns:
 `First Issued At · Last Access At · Access Date · Access Count · Registration ID ·
 Full Names · Author (main/co) · Paper Title · Certificate Number · File ID ·
-File Name · Certificate Type`
+File Name · Certificate Type · Submission ID`
 
 Certificate numbers are `TASS-2026-` + the last 5 digits of the registration
 number. If two registrations end in the same 5 digits the later one gets a
@@ -56,17 +58,18 @@ number. If two registrations end in the same 5 digits the later one gets a
 | `LockService` around the log writes | `claim_` → `withLock_` | Two simultaneous clicks creating two PDFs |
 | `PENDING` marker + stale timeout | `issueOrReuse_` | A second request while the first PDF is still rendering |
 | Issuance log tab | `Issued Certificates` | Audit trail; lets you revoke/renumber |
-| 60 s cooldown per registration | `CONFIG.COOLDOWN_SECONDS` | Rapid re-generation / hammering |
-| 5 requests per day per registration | `CONFIG.MAX_REQUESTS_PER_DAY` | Scripted abuse |
+| 60 s cooldown per certificate | `CONFIG.COOLDOWN_SECONDS` | Rapid re-generation / hammering |
+| 5 requests per day per certificate | `CONFIG.MAX_REQUESTS_PER_DAY` | Scripted abuse |
 | 8 wrong guesses per hour per ID | `CONFIG.MAX_FAILED_PER_HOUR` (CacheService) | Walking through registration numbers |
 | Surname must match the roster | `findRosterEntry_` | Claiming someone else's certificate |
 | QR → verification page | `?verify=` → `buildVerificationData_` | Forged or edited PDFs |
 
-One certificate per registration number is a hard rule: if a participant already
-has a Participation certificate and later asks for Participation and Paper
-Presentation, they get the original PDF back plus a notice explaining why. To
-issue the other type you must delete their row from `Issued Certificates` **and**
-their PDF from Drive.
+A certificate is issued once per **registration number + certificate type**, and
+for Paper Presentation once per **paper** (`Submission ID`). Re-requesting the
+same combination returns the existing PDF. Participants with a paper cannot
+request Participation — authors must choose Participation and Paper
+Presentation. To reissue, delete that row from `Issued Certificates` **and** its
+PDF from Drive.
 
 ## Setup
 
@@ -161,7 +164,7 @@ All in `CONFIG` (+ `CERT_TYPES`) at the top of `Code.gs`:
 | Key | Default | Notes |
 | --- | --- | --- |
 | `ROSTER_SPREADSHEET_ID` | `1AqypBH8gehtbv6MdtSunGsxKwX-b2T5gUXfLuxZnOdk` | Read-only. |
-| `ROSTER_SHEET_NAME` | `''` (auto-detect) | Set a tab name only if auto-detection picks the wrong one. |
+| `ROSTER_SHEET_NAME` | `Consolidated` | Roster tab in the spreadsheet. `''` auto-detects the first tab. |
 | `LOG_SHEET_NAME` | `Issued Certificates` | Created automatically in the roster spreadsheet. |
 | `CERT_FOLDER_ID` | certificates folder | Finished PDFs are stored here; it is never shared publicly. |
 | `TEMPLATE_SLIDES_ID` | `1CLqHNQz9as4Ugj3Nr49j-Gi-QYrPD_7ydydItEfCoXs` | Must be a native Google Slides file, not an uploaded `.pptx`. |
@@ -194,6 +197,12 @@ Every certificate carries `{{CERT_NO}}` and a QR pointing at
 
 The verification page is read-only. Scanning a QR on a printout opens the page in
 the phone's browser; it does not need a Google login.
+
+Every lookup — QR scan, the site's **Verify Certificate** modal, or a typed
+`?verify=` URL — appends one row to the **Verification Log** tab
+(`Checked At · Certificate Number · Result`). Logging is best effort: if the tab
+or spreadsheet is unavailable the page still renders. `checkSetup()` creates and
+reports the tab.
 
 ## Roster notes
 
