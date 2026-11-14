@@ -153,27 +153,7 @@ export default function Themes() {
       </section>
 
       {/* Submit Your Abstract CTA */}
-      {/* submit-abstract section removed; conference has ended */}{" "}
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 text-center">
-          <h2
-            className="font-display font-extrabold text-2xl md:text-3xl lg:text-4xl mb-4"
-            style={{ color: "#f4c430" }}
-          >
-            Submit Your Abstract
-          </h2>
-          <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-8">
-            Ready to present your research at TASS Nigeria 2026? Click the button below to submit your abstract.
-          </p>
-          <button
-            type="button"
-            onClick={openModal}
-            className="inline-flex items-center gap-2 px-8 py-3 font-semibold rounded-full shadow-lg transition-all hover:scale-105 text-xl md:text-2xl"
-            style={{ backgroundColor: "#f4c430", color: "#0a5c36" }}
-          >
-            Click to Submit Your Abstract
-          </button>
-        </div>
-      </section>
+      {/* submit-abstract section removed; conference has ended */}
 
       {/* Modal */}
       {modalOpen && (
