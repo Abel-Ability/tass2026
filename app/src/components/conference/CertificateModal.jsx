@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AlertCircle, Award, Loader2, X } from "lucide-react";
+import { PORTAL_READY, certificateIssueUrl } from "@/lib/certificatePortal";
 
 // ---------------------------------------------------------------------------
 // Certificate portal (Google Apps Script web app)
@@ -10,14 +11,12 @@ import { AlertCircle, Award, Loader2, X } from "lucide-react";
 //   Execute as: Me
 //   Who has access: Anyone
 //
-// Then paste the /exec URL below and keep the ?embed=true query string.
+// The deployment /exec URL lives in src/lib/certificatePortal.js and is shared
+// with VerifyCertificateModal (same deployment, ?verify=<cert-no>).
 // The deployment must use "Execute as: Me" + "Who has access: Anyone";
 // Certificate pages are served with X-Frame-Options ALLOWALL so this iframe works.
 // ---------------------------------------------------------------------------
-const GAS_CERT_URL =
-  "https://script.google.com/macros/s/AKfycbxoXcBjjwYsNYdQpQopB6xbl63m2eTl_U84WCrxZPe62ucSbLt6KVegAhoMMgKQ8aoB/exec?embed=true";
-
-const PORTAL_READY = !GAS_CERT_URL.includes("PASTE_DEPLOYMENT_ID");
+const GAS_CERT_URL = certificateIssueUrl();
 
 export default function CertificateModal({ open, onClose }) {
   const iframeRef = useRef(null);

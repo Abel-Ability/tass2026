@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Award, ClipboardCheck, FileEdit, FileText } from "lucide-react";
+import { ArrowRight, Award, ClipboardCheck, FileEdit, FileText, ShieldCheck } from "lucide-react";
 import CertificateModal from "./CertificateModal";
+import VerifyCertificateModal from "./VerifyCertificateModal";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -33,6 +34,7 @@ export default function FloatingSidebar() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.9], [0, 120]);
   const [certificateOpen, setCertificateOpen] = useState(false);
+  const [verifyOpen, setVerifyOpen] = useState(false);
   const [showCertificateHint, setShowCertificateHint] = useState(() => {
     try {
       return window.localStorage.getItem(CERTIFICATE_HINT_KEY) !== "dismissed";
@@ -87,6 +89,17 @@ export default function FloatingSidebar() {
           )}
         </div>
 
+        <button
+          type="button"
+          onClick={() => setVerifyOpen(true)}
+          className={`bg-primary text-primary-foreground hover:bg-primary/90 ${ACTION_BASE_CLASS}`}
+          aria-label="Verify Certificate"
+        >
+          <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
+          <span className="hidden md:inline">Verify Certificate</span>
+          <span className="md:hidden">Verify</span>
+        </button>
+
         {actions.map((a) => (
           a.external ? (
             <AlertDialog key={a.label}>
@@ -135,6 +148,7 @@ export default function FloatingSidebar() {
       </motion.div>
 
       <CertificateModal open={certificateOpen} onClose={() => setCertificateOpen(false)} />
+      <VerifyCertificateModal open={verifyOpen} onClose={() => setVerifyOpen(false)} />
     </>
   );
 }
