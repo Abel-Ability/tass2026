@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { AlertCircle, ArrowLeft, Loader2, Search, ShieldCheck, X } from "lucide-react";
+import { AlertCircle, Loader2, RotateCcw, Search, ShieldCheck, X } from "lucide-react";
 import {
   PORTAL_READY,
   certificateVerifyUrl,
@@ -104,16 +104,6 @@ export default function VerifyCertificateModal({ open, onClose }) {
             </div>
           </div>
           <div className="flex items-center gap-1 shrink-0">
-            {checkedNo && (
-              <button
-                type="button"
-                onClick={checkAnother}
-                className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-primary-foreground hover:bg-white/10 transition-colors"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
-                Check another
-              </button>
-            )}
             <button
               type="button"
               onClick={onClose}
@@ -210,6 +200,19 @@ export default function VerifyCertificateModal({ open, onClose }) {
                 Only certificates issued through this portal are listed. No personal account or login is required.
               </p>
             </form>
+          </div>
+        )}
+
+        {checkedNo && (
+          <div className="border-t border-border bg-card px-4 py-3">
+            <button
+              type="button"
+              onClick={checkAnother}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+            >
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              Check another certificate
+            </button>
           </div>
         )}
       </div>
