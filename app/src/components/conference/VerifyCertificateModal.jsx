@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AlertCircle, Loader2, RotateCcw, Search, ShieldCheck, X } from "lucide-react";
 import {
@@ -18,6 +18,7 @@ export default function VerifyCertificateModal({ open, onClose }) {
   const [checkedNo, setCheckedNo] = useState("");
   const [attempt, setAttempt] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [pageHasOwnButton, setPageHasOwnButton] = useState(false);
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -47,9 +48,39 @@ export default function VerifyCertificateModal({ open, onClose }) {
     setError("");
     setCheckedNo("");
     setLoaded(false);
+    setPageHasOwnButton(false);
     const timer = window.setTimeout(() => inputRef.current?.focus(), 50);
     return () => window.clearTimeout(timer);
   }, [open]);
+
+  const checkAnother = useCallback(() => {
+    setCheckedNo("");
+    setLoaded(false);
+    setError("");
+    setValue("");
+    setPageHasOwnButton(false);
+    window.setTimeout(() => inputRef.current?.focus(), 0);
+  }, []);
+
+  // Verify.html signals from its nested googleusercontent frame when it is
+  // newer than this bundle (it renders its own button) or when that button is
+  // clicked. Older deployments send nothing, so the footer stays as fallback.
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handleMessage = (event) => {
+      const data = event && event.data;
+      if (!data || typeof data.type !== "string") return;
+      if (data.type === "tass:verify-page" && data.action === "ready") {
+        setPageHasOwnButton(true);
+      } else if (data.type === "tass:verify-another") {
+        checkAnother();
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [open, checkAnother]);
 
   if (!open) return null;
 
@@ -63,15 +94,8 @@ export default function VerifyCertificateModal({ open, onClose }) {
     setError("");
     setLoaded(false);
     setCheckedNo(certNo);
+    setPageHasOwnButton(false);
     setAttempt((n) => n + 1);
-  };
-
-  const checkAnother = () => {
-    setCheckedNo("");
-    setLoaded(false);
-    setError("");
-    setValue("");
-    window.setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   return createPortal(
@@ -203,7 +227,7 @@ export default function VerifyCertificateModal({ open, onClose }) {
           </div>
         )}
 
-        {checkedNo && (
+        {checkedNo && !pageHasOwnButton && (
           <div className="border-t border-border bg-card px-4 py-3">
             <button
               type="button"

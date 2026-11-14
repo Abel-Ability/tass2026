@@ -198,6 +198,13 @@ Every certificate carries `{{CERT_NO}}` and a QR pointing at
 The verification page is read-only. Scanning a QR on a printout opens the page in
 the phone's browser; it does not need a Google login.
 
+When the page is loaded by the site's modal (`?verify=…&embed=true`) it shows a
+**Check another certificate** button under the result, for both the valid and
+not-found panels. It posts a message to the embedding site, which returns to the
+number form. QR codes and bare `?verify=` URLs omit `embed`, so they get no
+button. The modal keeps its own footer button as a fallback until the new page
+has loaded (or if the deployed page is older than the site).
+
 Every lookup — QR scan, the site's **Verify Certificate** modal, or a typed
 `?verify=` URL — appends one row to the **Verification Log** tab
 (`Checked At · Certificate Number · Result`). Logging is best effort: if the tab

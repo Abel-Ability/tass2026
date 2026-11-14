@@ -53,6 +53,7 @@ function doGet(e) {
     logVerification_(data); // best effort: a logging failure must never block the result page
     const t = HtmlService.createTemplateFromFile('Verify');
     t.data = data;
+    t.embedded = String(p.embed || '') === 'true'; // only the site's modal gets the "Check another" button
     out = t.evaluate();
   } else {
     out = HtmlService.createHtmlOutputFromFile('Certificate');

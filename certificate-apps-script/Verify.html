@@ -20,6 +20,10 @@
   dt { color: var(--muted); font-size: 14px; }
   dd { margin: 0; font-weight: 600; word-break: break-word; }
   p.note { margin-top: 22px; font-size: 13px; color: var(--muted); }
+  .again { margin-top: 22px; }
+  .again button { width: 100%; padding: 11px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--green); font: inherit; font-weight: 600; cursor: pointer; }
+  .again button:hover { background: #e7f2e7; }
+  .again button:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -48,6 +52,31 @@
     </div>
     <p class="note">No certificate with the number <strong><?= data.certNo ?></strong> exists in our register. The document may be forged or altered. Please contact the organisers if you believe this is a mistake.</p>
   <? } ?>
+
+  <? if (embedded) { ?>
+  <div class="again">
+    <button id="again" type="button">Check another certificate</button>
+  </div>
+  <? } ?>
 </div>
+<? if (embedded) { ?>
+<script>
+(function () {
+  // The page runs in a nested googleusercontent frame; talk to the embedding
+  // site (tasscemri.org) through the top window.
+  function tellTop(message) {
+    try { window.top.postMessage(message, '*'); } catch (e) { /* ignore */ }
+  }
+
+  // Tells VerifyCertificateModal that this page renders its own button, so the
+  // modal can drop its fallback footer.
+  tellTop({ type: 'tass:verify-page', action: 'ready' });
+
+  document.getElementById('again').addEventListener('click', function () {
+    tellTop({ type: 'tass:verify-another' });
+  });
+})();
+</script>
+<? } ?>
 </body>
 </html>
