@@ -9,7 +9,7 @@ const actions = [
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
 ];
 
-const CERTIFICATE_HINT_KEY = "tass-certificate-hint";
+const CERTIFICATE_HINT_KEY = "tass-certificate-hint-v2";
 
 const ACTION_BASE_CLASS =
   "inline-flex items-center justify-center font-semibold rounded-full shadow-lg hover:shadow-xl opacity-75 hover:opacity-100 transition-all whitespace-nowrap " +
@@ -77,7 +77,7 @@ export default function FloatingSidebar() {
         <button
           type="button"
           onClick={() => setVerifyOpen(true)}
-          className={`bg-primary text-primary-foreground hover:bg-primary/90 ${ACTION_BASE_CLASS}`}
+          className={`bg-red-600 text-white hover:bg-red-700 ${ACTION_BASE_CLASS}`}
           aria-label="Verify Certificate"
         >
           <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:hidden" />
