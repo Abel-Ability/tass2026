@@ -9,7 +9,7 @@ const actions = [
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
 ];
 
-const CERTIFICATE_HINT_KEY = "tass-certificate-hint-v2";
+const CERTIFICATE_HINT_KEY = "tass-certificate-hint-v3";
 
 const ACTION_BASE_CLASS =
   "inline-flex items-center justify-center font-semibold rounded-full shadow-lg hover:shadow-xl opacity-75 hover:opacity-100 transition-all whitespace-nowrap " +
