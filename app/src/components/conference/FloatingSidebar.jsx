@@ -71,7 +71,7 @@ export default function FloatingSidebar() {
             >
               <motion.svg
                 viewBox="0 0 48 24"
-                className="h-4 w-8 fill-amber-500 drop-shadow sm:h-5 sm:w-10 md:h-6 md:w-12 dark:fill-amber-400"
+                className="h-8 w-16 fill-amber-500 drop-shadow sm:h-10 sm:w-20 md:h-12 md:w-24 dark:fill-amber-400"
                 animate={reduceMotion ? { x: 0 } : { x: [-5, 5, -5] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
               >
