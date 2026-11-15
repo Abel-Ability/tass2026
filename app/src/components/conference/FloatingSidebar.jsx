@@ -9,8 +9,6 @@ const actions = [
   { label: "Register Now", mobileLabel: "Register", href: "/register#register-cta", color: "bg-green-600 text-white hover:bg-green-700", icon: ClipboardCheck },
 ];
 
-const CERTIFICATE_HINT_KEY = "tass-certificate-hint-v3";
-
 const ACTION_BASE_CLASS =
   "inline-flex items-center justify-center font-semibold rounded-full shadow-lg hover:shadow-xl opacity-75 hover:opacity-100 transition-all whitespace-nowrap " +
   "text-[10px] px-2 py-1.5 sm:text-xs sm:px-2.5 sm:py-2 md:text-sm lg:text-lg xl:text-xl md:px-4 md:py-2.5 lg:px-5 lg:py-3";
@@ -21,22 +19,9 @@ export default function FloatingSidebar() {
   const reduceMotion = useReducedMotion();
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [verifyOpen, setVerifyOpen] = useState(false);
-  const [showCertificateHint, setShowCertificateHint] = useState(() => {
-    try {
-      return window.localStorage.getItem(CERTIFICATE_HINT_KEY) !== "dismissed";
-    } catch {
-      return true;
-    }
-  });
 
   const openCertificatePortal = () => {
     setCertificateOpen(true);
-    setShowCertificateHint(false);
-    try {
-      window.localStorage.setItem(CERTIFICATE_HINT_KEY, "dismissed");
-    } catch {
-      // storage blocked (private mode): the hint simply shows again next visit
-    }
   };
 
   return (
@@ -63,22 +48,20 @@ export default function FloatingSidebar() {
             className="pointer-events-none absolute -inset-1 rounded-full border-2 border-amber-400/80 animate-certificate-hint"
           />
 
-          {/* thick solid arrow pointing at the certificate button */}
-          {showCertificateHint && (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute right-full top-1/2 z-10 mr-1.5 -translate-y-1/2 sm:mr-2.5"
+          {/* thick solid arrow pointing at the certificate button (always shown) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-full top-1/2 z-10 mr-1.5 -translate-y-1/2 sm:mr-2.5"
+          >
+            <motion.svg
+              viewBox="0 0 48 24"
+              className="h-8 w-16 fill-amber-500 drop-shadow sm:h-10 sm:w-20 md:h-12 md:w-24 dark:fill-amber-400"
+              animate={reduceMotion ? { x: 0 } : { x: [-5, 5, -5] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             >
-              <motion.svg
-                viewBox="0 0 48 24"
-                className="h-8 w-16 fill-amber-500 drop-shadow sm:h-10 sm:w-20 md:h-12 md:w-24 dark:fill-amber-400"
-                animate={reduceMotion ? { x: 0 } : { x: [-5, 5, -5] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <path d="M0 6h26V0l22 12-22 12v-6H0z" />
-              </motion.svg>
-            </div>
-          )}
+              <path d="M0 6h26V0l22 12-22 12v-6H0z" />
+            </motion.svg>
+          </div>
         </div>
 
         <button
