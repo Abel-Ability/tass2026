@@ -19,6 +19,10 @@
   dl { margin: 18px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; }
   dt { color: var(--muted); font-size: 14px; }
   dd { margin: 0; font-weight: 600; word-break: break-word; }
+  ul.papers { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  ul.papers li { padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; }
+  ul.papers li.current { background: var(--panel); border-color: var(--green); }
+  ul.papers .tag { display: inline-block; margin-left: 7px; padding: 1px 6px; border-radius: 999px; background: var(--green); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; }
   p.note { margin-top: 22px; font-size: 13px; color: var(--muted); }
   .again { margin-top: 22px; }
   .again button { width: 100%; padding: 11px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--green); font: inherit; font-weight: 600; cursor: pointer; }
@@ -39,11 +43,23 @@
     <dl>
       <dt>Awarded to</dt><dd><?= data.name ?></dd>
       <dt>Certificate</dt><dd><?= data.type ?></dd>
-      <? if (data.paperTitle) { ?><dt>Paper</dt><dd><?= data.paperTitle ?></dd><? } ?>
+      <? if (data.papers && data.papers.length > 1) { ?>
+      <dt>Papers</dt>
+      <dd>
+        <ul class="papers">
+          <? for (var i = 0; i < data.papers.length; i++) { ?>
+          <li<? if (data.papers[i].current) { ?> class="current"<? } ?>><?= data.papers[i].title ?><? if (data.papers[i].current) { ?><span class="tag">This certificate</span><? } ?></li>
+          <? } ?>
+        </ul>
+      </dd>
+      <? } else if (data.paperTitle) { ?><dt>Paper</dt><dd><?= data.paperTitle ?></dd><? } ?>
       <dt>Event</dt><dd><?= data.event ?></dd>
       <dt>Issued on</dt><dd><?= data.issuedOn ?></dd>
       <dt>Certificate No.</dt><dd><?= data.certNo ?></dd>
     </dl>
+    <? if (data.papers && data.papers.length > 1) { ?>
+    <p class="note">Each paper under one registration number is issued its own certificate, with its own number and QR code. This page verifies <?= data.certNo ?> only — scan another paper's certificate to check that one.</p>
+    <? } ?>
     <p class="note">Checked against the official register of certificates issued by CEMRI and the University of Abuja for TASS Nigeria 2026. Make sure the name and number above match the certificate you were shown.</p>
   <? } else { ?>
     <div class="badge bad">

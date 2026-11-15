@@ -422,6 +422,27 @@ function papersOf_(matches) {
   return out;
 }
 
+// Every distinct paper title recorded under one registration ID, in sheet order.
+function papersUnderReg_(regKey) {
+  if (!regKey) return [];
+  const values = getRosterSheet_().getDataRange().getValues();
+  const loc = locateColumns_(values);
+  if (!loc || loc.iPaper < 0) return [];
+  const seen = {}, out = [];
+  for (let i = loc.row + 1; i < values.length; i++) {
+    const r = values[i];
+    if (normReg_(r[loc.iReg]) !== regKey) continue;
+    const title = String(r[loc.iPaper] || '').trim();
+    if (!title) continue;
+    const submissionId = loc.iSub > -1 ? String(r[loc.iSub] || '').trim() : '';
+    const key = paperKey_(submissionId, title);
+    if (seen[key]) continue;
+    seen[key] = true;
+    out.push({ key: key, title: title });
+  }
+  return out;
+}
+
 // Stable id for a paper: its Submission ID, or a short hash of the title when that is blank
 function paperKey_(submissionId, title) {
   const sid = String(submissionId || '').trim().toUpperCase().replace(/\s+/g, '');
@@ -447,6 +468,27 @@ function surnameTokens_(s) {
 }
 
 /* ───────────────────────────── VERIFICATION ───────────────────────────── */
+/* Every paper on the certificate's registration ID, with the one this
+   certificate covers flagged as current. The log row's own title is used as a
+   fallback when the roster no longer lists that paper (row edited or removed). */
+function papersForVerify_(regId, certKey, logTitle) {
+  let list = [];
+  try {
+    list = papersUnderReg_(normReg_(regId));
+  } catch (err) {
+    console.error('Paper list skipped: ' + (err && err.message ? err.message : err));
+  }
+
+  const key = String(certKey || '').trim().toUpperCase();
+  const wanted = norm_(logTitle);
+  let hit = -1;
+  if (key) for (let i = 0; i < list.length; i++) if (list[i].key === key) { hit = i; break; }
+  if (hit < 0 && wanted) for (let i = 0; i < list.length; i++) if (norm_(list[i].title) === wanted) { hit = i; break; }
+  if (hit < 0 && logTitle) { list.push({ key: '', title: String(logTitle).trim() }); hit = list.length - 1; }
+
+  return list.map(function (p, i) { return { title: p.title, current: i === hit }; });
+}
+
 function buildVerificationData_(certNo) {
   const key = String(certNo || '').trim().toUpperCase();
   if (!/^[A-Z0-9-]{6,30}$/.test(key)) return { valid: false, certNo: key.slice(0, 30) };
@@ -457,12 +499,17 @@ function buildVerificationData_(certNo) {
   const fileId = String(row[COL.FILEID] || '');
   if (!fileId || fileId === 'PENDING') return { valid: false, certNo: key };
   const label = String(row[COL.TYPE] || '');
+  const isPaper = typeKeyFromLabel_(label) === 'presentation';
+  const papers = isPaper ? papersForVerify_(row[COL.REG], row[COL.SUB], row[COL.PAPER]) : [];
+  let paperTitle = isPaper ? String(row[COL.PAPER] || '').trim() : '';
+  if (!paperTitle && papers.length === 1) paperTitle = papers[0].title;
   return {
     valid: true,
     certNo: key,
     name: String(row[COL.NAME]),
     type: label,
-    paperTitle: typeKeyFromLabel_(label) === 'presentation' ? String(row[COL.PAPER] || '') : '',
+    paperTitle: paperTitle,
+    papers: papers,
     issuedOn: Utilities.formatDate(new Date(row[COL.FIRST]), CONFIG.TIMEZONE, 'd MMMM yyyy'),
     event: 'TASS Nigeria 2026 (9th\u201312th November 2026)'
   };

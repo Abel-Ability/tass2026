@@ -190,8 +190,20 @@ title wins; ties go to the earliest row.
 Every certificate carries `{{CERT_NO}}` and a QR pointing at
 `<web-app-url>?verify=<cert-no>`. Opening the URL shows `Verify.html`:
 
-- **Valid certificate** — name, certificate type, paper title (presentation
-  only), event, issue date, certificate number.
+- **Valid certificate** — name, certificate type, paper title(s), event, issue
+  date, certificate number.
+  - One paper under the registration ID → a single **Paper** line, as before.
+  - Several papers → a **Papers** list of every distinct paper title recorded
+    for that registration ID in the roster, with the one this certificate
+    number covers tagged *This certificate*, plus a note that each paper has its
+    own number and QR code.
+  - Participation certificates show no paper line at all.
+  - Titles come from the **live roster** (`papersUnderReg_`), deduped by
+    `Submission ID` (or a hash of the title when blank). The title stored on the
+    certificate's log row is only used as a fallback when the roster no longer
+    lists that paper, so a roster correction shows the corrected title.
+  - The paper list is best effort: if the roster tab cannot be read the page
+    still verifies the certificate and shows only the stored title.
 - **Certificate not found** — the number is not in `Issued Certificates`, or its
   row has no finished PDF yet.
 
