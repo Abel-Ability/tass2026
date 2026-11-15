@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Award, ClipboardCheck, ShieldCheck } from "lucide-react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Award, ClipboardCheck, ShieldCheck } from "lucide-react";
 import CertificateModal from "./CertificateModal";
 import VerifyCertificateModal from "./VerifyCertificateModal";
 
@@ -18,6 +18,7 @@ const ACTION_BASE_CLASS =
 export default function FloatingSidebar() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 0.9], [0, 120]);
+  const reduceMotion = useReducedMotion();
   const [certificateOpen, setCertificateOpen] = useState(false);
   const [verifyOpen, setVerifyOpen] = useState(false);
   const [showCertificateHint, setShowCertificateHint] = useState(() => {
@@ -62,14 +63,20 @@ export default function FloatingSidebar() {
             className="pointer-events-none absolute -inset-1 rounded-full border-2 border-amber-400/80 animate-certificate-hint"
           />
 
-          {/* callout with the arrow pointing at the button */}
+          {/* thick solid arrow pointing at the certificate button */}
           {showCertificateHint && (
-            <div className="pointer-events-none absolute right-full top-1/2 z-10 mr-1.5 flex -translate-y-1/2 items-center gap-1 rounded-full border border-amber-300 bg-white px-2 py-1 text-[10px] font-semibold leading-none text-amber-900 shadow-lg sm:mr-2.5 sm:px-3 sm:py-1.5 sm:text-xs dark:border-amber-400/40 dark:bg-card dark:text-foreground">
-              Get certificate
-              <ArrowRight
-                className="h-3 w-3 text-amber-600 sm:h-3.5 sm:w-3.5 dark:text-amber-400"
-                aria-hidden="true"
-              />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute right-full top-1/2 z-10 mr-1.5 -translate-y-1/2 sm:mr-2.5"
+            >
+              <motion.svg
+                viewBox="0 0 48 24"
+                className="h-4 w-8 fill-amber-500 drop-shadow sm:h-5 sm:w-10 md:h-6 md:w-12 dark:fill-amber-400"
+                animate={reduceMotion ? { x: 0 } : { x: [-5, 5, -5] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <path d="M0 6h26V0l22 12-22 12v-6H0z" />
+              </motion.svg>
             </div>
           )}
         </div>
