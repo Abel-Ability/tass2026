@@ -1,22 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Calendar, MapPin, Phone, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import CountdownTimer from "@/components/home/CountdownTimer";
 import ShootingStars from "@/components/home/ShootingStars";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogAction,
-  AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
-
-const CMT_SUBMISSION_URL = "https://cmt3.research.microsoft.com/Conference/Recent";
 
 const HERO_IMG = "/hero-bg.jpg";
 
@@ -77,7 +63,7 @@ export default function HeroSection() {
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 mb-10">
                 <span className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" /> 09–12 November 2026
+                  <Calendar className="w-4 h-4" /> Held 09–12 November 2026
                 </span>
                 <span className="w-px h-4 bg-white/20" />
                 <span className="flex items-center gap-2">
@@ -106,7 +92,6 @@ export default function HeroSection() {
               </div>
 
               {/* Hero CTAs removed per conference end requirements; only Register / Generate / Verify are available. */}
-            </div>
             </motion.div>
           </div>
 

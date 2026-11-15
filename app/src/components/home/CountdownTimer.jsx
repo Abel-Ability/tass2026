@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const TARGET = new Date("2026-11-09T00:00:00+01:00");
+// Conference ended 12 November 2026; the timer now counts up from midnight (WAT).
+const SINCE = new Date("2026-11-12T00:00:00+01:00");
 
 function calc() {
   const now = new Date();
-  const diff = Math.max(0, TARGET.getTime() - now.getTime());
+  const diff = Math.max(0, now.getTime() - SINCE.getTime());
   const totalSeconds = Math.floor(diff / 1000);
   return {
     days: Math.floor(totalSeconds / 86400),
@@ -38,9 +39,9 @@ export default function CountdownTimer() {
       className="mb-10"
     >
       <p className="text-gold font-heading font-semibold text-sm uppercase tracking-[0.15em] mb-3">
-        Counting Down to TASS Nigeria 2026
+        Celebrating TASS Nigeria 2026
       </p>
-      <p className="text-white/50 text-xs mb-4">09–12 November 2026</p>
+      <p className="text-white/50 text-xs mb-4">Held 09–12 November 2026</p>
       <div className="flex gap-3 md:gap-4">
         {boxes.map(({ key, label }) => (
           <div key={key} className="flex flex-col items-center">
