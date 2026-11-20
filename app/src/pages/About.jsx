@@ -27,7 +27,7 @@ const partners = [
   {
     icon: Building2, label: "Partnership Industry", bg: "bg-teal-50", iconBg: "bg-teal-100", iconColor: "text-teal-700",
     logos: [
-      { src: "/logo_restv.jpeg", name: "ResTV â€” Research Television" },
+      { src: "/logo_restv.jpeg", name: "ResTV — Research Television" },
       { src: "/logo_cefpacs.jpeg", name: "CEFPACS Consulting Limited" },
       { src: "/logo_tripwinga.jpeg", name: "TripWinga" },
       { src: "/logo_hyprep.jpeg", name: "Hydrocarbon Pollution Remediation Project (HYPREP)" },
@@ -165,7 +165,7 @@ export default function About() {
               <SectionHeading
                 label={<><span className="text-green-600">TASS NIG</span><span className="text-red-600">ERIA 2026</span></>}
                 title="Technology. Arts. Science. Society."
-                description="TASS â€” Technology, Arts, Science, and Society â€” is an international multidisciplinary platform established to promote excellence in research, innovation, entrepreneurship, knowledge exchange, and sustainable development."
+                description="TASS — Technology, Arts, Science, and Society — is an international multidisciplinary platform established to promote excellence in research, innovation, entrepreneurship, knowledge exchange, and sustainable development."
               />
               <p className="text-muted-foreground leading-relaxed">
                 The conference programme integrates rigorous peer-reviewed academic research with practical industry applications. In addition to scholarly paper presentations, the event features a competitive student hackathon, a dedicated policy dialogue forum, and a curated innovation and technology exhibition.
@@ -454,7 +454,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
             { val: "18", label: "Thematic Tracks", color: "text-yellow-400" },
-            { val: "â‚¦10M+", label: "Total Prize Pool", color: "text-green-400" },
+            { val: "₦10M+", label: "Total Prize Pool", color: "text-green-400" },
             { val: "4 Days", label: "Of Programming", color: "text-orange-400" },
             ].map((stat) => (
             <div key={stat.label} className="text-center">
